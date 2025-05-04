@@ -23,6 +23,7 @@ Die >> initializeWith: sides [
 
 { #category : 'roll' }
 Die >> roll [
+	"Answer a random integer in the interval [1, anInteger]. De la biblioteca random"
+	^ (Random new) nextInteger: numberSides
 
-	^ (Random new) nextIntegerBetween: 1 and: numberSides
 ]
