@@ -6,6 +6,15 @@ Class {
 }
 
 { #category : 'tests' }
+SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
+
+	| aSpaceship |
+	aSpaceship := Spaceship new.
+
+	self assert: aSpaceship position equals: 0
+]
+
+{ #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
 	| aSpaceship |
