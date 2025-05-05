@@ -9,16 +9,25 @@ Class {
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 
 	| aSpaceship |
-	aSpaceship := Spaceship new.
+	aSpaceship := Spaceship withName: 'Nave 1'.
 
 	self assert: aSpaceship position equals: 0
+]
+
+{ #category : 'tests' }
+SpaceshipTest >> testTheSpaceshipKnowsItsName [
+
+	| aSpaceship |
+	aSpaceship := Spaceship withName: 'Nave 1'.
+
+	self assert: aSpaceship name equals: 'Nave 1'
 ]
 
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
 	| aSpaceship |
-	aSpaceship := Spaceship new.
+	aSpaceship := Spaceship withName: 'Nave 1'.
 	aSpaceship move: 6.
 
 	self assert: aSpaceship position equals: 6
@@ -28,7 +37,7 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 
 	| aSpaceship |
-	aSpaceship := Spaceship new.
+	aSpaceship := Spaceship withName: 'Nave 1'.
 	aSpaceship move: 1.
 
 	self assert: aSpaceship position equals: 1
