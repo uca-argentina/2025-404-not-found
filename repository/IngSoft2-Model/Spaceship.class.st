@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'position',
-		'name'
+		'name',
+		'board'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,8 +18,20 @@ Spaceship class >> withName: aName [
 	^ self new initializeWith: aName
 ]
 
+{ #category : 'instance creation' }
+Spaceship class >> withName: aName withBoard:aBoard [
+	^ self new initializeWith: aName withBoard: aBoard 
+]
+
 { #category : 'initialization' }
 Spaceship >> initializeWith: aName [
+	position := 0.
+	name := aName.
+]
+
+{ #category : 'initialization' }
+Spaceship >> initializeWith: aName withBoard:aBoard [
+	board:=aBoard.
 	position := 0.
 	name := aName.
 ]
@@ -26,6 +39,8 @@ Spaceship >> initializeWith: aName [
 { #category : 'accessing' }
 Spaceship >> move: numberOfBoxes [ 
 	position := position + numberOfBoxes.
+	position:=board checkHole: position.
+	
 ]
 
 { #category : 'accessing' }
