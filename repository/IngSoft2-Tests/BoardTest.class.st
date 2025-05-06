@@ -16,12 +16,12 @@ BoardTest >> testWhenPositionIsOutOfBoardThenIsInvalid [
 
 { #category : 'tests' }
 BoardTest >> testWhenSpaceShipIsOnHole [
-	| sizeOfBoard aBoard  aSpaceship aPosition |
+	| sizeOfBoard aBoard aPosition |
 	aPosition:=2.
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
 	
-	self assert: (aBoard checkHole: aPosition) equals:6.
+	self assert: (aBoard checkHoleAndRelocate: aPosition) equals:6.
 ]
 
 { #category : 'tests' }

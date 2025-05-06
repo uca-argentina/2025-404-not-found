@@ -27,7 +27,7 @@ Board class >> with: sizeOfBoard andEntranceHole:anEntrance andExitHole:anExit [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkHole: aSpaceshipPosition [
+Board >> checkHoleAndRelocate: aSpaceshipPosition [
 	^ (aSpaceshipPosition = entranceHole)
 	ifTrue: [exitHole]
 	ifFalse: [
