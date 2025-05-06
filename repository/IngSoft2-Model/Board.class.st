@@ -30,7 +30,11 @@ Board class >> with: sizeOfBoard andEntranceHole:anEntrance andExitHole:anExit [
 Board >> checkHole: aSpaceshipPosition [
 	^ (aSpaceshipPosition = entranceHole)
 	ifTrue: [exitHole]
-	ifFalse: [entraceHole ]
+	ifFalse: [
+		(aSpaceshipPosition = exitHole )
+		ifTrue:[entranceHole ]
+		ifFalse:[aSpaceshipPosition ]
+		 ]
 	
 ]
 

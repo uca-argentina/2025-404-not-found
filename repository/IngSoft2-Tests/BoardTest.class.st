@@ -25,6 +25,30 @@ BoardTest >> testWhenSpaceShipIsOnHole [
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
+	| sizeOfBoard aBoard  aSpaceship |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
+	
+	aSpaceship move:2.
+	
+	self assert: aSpaceship position equals: 6.
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [ 
+	| sizeOfBoard aBoard  aSpaceship |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
+	
+	aSpaceship move:6.
+	
+	self assert: aSpaceship position equals: 2.
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenSpaceshipLandsOnHoleThenMoves [ 
 	| sizeOfBoard aBoard  aSpaceship |
 	sizeOfBoard := 10.

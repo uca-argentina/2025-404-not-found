@@ -26,18 +26,22 @@ SpaceshipTest >> testTheSpaceshipKnowsItsName [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
-	| aSpaceship |
-	aSpaceship := Spaceship withName: 'Nave 1'.
-	aSpaceship move: 6.
+	| aSpaceship sizeOfBoard aBoard |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
+	aSpaceship move: 8.
 
-	self assert: aSpaceship position equals: 6
+	self assert: aSpaceship position equals: 8
 ]
 
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 
-	| aSpaceship |
-	aSpaceship := Spaceship withName: 'Nave 1'.
+	| aSpaceship sizeOfBoard aBoard |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship move: 1.
 
 	self assert: aSpaceship position equals: 1
