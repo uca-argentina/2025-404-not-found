@@ -8,8 +8,10 @@ Class {
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 
-	| aSpaceship |
-	aSpaceship := Spaceship withName: 'Nave 1'.
+	| aSpaceship sizeOfBoard aBoard |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship position equals: 0
 ]
@@ -17,8 +19,10 @@ SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipKnowsItsName [
 
-	| aSpaceship |
-	aSpaceship := Spaceship withName: 'Nave 1'.
+	| aSpaceship sizeOfBoard aBoard |
+	sizeOfBoard := 10.
+	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship name equals: 'Nave 1'
 ]

@@ -14,19 +14,8 @@ Class {
 }
 
 { #category : 'instance creation' }
-Spaceship class >> withName: aName [
-	^ self new initializeWith: aName
-]
-
-{ #category : 'instance creation' }
 Spaceship class >> withName: aName withBoard:aBoard [
 	^ self new initializeWith: aName withBoard: aBoard 
-]
-
-{ #category : 'initialization' }
-Spaceship >> initializeWith: aName [
-	position := 0.
-	name := aName.
 ]
 
 { #category : 'initialization' }

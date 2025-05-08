@@ -1,3 +1,6 @@
+"
+Game class manages how the game is played
+"
 Class {
 	#name : 'Game',
 	#superclass : 'Object',
@@ -10,7 +13,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Game class >> with: spaceShips andDice: someDice andBoard: aBoard [
 	^self new initializeWith: spaceShips andDice: someDice andBoard: aBoard.
 ]
