@@ -5,14 +5,17 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'size',
-		'entraceHole',
-		'exitHole',
-		'entranceHole'
+		'boardSize',
+		'wormhole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'instance creation' }
+Board class >> initializeWith: aBoardSize wormhole: aWormhole [ 
+	^ self new initializeWith: aBoardSize wormhole: aWormhole.
+]
 
 { #category : 'instance creation' }
 Board class >> with: sizeOfBoard andEntranceHole:anEntrance andExitHole:anExit [
@@ -21,13 +24,15 @@ Board class >> with: sizeOfBoard andEntranceHole:anEntrance andExitHole:anExit [
 
 { #category : 'check' }
 Board >> checkHoleAndRelocate: aSpaceshipPosition [
-	^ (aSpaceshipPosition = entranceHole)
+	'^ (aSpaceshipPosition = entranceHole) 
 	ifTrue: [exitHole]
 	ifFalse: [
 		(aSpaceshipPosition = exitHole )
 		ifTrue:[entranceHole ]
 		ifFalse:[aSpaceshipPosition ]
-		 ]
+		 ]'.
+	^ wormhole newPosition: aSpaceshipPosition
+	
 	
 ]
 
@@ -41,4 +46,12 @@ Board >> initializeWith: sizeOfBoard andEntranceHole:anEntrance andExitHole:anEx
 	size := sizeOfBoard.
 	entranceHole:=anEntrance.
 	exitHole:=anExit.
+]
+
+{ #category : 'instance creation' }
+Board >> initializeWith: aBoardSize wormhole: aWormhole [
+	
+	
+	boardSize := aBoardSize.
+	wormhole := aWormhole.
 ]
