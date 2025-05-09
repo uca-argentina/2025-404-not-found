@@ -38,14 +38,7 @@ Board >> checkHoleAndRelocate: aSpaceshipPosition [
 
 { #category : 'check' }
 Board >> checksLimits: aPosition [ 
-	^(aPosition>=1 and: aPosition<=size)
-]
-
-{ #category : 'initialization' }
-Board >> initializeWith: sizeOfBoard andEntranceHole:anEntrance andExitHole:anExit [
-	size := sizeOfBoard.
-	entranceHole:=anEntrance.
-	exitHole:=anExit.
+	^(aPosition>=1 and: aPosition<=boardSize)
 ]
 
 { #category : 'instance creation' }
