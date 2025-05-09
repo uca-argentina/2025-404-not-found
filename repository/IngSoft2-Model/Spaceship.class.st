@@ -28,7 +28,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard [
 { #category : 'accessing' }
 Spaceship >> move: numberOfBoxes [ 
 	position := position + numberOfBoxes.
-	position:=board checkHoleAndRelocate: position.
+	position := board checkHoleAndRelocate: position.
 	
 ]
 

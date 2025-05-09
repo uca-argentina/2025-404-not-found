@@ -8,9 +8,10 @@ Class {
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 
-	| aSpaceship sizeOfBoard aBoard |
+	| aSpaceship sizeOfBoard aBoard aWormhole |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship position equals: 0
@@ -19,9 +20,10 @@ SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipKnowsItsName [
 
-	| aSpaceship sizeOfBoard aBoard |
+	| aSpaceship sizeOfBoard aBoard aWormhole |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship name equals: 'Nave 1'
@@ -30,9 +32,10 @@ SpaceshipTest >> testTheSpaceshipKnowsItsName [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
-	| aSpaceship sizeOfBoard aBoard |
+	| aSpaceship sizeOfBoard aBoard aWormhole |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship move: 8.
 
@@ -42,9 +45,10 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 
-	| aSpaceship sizeOfBoard aBoard |
+	| aSpaceship sizeOfBoard aBoard aWormhole |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship move: 1.
 

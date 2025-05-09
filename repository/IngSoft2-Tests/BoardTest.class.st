@@ -7,9 +7,10 @@ Class {
 
 { #category : 'tests' }
 BoardTest >> testWhenPositionIsOutOfBoardThenIsInvalid [
-	| sizeOfBoard aBoard positionOfShip  |
+	| sizeOfBoard aBoard positionOfShip  aWormhole |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	positionOfShip := 11.
 	
 	self deny: (aBoard checksLimits: positionOfShip).
