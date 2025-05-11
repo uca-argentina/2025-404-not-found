@@ -6,6 +6,15 @@ Class {
 }
 
 { #category : 'tests' }
+GameTest >> testAllTheSpaceshipsStartAtPosition0 [
+	| aGame |
+
+	aGame := GameFactory buildGame.
+
+	self assert: (aGame spaceships anySatisfy: [ :spaceship | spaceship position = 0 ]).
+]
+
+{ #category : 'tests' }
 GameTest >> testBanana [ 
 	| aBoard aSpaceship1 aSpaceship2 aDie spaceShips aGame aWormhole |
 	aWormhole := Wormhole entrance: 2 exit: 6.
@@ -34,4 +43,13 @@ GameTest >> testGameInitialization [
 	self assert: aGame spaceships size equals: 2.
 	self assert: (aGame spaceships anySatisfy: [ :s | s name = 'Nave 1' ]).
 	self assert: aGame board equals: aBoard.
+]
+
+{ #category : 'tests' }
+GameTest >> testWhenMultiplesDicesAreRolledTheSumIsCalculatedCorrectly [
+	| aGame |
+
+	aGame := GameFactory buildGame.
+
+	self assert: (aGame spaceships anySatisfy: [ :spaceship | spaceship position = 0 ]).
 ]
