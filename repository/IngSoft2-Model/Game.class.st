@@ -1,8 +1,11 @@
+"
+Controls the game functioning and logic
+"
 Class {
 	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShips',
+		'spaceships',
 		'dice',
 		'board'
 	],
@@ -27,12 +30,12 @@ Game >> dice [
 
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice andBoard: aBoard [ 
-	spaceShips := someSpaceShips.
+	spaceships := someSpaceShips.
 	dice := someDice.
 	board := aBoard.
 ]
 
 { #category : 'accesing' }
-Game >> spaceship [
-	^ spaceShips 
+Game >> spaceships [
+	^ spaceships 
 ]

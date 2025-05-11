@@ -7,8 +7,9 @@ Class {
 
 { #category : 'tests' }
 GameTest >> testBanana [ 
-	| aBoard aSpaceship1 aSpaceship2 aDie spaceShips aGame |
-	aBoard := Board with: 10 andEntranceHole: 2 andExitHole: 6.
+	| aBoard aSpaceship1 aSpaceship2 aDie spaceShips aGame aWormhole |
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: 10 wormhole: aWormhole.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
 	spaceShips := [aSpaceship1,aSpaceship2].
@@ -18,9 +19,10 @@ GameTest >> testBanana [
 
 { #category : 'tests' }
 GameTest >> testGameInitialization [ 
-	| aBoard aSpaceship1 aSpaceship2 aspaceShips aDie dice aGame |
+	| aBoard aSpaceship1 aSpaceship2 aspaceShips aDie dice aGame aWormhole |
 
-	aBoard := Board with: 10 andEntranceHole: 2 andExitHole: 6.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: 10 wormhole: aWormhole.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
 	aspaceShips := { aSpaceship1. aSpaceship2 }.
@@ -29,7 +31,7 @@ GameTest >> testGameInitialization [
 
 	aGame := Game with: aspaceShips andDice: dice andBoard: aBoard.
 
-	self assert: aGame spaceShips size = 2.
-	self assert: (aGame spaceShips anySatisfy: [ :s | s name = 'Nave 1' ]).
-	self assert: aGame board = aBoard.
+	self assert: aGame spaceships size equals: 2.
+	self assert: (aGame spaceships anySatisfy: [ :s | s name = 'Nave 1' ]).
+	self assert: aGame board equals: aBoard.
 ]
