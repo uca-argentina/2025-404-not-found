@@ -47,9 +47,10 @@ GameTest >> testGameInitialization [
 
 { #category : 'tests' }
 GameTest >> testWhenMultiplesDicesAreRolledTheSumIsCalculatedCorrectly [
-	| aGame |
+	| aGame result |
 
 	aGame := GameFactory buildGame.
+	result := aGame rollDices.
 
-	self assert: (aGame spaceships anySatisfy: [ :spaceship | spaceship position = 0 ]).
+	self assert: (result >= 2 and: result <= 12 ).
 ]

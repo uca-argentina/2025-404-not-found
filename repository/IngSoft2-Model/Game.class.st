@@ -35,6 +35,15 @@ Game >> initializeWith: someSpaceShips andDice: someDice andBoard: aBoard [
 	board := aBoard.
 ]
 
+{ #category : 'logic' }
+Game >> rollDices [
+	| numbers result |
+	numbers := dice collect: [ :die | die roll].
+	result := numbers inject: 0 into: [ :acum :value | acum + value ].
+	
+	^ result
+]
+
 { #category : 'accesing' }
 Game >> spaceships [
 	^ spaceships 
