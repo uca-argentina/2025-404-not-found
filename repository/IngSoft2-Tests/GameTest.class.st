@@ -11,7 +11,7 @@ GameTest >> testAllTheSpaceshipsStartAtPosition0 [
 
 	aGame := GameFactory buildGame.
 
-	self assert: (aGame spaceships anySatisfy: [ :spaceship | spaceship position = 0 ]).
+	self assert: (aGame spaceships allSatisfy: [ :spaceship | spaceship position = 0 ]).
 ]
 
 { #category : 'tests' }
@@ -65,10 +65,10 @@ GameTest >> testWhenADiceIsRolledOneSpaceshipMovesAndTheOtherDoesnt [
 GameTest >> testWhenMultiplesDicesAreRolledTheSumIsCalculatedCorrectly [
 	| aGame result |
 
-	aGame := GameFactory buildGame.
+	aGame := GameFactory buildGameWithDiceOne: 2 andDiceTwo: 3 .
 	result := aGame rollDices.
 
-	self assert: (result = 6 ).
+	self assert: result equals: 6.
 ]
 
 { #category : 'tests' }
