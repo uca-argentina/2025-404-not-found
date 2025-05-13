@@ -11,7 +11,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'as yet unclassified' }
 Die class >> with: sides [ 
 	^ self new initializeWith: sides
 ]
