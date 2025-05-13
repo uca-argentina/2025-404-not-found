@@ -15,7 +15,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Game class >> with: spaceShips andDice: someDice andBoard: aBoard [ 
 	^self new initializeWith: spaceShips andDice: someDice andBoard: aBoard.
 ]
@@ -51,7 +51,7 @@ Game >> isFinished [
 
 { #category : 'logic' }
 Game >> nexTurn [
-	self isFinished ifTrue: [ ^self ].  
+	self isFinished ifTrue: [ ^ self ].  
 
 	spaceships do: [:ship |
 		| roll |
@@ -60,10 +60,10 @@ Game >> nexTurn [
 		(self hasShipWon: ship) ifTrue: [
 			winner := ship.
 			finished := true.
-			^self.
-			
+			^self		
 		].
 	].
+	
 ]
 
 { #category : 'logic' }
@@ -72,6 +72,21 @@ Game >> rollDices [
 	resultados := dice collect: [ :dado | dado roll ].
 	^ resultados sum.
 
+]
+
+{ #category : 'logic' }
+Game >> showStatus [
+    | status |
+    status := ''.
+
+    spaceships do: [:spaceship |
+        status := status , 'Nave: ', spaceship name, ' - Posición: ', spaceship position asString, String cr.
+].
+
+    self isFinished ifTrue: [
+        status := status , '🎉 El juego ha terminado. Ganó: ', winner name, String cr.].
+
+    ^ status
 ]
 
 { #category : 'accesing' }
