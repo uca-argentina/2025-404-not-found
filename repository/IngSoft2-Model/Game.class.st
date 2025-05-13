@@ -76,11 +76,17 @@ Game >> rollDices [
 
 { #category : 'logic' }
 Game >> showStatus [
-	| status |
-	status := ''.
-	spaceships do: [:spaceship | status := status , 'Nave: ', spaceship name, ' - Posición: ', spaceship position asString, String cr.].
+    | status |
+    status := ''.
 
-	^ status
+    spaceships do: [:spaceship |
+        status := status , 'Nave: ', spaceship name, ' - Posición: ', spaceship position asString, String cr.
+].
+
+    self isFinished ifTrue: [
+        status := status , '🎉 El juego ha terminado. Ganó: ', winner name, String cr.].
+
+    ^ status
 ]
 
 { #category : 'accesing' }
