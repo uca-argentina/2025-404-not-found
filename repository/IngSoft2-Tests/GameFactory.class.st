@@ -10,14 +10,14 @@ Class {
 
 { #category : 'build' }
 GameFactory class >> buildGame [
-	| die1 die2 dice aSpaceship1 aBoard aSpaceship2 spaceships aWormhole |
+	| die1 dice aSpaceship1 aBoard aSpaceship2 spaceships aWormhole die2 |
 	
-	die1 := Die with: 6.
-	die2 := Die with: 6.
-	dice := { die1 . die2 }.
+	die1 := LoadedDie with: 3.
+	die2 := LoadedDie with: 3.
+	dice := { die1 . die2}.
 	
 	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: 10 wormhole: aWormhole.
+	aBoard := Board with: 50 wormhole: aWormhole.
 	
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.

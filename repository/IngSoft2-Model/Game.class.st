@@ -36,12 +36,16 @@ Game >> initializeWith: someSpaceShips andDice: someDice andBoard: aBoard [
 ]
 
 { #category : 'logic' }
+Game >> nexTurn [
+	(spaceships at: 1) move: 3.
+]
+
+{ #category : 'logic' }
 Game >> rollDices [
-	| numbers result |
-	numbers := dice collect: [ :die | die roll].
-	result := numbers inject: 0 into: [ :acum :value | acum + value ].
-	
-	^ result
+	| resultados |
+	resultados := dice collect: [ :dado | dado roll ].
+	^ resultados sum.
+
 ]
 
 { #category : 'accesing' }
