@@ -15,18 +15,6 @@ GameTest >> testAllTheSpaceshipsStartAtPosition0 [
 ]
 
 { #category : 'tests' }
-GameTest >> testBanana [ 
-	| aBoard aSpaceship1 aSpaceship2 aDie spaceShips aGame aWormhole |
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: 10 wormhole: aWormhole.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
-	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
-	spaceShips := [aSpaceship1,aSpaceship2].
-	aDie := Die with: 6.
-	aGame := Game with: spaceShips andDice: aDie andBoard: aBoard.
-]
-
-{ #category : 'tests' }
 GameTest >> testGameEndsWhenAShipWins [
 	| aGame spaceships aSpaceship1 |
 	aGame := GameFactory buildGameWithDiceOne: 20 andDiceTwo: 20.  
