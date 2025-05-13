@@ -25,3 +25,21 @@ GameFactory class >> buildGame [
 	
 	^ Game with: spaceships andDice: dice andBoard: aBoard.
 ]
+
+{ #category : 'as yet unclassified' }
+GameFactory class >> buildGameWithDiceOne: value1 andDiceTwo: value2 [
+	| die1 die2 dice aBoard aSpaceship1 aSpaceship2 spaceships aWormhole |
+
+	die1 := LoadedDie with: value1.
+	die2 := LoadedDie with: value2.
+	dice := { die1. die2 }.
+
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: 10 wormhole: aWormhole.
+
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
+	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
+	spaceships := { aSpaceship1. aSpaceship2 }.
+
+	^ Game with: spaceships andDice: dice andBoard: aBoard
+]

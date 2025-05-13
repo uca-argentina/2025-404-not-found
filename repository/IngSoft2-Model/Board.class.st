@@ -33,6 +33,11 @@ Board >> checksLimits: aPosition [
 	^(aPosition>=1 and: aPosition<=size)
 ]
 
+{ #category : 'accessing' }
+Board >> size [ 
+	^size
+]
+
 { #category : 'initialization' }
 Board >> with: aBoardSize wormhole: aWormhole [
 	

@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'spaceships',
 		'dice',
-		'board'
+		'board',
+		'finished',
+		'winner'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,16 +30,40 @@ Game >> dice [
  ^ dice
 ]
 
+{ #category : 'testing' }
+Game >> hasShipWon: aShip [
+	^ aShip position >= board size
+
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice andBoard: aBoard [ 
 	spaceships := someSpaceShips.
 	dice := someDice.
 	board := aBoard.
+	finished := false.
+]
+
+{ #category : 'testing' }
+Game >> isFinished [
+	^finished
 ]
 
 { #category : 'logic' }
 Game >> nexTurn [
-	(spaceships at: 1) move: 3.
+	self isFinished ifTrue: [ ^self ].  
+
+	spaceships do: [:ship |
+		| roll |
+		roll := self rollDices.
+		ship move: roll.
+		(self hasShipWon: ship) ifTrue: [
+			winner := ship.
+			finished := true.
+			^self.
+			
+		].
+	].
 ]
 
 { #category : 'logic' }
@@ -51,4 +77,9 @@ Game >> rollDices [
 { #category : 'accesing' }
 Game >> spaceships [
 	^ spaceships 
+]
+
+{ #category : 'accessing' }
+Game >> winner [
+	^ winner
 ]

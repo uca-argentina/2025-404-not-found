@@ -27,6 +27,27 @@ GameTest >> testBanana [
 ]
 
 { #category : 'tests' }
+GameTest >> testGameEndsWhenAShipWins [
+	| aGame spaceships aSpaceship1 |
+	aGame := GameFactory buildGameWithDiceOne: 20 andDiceTwo: 20.  
+	aGame nexTurn.
+	spaceships := aGame spaceships.
+	aSpaceship1 := spaceships at: 1.
+	
+	self assert: aGame isFinished.
+	self assert: (aGame winner name) = 'Nave 1' 
+    description: 'Ganó la nave: ', (aGame winner name).
+
+	"self assert: (aGame winner name) = 'Nave 1'."
+	"self assert: aGame winner == aSpaceship1."
+
+
+	
+	
+	
+]
+
+{ #category : 'tests' }
 GameTest >> testGameInitialization [ 
 	| aBoard aSpaceship1 aSpaceship2 aspaceShips aDie dice aGame aWormhole |
 
@@ -46,18 +67,44 @@ GameTest >> testGameInitialization [
 ]
 
 { #category : 'tests' }
-GameTest >> testWhenADiceIsRolledOneSpaceshipMovesAndTheOtherDoesnt [
-	| aSpaceship1 spaceships aGame aSpaceship2 |
-
-	aGame := GameFactory buildGame.
+GameTest >> testTwoShipsMoveSameTurn [ 
+	| aGame  spaceships aSpaceship1 aSpaceship2 |
+	aGame:= GameFactory buildGameWithDiceOne: 1 andDiceTwo: 2.
 	aGame nexTurn.
 	spaceships := aGame spaceships.
 	aSpaceship1 := spaceships at: 1.
 	aSpaceship2 := spaceships at: 2.
 	
 	self assert: aSpaceship1 position equals: 3.
-	self assert: aSpaceship2 position equals: 0.
+	self assert: aSpaceship2 position equals: 3.
+]
+
+{ #category : 'tests' }
+GameTest >> testWhenADiceIsRolledOneSpaceshipMovesAndTheOtherDoesnt [
+	| aSpaceship1 spaceships aGame aSpaceship2 |
+
+	aGame := GameFactory buildGameWithDiceOne: 1 andDiceTwo: 2.
+	aGame nexTurn.
+	spaceships := aGame spaceships.
+	aSpaceship1 := spaceships at: 1.
+	aSpaceship2 := spaceships at: 2.
 	
+	self assert: aSpaceship1 position equals: 3.
+	self assert: aSpaceship2 position equals: 3.
+	
+	
+]
+
+{ #category : 'tests' }
+GameTest >> testWhenASpaceShipHasFallenIntoWormholeThenItChangesPosition [ 
+	| aGame spaceships aSpaceship1 |
+
+	aGame := GameFactory buildGameWithDiceOne: 1 andDiceTwo: 1 .
+	aGame nexTurn.
+	spaceships := aGame spaceships.
+	aSpaceship1 := spaceships at: 1.
+	
+	self assert: aSpaceship1 position equals: 6.
 	
 ]
 
@@ -68,14 +115,14 @@ GameTest >> testWhenMultiplesDicesAreRolledTheSumIsCalculatedCorrectly [
 	aGame := GameFactory buildGameWithDiceOne: 2 andDiceTwo: 3 .
 	result := aGame rollDices.
 
-	self assert: result equals: 6.
+	self assert: result equals: 5.
 ]
 
 { #category : 'tests' }
 GameTest >> testWhenTheDiceIsRolledASpaceshipMoves [
 	| aSpaceship1 spaceships aGame |
 
-	aGame := GameFactory buildGame.
+	aGame := GameFactory buildGameWithDiceOne: 1 andDiceTwo: 2.
 	aGame nexTurn.
 	spaceships := aGame spaceships.
 	aSpaceship1 := spaceships at: 1.
