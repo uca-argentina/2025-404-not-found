@@ -5,6 +5,30 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+SpaceshipTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
+]
+
+{ #category : 'tests' }
+SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
+
+	| aSpaceship sizeOfBoard aBoard aWormhole |
+	sizeOfBoard := 10.
+	aWormhole := Wormhole entrance: 2 exit: 6.
+	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	
+	self
+		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard. ]
+		raise: Error
+		withMessageText: 'Name should have at least one character'
+]
+
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 

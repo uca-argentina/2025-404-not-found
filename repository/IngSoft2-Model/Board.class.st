@@ -14,6 +14,7 @@ Class {
 
 { #category : 'instance creation' }
 Board class >> with: aBoardSize wormhole: aWormhole [ 
+	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
 	^ self new with: aBoardSize wormhole: aWormhole.
 ]
 

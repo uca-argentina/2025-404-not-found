@@ -5,6 +5,25 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
+]
+
+{ #category : 'tests' }
+DiceTest >> testWhenSidesIsNegativeThenCreationFails [
+
+	self
+		should: [ Die with: -1 ]
+		raise: Error
+		withMessageText: 'Sides should be positive' 
+]
+
 { #category : 'tests' }
 DiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1And6 [
 
