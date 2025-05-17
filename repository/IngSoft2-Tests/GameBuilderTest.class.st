@@ -16,5 +16,67 @@ GameBuilderTest >> should: anErrorBlock raise: anErrorClass withMessageText: err
 ]
 
 { #category : 'asserting' }
-GameBuilderTest >> test [
+GameBuilderTest >> testWhenGameCreationWithInvalidSpaceshipNameThenFails [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: ''.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: 10.
+	builder setWormholeEntrance: 2 exit: 7.
+	
+	self
+		should: [ game := builder buildGame ]
+		raise: Error
+		withMessageText: 'Name should have at least one character'			
+				
+			
+		
+	
+
+]
+
+{ #category : 'asserting' }
+GameBuilderTest >> testWhenGameCreationWithNegativeBoardSizeThenFails [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: -10.
+	builder setWormholeEntrance: 2 exit: 7.
+	
+	self
+		should: [ game := builder buildGame ]
+		raise: Error
+		withMessageText: 'Board size should be positive'			
+				
+			
+		
+	
+
+]
+
+{ #category : 'asserting' }
+GameBuilderTest >> testWhenGameCreationWithNegativeDieSideThenFails [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: -3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: -10.
+	builder setWormholeEntrance: 2 exit: 7.
+	
+	self
+		should: [ game := builder buildGame ]
+		raise: Error
+		withMessageText: 'Sides should be positive'			
+				
+			
+		
+	
+
 ]
