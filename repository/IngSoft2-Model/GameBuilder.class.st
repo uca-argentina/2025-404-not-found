@@ -1,5 +1,8 @@
+"
+Game builder 
+"
 Class {
-	#name : 'GameFactoryToPlay',
+	#name : 'GameBuilder',
 	#superclass : 'Object',
 	#instVars : [
 		'spaceshipNames',
@@ -13,17 +16,17 @@ Class {
 }
 
 { #category : 'initialization' }
-GameFactoryToPlay >> addDieWithValue: aValue [
+GameBuilder >> addDieWithValue: aValue [
     dieValues add: aValue.
 ]
 
 { #category : 'initialization' }
-GameFactoryToPlay >> addSpaceshipNamed: aName [
+GameBuilder >> addSpaceshipNamed: aName [
     spaceshipNames add: aName.
 ]
 
 { #category : 'initialization' }
-GameFactoryToPlay >> buildGameToPlay [
+GameBuilder >> buildGameToPlay [
     | dice board wormhole spaceships |
 
     dice := dieValues collect: [ :val | Die with: val ].
@@ -36,18 +39,18 @@ GameFactoryToPlay >> buildGameToPlay [
 ]
 
 { #category : 'initialization' }
-GameFactoryToPlay >> initialize [
+GameBuilder >> initialize [
     spaceshipNames := OrderedCollection new.
     dieValues := OrderedCollection new.
 ]
 
 { #category : 'initialization' }
-GameFactoryToPlay >> setBoardSize: aSize [
+GameBuilder >> setBoardSize: aSize [
     boardSize := aSize.
 ]
 
 { #category : 'initialization' }
-GameFactoryToPlay >> setWormholeEntrance: entrance exit: exit [
+GameBuilder >> setWormholeEntrance: entrance exit: exit [
     wormholeEntrance := entrance.
     wormholeExit := exit.
 ]
