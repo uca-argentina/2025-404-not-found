@@ -7,22 +7,19 @@ Class {
 
 { #category : 'tests' }
 WormholeTest >> testWhenABoxIsAWormhole [
-	| sizeOfBoard aBoard aPosition aWormhole |
+	| sizeOfBoard aBoard aPosition |
 	aPosition:=2.
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	
 	self assert: (aBoard checkHoleAndRelocate: aPosition) equals: 6.
 ]
 
 { #category : 'tests' }
 WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
-	| sizeOfBoard aBoard  aSpaceship aWormhole |
+	| sizeOfBoard aBoard  aSpaceship |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
 	
 	aSpaceship move:2.
@@ -32,10 +29,9 @@ WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
 
 { #category : 'tests' }
 WormholeTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [ 
-	| sizeOfBoard aBoard  aSpaceship aWormhole |
+	| sizeOfBoard aBoard  aSpaceship |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
 	
 	aSpaceship move:6.

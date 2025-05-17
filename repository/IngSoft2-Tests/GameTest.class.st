@@ -21,8 +21,7 @@ GameTest >> setUp [
 	super setUp.
 
 	"Put here a common initialization logic for tests"
-	aWormhole := Wormhole entrance: 12 exit: 18.
-	aBoard := Board with: 20 wormhole: aWormhole.
+	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
 	spaceships := { aSpaceship1 . aSpaceship2 }.

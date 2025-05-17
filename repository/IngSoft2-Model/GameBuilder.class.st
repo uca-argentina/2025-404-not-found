@@ -27,15 +27,14 @@ GameBuilder >> addSpaceshipNamed: aName [
 
 { #category : 'initialization' }
 GameBuilder >> buildGame [
-    | dice board wormhole spaceships |
+	| dice board wormhole spaceships |
 
-    dice := dieValues collect: [ :val | Die with: val ].
-    wormhole := Wormhole entrance: wormholeEntrance exit: wormholeExit.
-    board := Board with: boardSize wormhole: wormhole.
+   dice := dieValues collect: [ :val | Die with: val ].
+   wormhole := Wormhole entrance: wormholeEntrance exit: wormholeExit.
+	board := Board with: boardSize wormhole: wormhole.
+	spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board ].
 
-    spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board ].
-
-    ^ Game with: spaceships andDice: dice.
+   ^ Game with: spaceships andDice: dice.
 ]
 
 { #category : 'initialization' }

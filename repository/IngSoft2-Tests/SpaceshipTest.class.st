@@ -18,10 +18,9 @@ SpaceshipTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 { #category : 'tests' }
 SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
 
-	| aSpaceship sizeOfBoard aBoard aWormhole |
+	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	
 	self
 		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard. ]
@@ -32,10 +31,9 @@ SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 
-	| aSpaceship sizeOfBoard aBoard aWormhole |
+	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship position equals: 0
@@ -44,10 +42,9 @@ SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipKnowsItsName [
 
-	| aSpaceship sizeOfBoard aBoard aWormhole |
+	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 
 	self assert: aSpaceship name equals: 'Nave 1'
@@ -56,10 +53,9 @@ SpaceshipTest >> testTheSpaceshipKnowsItsName [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
-	| aSpaceship sizeOfBoard aBoard aWormhole |
+	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship move: 8.
 
@@ -69,10 +65,9 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 
-	| aSpaceship sizeOfBoard aBoard aWormhole |
+	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aWormhole := Wormhole entrance: 2 exit: 6.
-	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship move: 1.
 
