@@ -25,13 +25,19 @@ Wormhole >> initializeWith: anEntranceBox and: anExitBox [
 ]
 
 { #category : 'position' }
-Wormhole >> isWormhole: aPosition [
+Wormhole >> isEntrance: aPosition [
+	^ aPosition = entranceBox
+]
 
-	^ (aPosition = entranceBox ) or: (aPosition = exitBox )
+{ #category : 'testing' }
+Wormhole >> isExit: aPosition [
+	^ aPosition = exitBox 
 ]
 
 { #category : 'position' }
-Wormhole >> newPosition: aSpaceshipPosition [ 
-	(aSpaceshipPosition = entranceBox ) ifTrue: [ ^ exitBox ].
-	^ entranceBox
+Wormhole >> newPosition: aSpaceshipPosition [
+	(self isEntrance: aSpaceshipPosition) ifTrue: [ ^ exitBox ].
+	(self isExit: aSpaceshipPosition ) ifTrue: [ ^ entranceBox ].
+	^aSpaceshipPosition
+	
 ]

@@ -25,11 +25,11 @@ GameTest >> setUp [
 	aBoard := Board with: 20 wormhole: aWormhole.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
-	spaceships := { aSpaceship1. aSpaceship2 }.
+	spaceships := { aSpaceship1 . aSpaceship2 }.
 	aDie := LoadedDie with: 3.
 	aDie2 := LoadedDie with: 3.
 	dice := { aDie . aDie2 }.
-	aGame := Game with: spaceships andDice: dice andBoard: aBoard.
+	aGame := Game with: spaceships andDice: dice.
 ]
 
 { #category : 'tests' }
@@ -44,10 +44,12 @@ GameTest >> testGameEndsWhenAShipWins [
 	aGame nexTurn.
 	aGame nexTurn.
 	aGame nexTurn.
-
+	aGame nexTurn.
+	aGame nexTurn.
+	
 	self assert: aGame isFinished.
-	self assert: (aGame winner name) = 'Nave 1' description: 'Ganó la nave: ', (aGame winner name).
-
+	self assert: aSpaceship1 hasWon.
+	
 	
 	
 	
@@ -58,12 +60,12 @@ GameTest >> testGameInitialization [
 
 	self assert: aGame spaceships size equals: 2.
 	self assert: (aGame spaceships anySatisfy: [ :s | s name = 'Nave 1' ]).
-	self assert: aGame board equals: aBoard.
 ]
 
 { #category : 'tests' }
-GameTest >> testTwoShipsMoveSameTurn [ 
+GameTest >> testTwoShipsMoveInDifferentTurns [ 
 
+	aGame nexTurn.
 	aGame nexTurn.
 	
 	self assert: aSpaceship1 position equals: 6.
@@ -85,8 +87,10 @@ GameTest >> testWhenADiceIsRolledOneSpaceshipMovesAndTheOtherDoesnt [
 GameTest >> testWhenASpaceShipHasFallenIntoWormholeThenItChangesPosition [ 
 
 	aGame nexTurn.
+	aGame nexTurn.
+	aGame nexTurn.
 
-	self assert: aSpaceship1 position equals: 6.
+	self assert: aSpaceship1 position equals: 18.
 	
 ]
 

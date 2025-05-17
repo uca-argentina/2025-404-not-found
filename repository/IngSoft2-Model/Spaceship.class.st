@@ -18,6 +18,11 @@ Spaceship class >> withName: aName withBoard:aBoard [
 	^ self new initializeWith: aName withBoard: aBoard 
 ]
 
+{ #category : 'testing' }
+Spaceship >> hasWon [
+	^ (board checkLimits: position) not
+]
+
 { #category : 'initialization' }
 Spaceship >> initializeWith: aName withBoard:aBoard [
 	board:=aBoard.

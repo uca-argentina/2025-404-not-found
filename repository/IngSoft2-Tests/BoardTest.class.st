@@ -13,5 +13,5 @@ BoardTest >> testWhenPositionIsOutOfBoardThenIsInvalid [
 	aBoard := Board with: sizeOfBoard wormhole: aWormhole.
 	positionOfShip := 11.
 	
-	self deny: (aBoard checksLimits: positionOfShip).
+	self deny: (aBoard checkLimits: positionOfShip).
 ]

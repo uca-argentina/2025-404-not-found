@@ -20,8 +20,8 @@ Board class >> with: aBoardSize wormhole: aWormhole [
 { #category : 'check' }
 Board >> checkHoleAndRelocate: aSpaceshipPosition [
 
-    (wormhole isWormhole: aSpaceshipPosition) ifTrue: [ ^ wormhole newPosition: aSpaceshipPosition ].
-    ^ aSpaceshipPosition.
+    "(wormhole isWormhole: aSpaceshipPosition) ifTrue: [ ^ wormhole newPosition: aSpaceshipPosition ]."
+    ^ wormhole newPosition: aSpaceshipPosition
 
  
 	
@@ -29,8 +29,8 @@ Board >> checkHoleAndRelocate: aSpaceshipPosition [
 ]
 
 { #category : 'check' }
-Board >> checksLimits: aPosition [ 
-	^(aPosition>=1 and: aPosition<=size)
+Board >> checkLimits: aPosition [ 
+	^(aPosition>=0 and: aPosition<=size)
 ]
 
 { #category : 'accessing' }

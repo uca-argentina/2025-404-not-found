@@ -1,12 +1,12 @@
 Class {
-	#name : 'NSidedDiceTest',
+	#name : 'DiceTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-NSidedDiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1And6 [
+DiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1And6 [
 
 	| sides aDie number |
 	sides := 6.
@@ -16,7 +16,7 @@ NSidedDiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1And6 [
 ]
 
 { #category : 'tests' }
-NSidedDiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1AndN [
+DiceTest >> testWhenTheDieIsRolledThenTheResultIsBetween1AndN [
 
 	| sides aDie number |
 	sides := 20.
