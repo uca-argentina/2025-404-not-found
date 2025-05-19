@@ -21,10 +21,13 @@ Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 ]
 
 { #category : 'check' }
-Board >> checkHoleAndRelocate: aSpaceshipPosition [
-
-    "(wormhole isWormhole: aSpaceshipPosition) ifTrue: [ ^ wormhole newPosition: aSpaceshipPosition ]."
-    ^ wormhole newPosition: aSpaceshipPosition
+Board >> checkAndRelocate: aSpaceshipPosition [
+	| position |
+	position := aSpaceshipPosition.
+	(self checkLimits: aSpaceshipPosition) ifFalse: [ 
+		position := aSpaceshipPosition \\ size - 1.
+	].
+	^ wormhole newPosition: position 
 
  
 	

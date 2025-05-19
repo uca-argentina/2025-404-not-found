@@ -12,7 +12,7 @@ WormholeTest >> testWhenABoxIsAWormhole [
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
 	
-	self assert: (aBoard checkHoleAndRelocate: aPosition) equals: 6.
+	self assert: (aBoard checkAndRelocate: aPosition) equals: 6.
 ]
 
 { #category : 'tests' }

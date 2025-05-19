@@ -9,7 +9,8 @@ Class {
 		'dieValues',
 		'boardSize',
 		'wormholeEntrance',
-		'wormholeExit'
+		'wormholeExit',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,13 +28,13 @@ GameBuilder >> addSpaceshipNamed: aName [
 
 { #category : 'initialization' }
 GameBuilder >> buildGame [
-	| dice board spaceships |
 
-   dice := dieValues collect: [ :val | Die with: val ].
-	board := Board with: boardSize entranceBox: wormholeEntrance exitBox: wormholeExit .
+	| dice board spaceships |
+	dice := dieValues collect: [ :val | Die with: val ].
+	board := Board with: boardSize entranceBox: wormholeEntrance exitBox: wormholeExit.
 	spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board ].
 
-   ^ Game with: spaceships andDice: dice.
+	^ Game with: spaceships andDice: dice laps: laps
 ]
 
 { #category : 'initialization' }
@@ -45,6 +46,11 @@ GameBuilder >> initialize [
 { #category : 'initialization' }
 GameBuilder >> setBoardSize: aSize [
     boardSize := aSize.
+]
+
+{ #category : 'initialization' }
+GameBuilder >> setGameLaps: numberOfLaps [
+	laps := numberOfLaps.
 ]
 
 { #category : 'initialization' }

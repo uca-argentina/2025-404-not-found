@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'position',
 		'name',
-		'board'
+		'board',
+		'doneLaps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,8 +21,8 @@ Spaceship class >> withName: aName withBoard:aBoard [
 ]
 
 { #category : 'testing' }
-Spaceship >> hasWon [
-	^ (board checkLimits: position) not
+Spaceship >> hasWon: requiredLaps [
+	^ doneLaps == requiredLaps
 ]
 
 { #category : 'initialization' }
@@ -29,12 +30,16 @@ Spaceship >> initializeWith: aName withBoard:aBoard [
 	board:=aBoard.
 	position := 0.
 	name := aName.
+	doneLaps := 0.
 ]
 
 { #category : 'accessing' }
 Spaceship >> move: numberOfBoxes [ 
 	position := position + numberOfBoxes.
-	position := board checkHoleAndRelocate: position.
+	(board checkLimits: position ) ifFalse: [ 
+		doneLaps := doneLaps + 1.
+	].
+	position := board checkAndRelocate: position.
 	
 ]
 
