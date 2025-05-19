@@ -15,7 +15,13 @@ Class {
 
 { #category : 'instance creation' }
 Spaceship class >> withName: aName withBoard:aBoard [
+	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
 	^ self new initializeWith: aName withBoard: aBoard 
+]
+
+{ #category : 'testing' }
+Spaceship >> hasWon [
+	^ (board checkLimits: position) not
 ]
 
 { #category : 'initialization' }

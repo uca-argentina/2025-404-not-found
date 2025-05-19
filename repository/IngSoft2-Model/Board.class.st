@@ -13,15 +13,18 @@ Class {
 }
 
 { #category : 'instance creation' }
-Board class >> with: aBoardSize wormhole: aWormhole [ 
-	^ self new with: aBoardSize wormhole: aWormhole.
+Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [ 
+	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
+	((anEntranceBox negative) or: (anEntranceBox >aBoardSize )) ifTrue: [ Error signal: 'Entrance box should be inside the board' ].
+	((anExitBox negative) or: (anExitBox >aBoardSize )) ifTrue: [ Error signal: 'Exit box should be inside the board' ].
+	^ self new with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox.
 ]
 
 { #category : 'check' }
 Board >> checkHoleAndRelocate: aSpaceshipPosition [
 
-    (wormhole isWormhole: aSpaceshipPosition) ifTrue: [ ^ wormhole newPosition: aSpaceshipPosition ].
-    ^ aSpaceshipPosition.
+    "(wormhole isWormhole: aSpaceshipPosition) ifTrue: [ ^ wormhole newPosition: aSpaceshipPosition ]."
+    ^ wormhole newPosition: aSpaceshipPosition
 
  
 	
@@ -29,8 +32,8 @@ Board >> checkHoleAndRelocate: aSpaceshipPosition [
 ]
 
 { #category : 'check' }
-Board >> checksLimits: aPosition [ 
-	^(aPosition>=1 and: aPosition<=size)
+Board >> checkLimits: aPosition [ 
+	^(aPosition>=0 and: aPosition<=size)
 ]
 
 { #category : 'accessing' }
@@ -39,9 +42,8 @@ Board >> size [
 ]
 
 { #category : 'initialization' }
-Board >> with: aBoardSize wormhole: aWormhole [
-	
+Board >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 	
 	size := aBoardSize.
-	wormhole := aWormhole.
+	wormhole := Wormhole entrance: anEntranceBox exit: anExitBox.
 ]
