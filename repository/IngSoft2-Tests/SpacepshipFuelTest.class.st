@@ -5,11 +5,6 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'running' }
-SpacepshipFuelTest >> setUp [
-	
-]
-
 { #category : 'tests' }
 SpacepshipFuelTest >> testSpaceshipFuelDecreaseWithMoves [
 	| aBoard aSpaceship1 |

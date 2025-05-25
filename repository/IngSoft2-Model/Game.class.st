@@ -39,7 +39,9 @@ Game >> isFinished [
 Game >> nextTurn [
 
 	self isFinished ifTrue: [ ^ self ].
-	(spaceships at: turnNumber) move: self rollDices.
+	((spaceships at: turnNumber) isPenalized) ifFalse:[
+		(spaceships at: turnNumber) move: self rollDices.
+	].
 	turnNumber := (turnNumber \\ numberSpaceships) + 1.
 
 

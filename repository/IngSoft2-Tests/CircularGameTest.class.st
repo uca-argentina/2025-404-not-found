@@ -22,8 +22,8 @@ CircularGameTest >> setUp [
 
 	"Put here a common initialization logic for tests"
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard.
-	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard.
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 30.
 	spaceships := { aSpaceship1 . aSpaceship2 }.
 	"1 vuelta = 6 nextTurn     1   2   1   2   1   2 "
 	aDie1 := LoadedDie with: { 3 . 3 . 3 . 3 . 1 . 1}.
@@ -31,6 +31,14 @@ CircularGameTest >> setUp [
 	dice := { aDie1 . aDie2 }.
 	lap := 2.
 	aGame := Game with: spaceships andDice: dice laps: lap.
+]
+
+{ #category : 'tests' }
+CircularGameTest >> testWhenSpaceshipGoesBeyondNewLapThenPositionIsNot0 [
+
+	7 timesRepeat: [ aGame nextTurn ].
+	
+	self assert: aSpaceship1 position equals: 6.
 ]
 
 { #category : 'tests' }

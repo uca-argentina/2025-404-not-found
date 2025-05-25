@@ -20,7 +20,7 @@ WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
 	| sizeOfBoard aBoard  aSpaceship |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
+	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	
 	aSpaceship move:2.
 	
@@ -32,7 +32,7 @@ WormholeTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [
 	| sizeOfBoard aBoard  aSpaceship |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard .
+	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	
 	aSpaceship move:6.
 	

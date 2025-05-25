@@ -56,7 +56,7 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	aSpaceship move: 8.
 
 	self assert: aSpaceship position equals: 8
@@ -67,8 +67,8 @@ SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard.
+	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6 .
+	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	aSpaceship move: 1.
 
 	self assert: aSpaceship position equals: 1

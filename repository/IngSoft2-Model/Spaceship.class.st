@@ -9,7 +9,9 @@ Class {
 		'name',
 		'board',
 		'doneLaps',
-		'fuel'
+		'fuel',
+		'maxFuel',
+		'penalization'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,12 +23,25 @@ Spaceship class >> withName: aName withBoard:aBoard [
 	^ self new initializeWith: aName withBoard: aBoard 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
+Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
+	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
+	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
+]
+
+{ #category : 'accessing' }
 Spaceship >> chargeFuel: amountFuel [ 
 	fuel := fuel + amountFuel.
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
+Spaceship >> checkLaps [
+	(board checkLimits: position ) ifFalse: [ 
+		doneLaps := doneLaps + 1.
+	].
+]
+
+{ #category : 'accessing' }
 Spaceship >> fuel [
 	^fuel
 ]
@@ -45,17 +60,40 @@ Spaceship >> initializeWith: aName withBoard:aBoard [
 	fuel := 0.
 ]
 
+{ #category : 'initialization' }
+Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
+	board:=aBoard.
+	position := 0.
+	name := aName.
+	doneLaps := 0.
+	fuel := aMaxFuel.
+	maxFuel := aMaxFuel.
+	penalization := 0.
+]
+
+{ #category : 'testing' }
+Spaceship >> isPenalized [
+	(penalization == 0) ifTrue: [^false].
+	penalization := penalization - 1.
+	(penalization == 0) ifTrue: [ fuel := maxFuel ].
+	^true
+]
+
 { #category : 'accessing' }
 Spaceship >> move: numberOfBoxes [ 
 	| startPosition dicePosition |
 	startPosition := position.
 	dicePosition :=position + numberOfBoxes.
 	position := position + numberOfBoxes.
-	(board checkLimits: position ) ifFalse: [ 
-		doneLaps := doneLaps + 1.
-	].
+	
+	self checkLaps.
+	
 	position := board checkAndRelocate: position.
-	fuel := fuel - (dicePosition -startPosition +(position-dicePosition )).
+	(fuel < (dicePosition -startPosition +(position-dicePosition ))) ifTrue: [ 
+		position := 0.
+		penalization := 2] 
+	ifFalse: [fuel := fuel - (dicePosition -startPosition +(position-dicePosition ))].
+	
 	
 ]
 
