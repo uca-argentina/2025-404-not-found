@@ -5,7 +5,9 @@ Class {
 	#name : 'LoadedDie',
 	#superclass : 'Object',
 	#instVars : [
-		'number'
+		'index',
+		'numbers',
+		'numbersSize'
 	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
@@ -17,11 +19,17 @@ LoadedDie class >> with: aNumber [
 ]
 
 { #category : 'initialization' }
-LoadedDie >> initialize: aNumber [
-	number := aNumber
+LoadedDie >> initialize: anArrayNumbers [
+	numbers := anArrayNumbers.
+	numbersSize := anArrayNumbers size.
+	index := 1.
 ]
 
 { #category : 'roll' }
 LoadedDie >> roll [
-	^ number
+	| result |
+	result := numbers at: index.
+	index := (index \\ numbersSize) + 1.
+	^result.
+	
 ]

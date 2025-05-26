@@ -16,6 +16,49 @@ GameBuilderTest >> should: anErrorBlock raise: anErrorClass withMessageText: err
 ]
 
 { #category : 'asserting' }
+GameBuilderTest >> testSpaceshipFuelInitializesWithDoubleTheMaxRoll [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: 10.
+	builder setWormholeEntrance: 2 exit: 7.
+	builder setGameLaps: 1.
+	
+	game := builder buildGame.
+	
+	self assert:	builder maxFuel equals: 8
+				
+			
+		
+	
+
+]
+
+{ #category : 'asserting' }
+GameBuilderTest >> testWhenGameCreationWithInvalidLapsThenFails [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: 10.
+	builder setWormholeEntrance: 2 exit: 7.		
+	builder setGameLaps: 0.
+				
+	self
+		should: [ game := builder buildGame ]
+		raise: Error
+		withMessageText: 'Number of laps should be greater than 0'	
+		
+	
+
+]
+
+{ #category : 'asserting' }
 GameBuilderTest >> testWhenGameCreationWithInvalidSpaceshipNameThenFails [
 	| builder game |
 	builder := GameBuilder new.
@@ -24,14 +67,12 @@ GameBuilderTest >> testWhenGameCreationWithInvalidSpaceshipNameThenFails [
 	builder addDieWithValue: 3.
 	builder addDieWithValue: 5.
 	builder setBoardSize: 10.
-	builder setWormholeEntrance: 2 exit: 7.
-	
+	builder setWormholeEntrance: 2 exit: 7.		
+				
 	self
 		should: [ game := builder buildGame ]
 		raise: Error
-		withMessageText: 'Name should have at least one character'			
-				
-			
+		withMessageText: 'Name should have at least one character'	
 		
 	
 
