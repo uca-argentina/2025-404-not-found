@@ -9,12 +9,10 @@ Class {
 SpacepshipFuelTest >> testSpaceshipFuelDecreaseWithMoves [
 	| aBoard aSpaceship1 |
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard .
-	aSpaceship1 chargeFuel:12.
-	
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.	
 	aSpaceship1 move:1.
 	
-	self assert: aSpaceship1 fuel equals: 11.
+	self assert: aSpaceship1 fuel equals: 9.
 	
 
 ]
@@ -23,12 +21,10 @@ SpacepshipFuelTest >> testSpaceshipFuelDecreaseWithMoves [
 SpacepshipFuelTest >> testSpaceshipFuelDecreasesInWormHole [
 | aBoard aSpaceship1 |
 	aBoard := Board with: 20 entranceBox: 8 exitBox: 10.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard .
-	aSpaceship1 chargeFuel:12.
-	
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 	aSpaceship1 move:8.
 	
-	self assert: aSpaceship1 fuel equals: 2.
+	self assert: aSpaceship1 fuel equals: 0.
 	
 ]
 
@@ -36,11 +32,9 @@ SpacepshipFuelTest >> testSpaceshipFuelDecreasesInWormHole [
 SpacepshipFuelTest >> testSpaceshipFuelStartsWithMaxDice [
 	| aBoard aSpaceship1 |
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard .
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 	
-	aSpaceship1 chargeFuel:12.
-	
-	self assert: aSpaceship1 fuel equals: 12.
+	self assert: aSpaceship1 fuel equals: 10.
 	
 	
 	

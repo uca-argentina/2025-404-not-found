@@ -21,6 +21,16 @@ Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 ]
 
 { #category : 'check' }
+Board >> calculateMoves: position and: newPosition [
+	| finalPosition moves |
+	finalPosition := self checkAndRelocate: newPosition.
+	moves := (finalPosition > position)
+	ifTrue: [ finalPosition - position ]
+	ifFalse: [ size - position + finalPosition ].
+	^moves.
+]
+
+{ #category : 'check' }
 Board >> checkAndRelocate: aSpaceshipPosition [
 	| position |
 	position := aSpaceshipPosition.

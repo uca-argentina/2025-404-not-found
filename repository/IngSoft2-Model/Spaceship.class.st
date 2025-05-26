@@ -34,10 +34,10 @@ Spaceship >> chargeFuel: amountFuel [
 	fuel := fuel + amountFuel.
 ]
 
-{ #category : 'accessing' }
-Spaceship >> checkLaps [
-	(board checkLimits: position ) ifFalse: [ 
-		doneLaps := doneLaps + 1.
+{ #category : 'as yet unclassified' }
+Spaceship >> checkLaps: aPosition [
+	(board checkLimits: aPosition ) ifFalse: [ 
+			doneLaps := doneLaps + 1.
 	].
 ]
 
@@ -52,15 +52,6 @@ Spaceship >> hasWon: requiredLaps [
 ]
 
 { #category : 'initialization' }
-Spaceship >> initializeWith: aName withBoard:aBoard [
-	board:=aBoard.
-	position := 0.
-	name := aName.
-	doneLaps := 0.
-	fuel := 0.
-]
-
-{ #category : 'initialization' }
 Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	board:=aBoard.
 	position := 0.
@@ -72,27 +63,27 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 ]
 
 { #category : 'testing' }
-Spaceship >> isPenalized [
+Spaceship >> managePenalization [
 	(penalization == 0) ifTrue: [^false].
 	penalization := penalization - 1.
-	(penalization == 0) ifTrue: [ fuel := maxFuel ].
+	(penalization == 0) ifTrue: [ self refuel ].
 	^true
 ]
 
 { #category : 'accessing' }
-Spaceship >> move: numberOfBoxes [ 
-	| startPosition dicePosition |
-	startPosition := position.
-	dicePosition :=position + numberOfBoxes.
-	position := position + numberOfBoxes.
-	
-	self checkLaps.
-	
-	position := board checkAndRelocate: position.
-	(fuel < (dicePosition -startPosition +(position-dicePosition ))) ifTrue: [ 
+Spaceship >> move: numberOfBoxes [
+	| newPosition necesaryFuel |
+	newPosition := position + numberOfBoxes.
+	necesaryFuel := board calculateMoves: position and: newPosition.
+	(fuel < necesaryFuel ) ifTrue: [  
 		position := 0.
-		penalization := 2] 
-	ifFalse: [fuel := fuel - (dicePosition -startPosition +(position-dicePosition ))].
+		penalization := 2.
+		fuel := 0.
+	] ifFalse: [ 
+		self checkLaps: newPosition.
+		position := board checkAndRelocate: newPosition.
+		fuel := fuel - necesaryFuel.
+	].
 	
 	
 ]
@@ -105,4 +96,9 @@ Spaceship >> name [
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> refuel [
+	fuel := maxFuel.
 ]

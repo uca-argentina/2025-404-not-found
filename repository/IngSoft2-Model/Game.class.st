@@ -39,7 +39,7 @@ Game >> isFinished [
 Game >> nextTurn [
 
 	self isFinished ifTrue: [ ^ self ].
-	((spaceships at: turnNumber) isPenalized) ifFalse:[
+	((spaceships at: turnNumber) managePenalization) ifFalse:[
 		(spaceships at: turnNumber) move: self rollDices.
 	].
 	turnNumber := (turnNumber \\ numberSpaceships) + 1.
@@ -63,6 +63,13 @@ Game >> showStatus [
 	spaceships do: [ :ship  | 
 		status at: ship name put: { ship position . ship hasWon}].
 	^ status
+]
+
+{ #category : 'logic' }
+Game >> skipTurn [
+	self isFinished ifTrue: [ ^ self ].
+	(spaceships at: turnNumber) refuel.
+	turnNumber := (turnNumber \\ numberSpaceships) + 1.
 ]
 
 { #category : 'accessing' }

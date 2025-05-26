@@ -7,7 +7,6 @@ Class {
 		'dice',
 		'aBoard',
 		'aSpaceship1',
-		'aSpaceship2',
 		'spaceships',
 		'lap',
 		'aGame'
@@ -30,16 +29,6 @@ GameWithFuelTest >> setUp [
 	spaceships := { aSpaceship1 }.
 	lap := 1.
 	aGame := Game with: spaceships andDice: dice laps: lap.
-]
-
-{ #category : 'tests' }
-GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelLapsDontIncrement [
-	"runs out of fuel"
-	aGame nextTurn.
-	aGame nextTurn.
-		
-	self assert: aSpaceship1 fuel equals: 10
-	
 ]
 
 { #category : 'tests' }
@@ -76,6 +65,28 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenLosesTwoTurnsAndMovesAgain
 	aGame nextTurn.
 		
 	self assert: aSpaceship1 position equals: 6
+	
+]
+
+{ #category : 'tests' }
+GameWithFuelTest >> testWhenSpaceshipSkipsOwnTurnThenDoesntMove [
+	"runs out of fuel"
+	| initialPosition |
+	aGame nextTurn.
+	initialPosition := aSpaceship1 position.
+	aGame skipTurn.
+		
+	self assert: aSpaceship1 position equals: initialPosition
+	
+]
+
+{ #category : 'tests' }
+GameWithFuelTest >> testWhenSpaceshipSkipsOwnTurnThenFuelGoesBackToMax [
+	"runs out of fuel"
+	aGame nextTurn.
+	aGame skipTurn.
+		
+	self assert: aSpaceship1 fuel equals: 10
 	
 ]
 
