@@ -73,8 +73,10 @@ Spaceship >> managePenalization [
 { #category : 'accessing' }
 Spaceship >> move: numberOfBoxes [
 	| newPosition necesaryFuel |
+	
 	newPosition := position + numberOfBoxes.
 	necesaryFuel := board calculateMoves: position and: newPosition.
+	
 	(fuel < necesaryFuel ) ifTrue: [  
 		position := 0.
 		penalization := 2.
@@ -83,8 +85,27 @@ Spaceship >> move: numberOfBoxes [
 		self checkLaps: newPosition.
 		position := board checkAndRelocate: newPosition.
 		fuel := fuel - necesaryFuel.
+		board applyTileEffectTo: self.
 	].
 	
+	
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> moveBackwards: steps [
+    | newPosition fuelNeeded |
+
+    fuelNeeded := steps abs.
+    newPosition := position - steps.
+
+    (fuel < fuelNeeded) ifTrue: [
+        position := 0.
+        penalization := 2.
+        fuel := 0.
+    ] ifFalse: [
+        position := newPosition.
+        fuel := fuel - fuelNeeded.
+    ].
 	
 ]
 
