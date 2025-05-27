@@ -1,14 +1,14 @@
 "
-Black hole
+common tile
 "
 Class {
-	#name : 'BlackHole',
+	#name : 'CommonTile',
 	#superclass : 'BoardTile',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'effects' }
-BlackHole >> applyEffectsTo: aSpaceship [
-	aSpaceship newPosition: -4.
+CommonTile >> applyEffectsTo: aSpaceship [
+	aSpaceship newPosition: 0.
 ]

@@ -1,3 +1,6 @@
+"
+Board tile
+"
 Class {
 	#name : 'BoardTile',
 	#superclass : 'Object',
@@ -9,16 +12,10 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'adding' }
-BoardTile >> addEffect: anEffect [
-	effects ifNil:[effects := OrderedCollection new].
-	effects add: anEffect.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 BoardTile >> applyEffectsTo: aSpaceship [
-    effects ifNotNil: [
-        effects do: [ :effect | effect applyTo: aSpaceship ] ].
+    self subclassResponsibility.
+	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."
 ]
 
 { #category : 'accessing' }

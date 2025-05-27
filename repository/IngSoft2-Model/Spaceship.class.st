@@ -29,16 +29,9 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
 ]
 
-{ #category : 'accessing' }
-Spaceship >> chargeFuel: amountFuel [ 
-	fuel := fuel + amountFuel.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Spaceship >> checkLaps: aPosition [
-	(board checkLimits: aPosition ) ifFalse: [ 
-			doneLaps := doneLaps + 1.
-	].
+	doneLaps := doneLaps + (board checkLimits: aPosition)
 ]
 
 { #category : 'accessing' }
@@ -46,7 +39,7 @@ Spaceship >> fuel [
 	^fuel
 ]
 
-{ #category : 'testing' }
+{ #category : 'logic' }
 Spaceship >> hasWon: requiredLaps [
 	^ doneLaps == requiredLaps
 ]
@@ -62,7 +55,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	penalization := 0.
 ]
 
-{ #category : 'testing' }
+{ #category : 'logic' }
 Spaceship >> managePenalization [
 	(penalization == 0) ifTrue: [^false].
 	penalization := penalization - 1.
@@ -70,42 +63,18 @@ Spaceship >> managePenalization [
 	^true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'moving' }
 Spaceship >> move: numberOfBoxes [
-	| newPosition necesaryFuel |
-	
-	newPosition := position + numberOfBoxes.
-	necesaryFuel := board calculateMoves: position and: newPosition.
-	
-	(fuel < necesaryFuel ) ifTrue: [  
+	[
+		"self halt."
+		self newPosition: numberOfBoxes.
+		board applyTileEffectTo: self.
+	] on: Error do: [ 
 		position := 0.
 		penalization := 2.
 		fuel := 0.
-	] ifFalse: [ 
-		self checkLaps: newPosition.
-		position := board checkAndRelocate: newPosition.
-		fuel := fuel - necesaryFuel.
-		board applyTileEffectTo: self.
-	].
+	]
 	
-	
-]
-
-{ #category : 'as yet unclassified' }
-Spaceship >> moveBackwards: steps [
-    | newPosition fuelNeeded |
-
-    fuelNeeded := steps abs.
-    newPosition := position - steps.
-
-    (fuel < fuelNeeded) ifTrue: [
-        position := 0.
-        penalization := 2.
-        fuel := 0.
-    ] ifFalse: [
-        position := newPosition.
-        fuel := fuel - fuelNeeded.
-    ].
 	
 ]
 
@@ -114,12 +83,25 @@ Spaceship >> name [
 	^ name
 ]
 
+{ #category : 'moving' }
+Spaceship >> newPosition: numberOfBoxes [
+	self useFuel: numberOfBoxes.
+	self checkLaps: position + numberOfBoxes.
+	position := board boardPosition: position + numberOfBoxes.
+]
+
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> refuel [
 	fuel := maxFuel.
+]
+
+{ #category : 'moving' }
+Spaceship >> useFuel: numberOfBoxes [
+	fuel := fuel - (numberOfBoxes abs).
+	(fuel < 0) ifTrue: [ Error signal: 'Ran out of fuel']. 
 ]

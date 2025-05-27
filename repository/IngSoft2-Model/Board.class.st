@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'instance creation' }
+Board class >> with: aBoardSize [ 
+	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
+	^ self new with: aBoardSize
+]
+
+{ #category : 'instance creation' }
 Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [ 
 	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
 	((anEntranceBox negative) or: (anEntranceBox >aBoardSize )) ifTrue: [ Error signal: 'Entrance box should be inside the board' ].
@@ -22,50 +28,52 @@ Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 ]
 
 { #category : 'adding' }
-Board >> addEffect: anEffect [
-    (self tileAt: anEffect position) addEffect: anEffect.
+Board >> addTile: aTile [
+	self tiles at: aTile position put: aTile.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
+Board >> addWormHolewithEntraceTile: entrancePosition exitTile: exitPosition [ 
+
+	|wormholeEntrance wormholeExit |
+	
+	wormholeEntrance:= WormHole new.
+	wormholeExit:= WormHole new.
+	wormholeEntrance position:2 effect:exitPosition -entrancePosition.
+	wormholeExit position:6 effect:entrancePosition -exitPosition.
+	
+	self addTile:wormholeEntrance.
+	self addTile:wormholeExit.
+	 
+]
+
+{ #category : 'accessing' }
 Board >> applyTileEffectTo: aSpaceship [
-    | tile |
-    tile := self tileAt: aSpaceship position.
-    tile ifNotNil: [ tile applyEffectsTo: aSpaceship ].
+	| tile |
+    "tile := self tileAt: aSpaceship position.
+    tile ifNotNil: [ tile applyEffectsTo: aSpaceship ]."
+	tile := self tileAt: aSpaceship position.
+	tile ifNotNil: [ tile applyEffectsTo: aSpaceship ].
 ]
 
 { #category : 'check' }
-Board >> calculateMoves: position and: newPosition [
-	| finalPosition moves |
-	finalPosition := self checkAndRelocate: newPosition.
-	moves := (finalPosition > position)
-	ifTrue: [ finalPosition - position ]
-	ifFalse: [ size - position + finalPosition ].
-	^moves.
-]
-
-{ #category : 'check' }
-Board >> checkAndRelocate: aSpaceshipPosition [
-	| position |
-	position := aSpaceshipPosition.
-	(self checkLimits: aSpaceshipPosition) ifFalse: [ 
-		position := aSpaceshipPosition \\ size - 1.
-	].
-	^ wormhole newPosition: position 
-
- 
-	
-	
+Board >> boardPosition: position [
+	(position < 0) ifTrue: [ ^ size + position ].
+	(position > size) ifTrue: [ ^ position \\ size -1].
+	^ position.
 ]
 
 { #category : 'check' }
 Board >> checkLimits: aPosition [ 
-	^(aPosition>=0 and: aPosition<=size)
+	(aPosition < 0) ifTrue: [ ^ -1 ].
+	(aPosition > size) ifTrue: [ ^ 1 ].
+	^ 0. 
 ]
 
 { #category : 'initialization' }
 Board >> initializeTiles [
     tiles := (1 to: size) collect: [ :i |
-        (BoardTile new)
+        (CommonTile new)
             position: i;
             yourself ].
 ]
@@ -85,6 +93,12 @@ Board >> tileAt: aPosition [
 { #category : 'accessing' }
 Board >> tiles [
     ^ tiles
+]
+
+{ #category : 'initialization' }
+Board >> with: aBoardSize [
+	size := aBoardSize.
+	self initializeTiles.
 ]
 
 { #category : 'initialization' }

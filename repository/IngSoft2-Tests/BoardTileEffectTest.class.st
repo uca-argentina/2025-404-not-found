@@ -6,34 +6,55 @@ Class {
 }
 
 { #category : 'tests' }
-BoardTileEffectTest >> testBanana [
+BoardTileEffectTest >> testWhenBlackHoleEffectIsApliedThenFuelGoesDown [
 	| aBoard aSpaceship1 blackHole |
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
 	blackHole := BlackHole new.
 	blackHole position: 9.
-	aBoard addEffect: blackHole.
+	aBoard addTile: blackHole.
 	
 	aSpaceship1 move: 9.
 	
-	self assert: aSpaceship1 position equals:(5).
-	"self assert: aSpaceship1 fuel equals:(19)."
+	self assert: aSpaceship1 fuel equals: 17.
 	
 
 ]
 
 { #category : 'tests' }
-BoardTileEffectTest >> testMoveSpaceshipBackwards [
-	| aBoard aSpaceship1 |
+BoardTileEffectTest >> testWhenGoingBackwardsCanReduceOneLap [
+	| aBoard aSpaceship1 blackHole |
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	aSpaceship1 move: 7.
-	aSpaceship1 moveBackwards: 4.
+	blackHole := BlackHole new.
+	blackHole position: 2.
+	aBoard addTile: blackHole.
 	
-	self assert: aSpaceship1 position equals:(3).
-	self assert: aSpaceship1 fuel equals:(19).
+	aSpaceship1 move: 2.
+	
+	self assert: aSpaceship1 position equals: 18.
+	
+
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOtherEffectIsApplied [
+	| aBoard aSpaceship1 blackHole blackHole2 |
+	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+	
+	blackHole := BlackHole new.
+	blackHole position: 9.
+	aBoard addTile: blackHole.
+	blackHole2 := BlackHole new.
+	blackHole2 position: 5.
+	aBoard addTile: blackHole2.
+	
+	aSpaceship1 move: 9.
+	
+	self assert: aSpaceship1 position equals:(5).
 	
 
 ]
@@ -43,15 +64,14 @@ BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
 	| aBoard aSpaceship1 blackHole |
 	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
-	
+
 	blackHole := BlackHole new.
 	blackHole position: 9.
-	aBoard addEffect: blackHole.
+	aBoard addTile: blackHole.
 	
 	aSpaceship1 move: 9.
 	
 	self assert: aSpaceship1 position equals:(5).
-	"self assert: aSpaceship1 fuel equals:(19)."
 	
 
 ]
