@@ -138,3 +138,31 @@ BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
 	
 
 ]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityAndRollIsBiggerThenMoves [
+	| hyperGravity | 	 	
+	hyperGravity := HyperGravity inPosition: 2. 	
+	hyperGravity exitRoll: 10.
+	aBoard addTile: hyperGravity .
+	
+	aGame nextTurn.
+	aGame nextTurn.
+	aGame nextTurn. "tira 6 y necesita 2"
+	 
+	self assert: aSpaceship1 position equals: 12.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThenStaysAtTheSamePosition [
+	| hyperGravity | 	 	
+	hyperGravity := HyperGravity inPosition: 6. 	
+	hyperGravity exitRoll: 10.
+	aBoard addTile: hyperGravity .
+	
+	aGame nextTurn.
+	aGame nextTurn.
+	aGame nextTurn. "tira 6 pero necesita 10"
+	 
+	self assert: aSpaceship1 position equals: 6.
+]

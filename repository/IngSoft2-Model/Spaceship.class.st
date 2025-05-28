@@ -11,7 +11,9 @@ Class {
 		'doneLaps',
 		'fuel',
 		'maxFuel',
-		'penalization'
+		'penalization',
+		'lock',
+		'exitRoll'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -58,6 +60,14 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	fuel := aMaxFuel.
 	maxFuel := aMaxFuel.
 	penalization := 0.
+	lock := false.
+	exitRoll := 0.
+]
+
+{ #category : 'logic' }
+Spaceship >> lockUntil: anExitRoll [
+	lock := true.
+	exitRoll := anExitRoll.
 ]
 
 { #category : 'logic' }
@@ -71,8 +81,11 @@ Spaceship >> managePenalization [
 { #category : 'moving' }
 Spaceship >> move: numberOfBoxes [
 	[
-		self newPosition: numberOfBoxes.
-		board applyTileEffectTo: self.
+		self tryUnlock: numberOfBoxes.
+		(lock) ifFalse: [ 
+			self newPosition: numberOfBoxes.
+			board applyTileEffectTo: self.
+		]
 	] on: Error do: [ 
 		position := 0.
 		penalization := 2.
@@ -107,6 +120,12 @@ Spaceship >> refuel [
 { #category : 'initialization' }
 Spaceship >> resetToStartWithoutFuelLoss [     
 	position := 0.
+]
+
+{ #category : 'logic' }
+Spaceship >> tryUnlock: aRoll [
+	lock := (aRoll < exitRoll )
+	
 ]
 
 { #category : 'moving' }
