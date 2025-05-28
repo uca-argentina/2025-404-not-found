@@ -120,16 +120,12 @@ Spaceship >> newPosition: delta [
 		penalization := 2.
 		^self
 	].
-
 	self useFuel: delta.
 	self checkLaps: newPos.
 	position := board boardPosition: newPos.
-	"
-	self
-		useFuel: arg1;
-		checkLaps: position + arg1.
-	position := board boardPosition: position + arg1
-	"
+	"self useFuel: delta.
+	self checkLaps: position + delta.
+	position := board boardPosition: position + delta."
 	
 ]
 

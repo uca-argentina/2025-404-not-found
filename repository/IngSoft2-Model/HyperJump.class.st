@@ -16,11 +16,14 @@ HyperJump >> applyEffectsTo: aSpaceship in: aGame [
 	| parsecsValue tilesToAdvance |
 	listOfValues isEmpty ifTrue: [ listOfValues := originalList copy ].
 	
-	parsecsValue := listOfValues first.
-	listOfValues := listOfValues allButFirst.
+	"parsecsValue := listOfValues first.
+	listOfValues := listOfValues allButFirst."
+	parsecsValue := listOfValues max.
+	listOfValues remove: parsecsValue.
+	
 	
 	tilesToAdvance := parsecsValue // convertor.
-	aSpaceship move: tilesToAdvance.
+	aSpaceship newPosition: tilesToAdvance.
 ]
 
 { #category : 'as yet unclassified' }

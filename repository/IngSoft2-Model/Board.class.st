@@ -30,6 +30,14 @@ Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 	^ self new with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox.
 ]
 
+{ #category : 'instance creation' }
+Board class >> withRandom: arg1 [
+
+	arg1 negative ifTrue: [
+		Error signal: 'Board size should be positive' ].
+	^ self new withRandom: arg1
+]
+
 { #category : 'adding' }
 Board >> addTile: arg1 [
 
@@ -88,6 +96,30 @@ Board >> initializeTiles [
 		         tmp2
 			         position: arg1;
 			         yourself ]
+
+]
+
+{ #category : 'initialization' }
+Board >> initializeTilesRandom [
+    tiles := (1 to: size) collect: [ :i |
+        | tile |
+        tile := self randomTile.
+        tile position: i.
+        tile
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+Board >> randomTile [
+    | r |
+    r := Random new next.
+
+    (r < 0.40) ifTrue: [ ^ CommonTile new ].
+    (r < 0.60) ifTrue: [ ^ BlackHole new ].
+    (r < 0.80) ifTrue: [ ^ HyperGravity new ].
+    (r < 0.90) ifTrue: [ ^ MoonWalk new ].
+    (r < 0.92) ifTrue: [ ^ AtomicBomb new ].
+    ^ HyperJump new.
 ]
 
 { #category : 'initialization' }
@@ -127,4 +159,11 @@ Board >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [.
 	entranceBox := anEntranceBox.
 	exitBox := anEntranceBox.
 	self initializeTiles.
+]
+
+{ #category : 'initialization' }
+Board >> withRandom: arg1 [
+
+	size := arg1.
+	self initializeTilesRandom
 ]

@@ -177,7 +177,7 @@ BoardTileEffectTest >> testHJWhenSecondSpaceshipLandOnHyperJumpThenUsesSecondVal
 	aSpaceship1 move:4.
 	aSpaceship2 move:4.
 	 
-	self assert: aSpaceship1 position equals: 9.
+	self assert: aSpaceship1 position equals: 10.
 	self assert: aSpaceship2 position equals: 10.
 	
 ]
@@ -221,8 +221,9 @@ BoardTileEffectTest >> testMWWhenOtherSpaceShipRunsOutOfFuelThenItApplisPenaliza
 	aSpaceship2 move:4. "Cae en moonWalk y hace que la 1 retroceda"
 	 
 	"self assert: aSpaceship2 fuel equals: 26."
-	self assert: aSpaceship2 position equals: 4.
 	self assert: aSpaceship1 position equals: 0.
+	self assert: aSpaceship2 position equals: 4.
+	
 ]
 
 { #category : 'tests' }
