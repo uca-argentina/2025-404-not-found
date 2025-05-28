@@ -35,6 +35,11 @@ Spaceship >> checkLaps: aPosition [
 ]
 
 { #category : 'accessing' }
+Spaceship >> doneLaps [
+	^ doneLaps
+]
+
+{ #category : 'accessing' }
 Spaceship >> fuel [
 	^fuel
 ]
@@ -66,7 +71,6 @@ Spaceship >> managePenalization [
 { #category : 'moving' }
 Spaceship >> move: numberOfBoxes [
 	[
-		"self halt."
 		self newPosition: numberOfBoxes.
 		board applyTileEffectTo: self.
 	] on: Error do: [ 
@@ -98,6 +102,11 @@ Spaceship >> position [
 { #category : 'moving' }
 Spaceship >> refuel [
 	fuel := maxFuel.
+]
+
+{ #category : 'initialization' }
+Spaceship >> resetToStartWithoutFuelLoss [     
+	position := 0.
 ]
 
 { #category : 'moving' }

@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : 'effects' }
-CommonTile >> applyEffectsTo: aSpaceship [
+CommonTile >> applyEffectsTo: aSpaceship in: aGame [
 	aSpaceship newPosition: 0.
 ]

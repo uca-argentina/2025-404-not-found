@@ -21,6 +21,11 @@ Game class >> with: spaceShips andDice: someDice laps: lap [
 	^ self new initializeWith: spaceShips andDice: someDice laps: lap
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> activateAtomicBomb [     
+	self spaceships do: [:ship | ship resetToStartWithoutFuelLoss ].
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	laps := numberLaps. 

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'wormhole',
 		'size',
-		'tiles'
+		'tiles',
+		'game'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -46,12 +47,10 @@ Board >> addWormHolewithEntraceTile: entrancePosition exitTile: exitPosition [
 ]
 
 { #category : 'accessing' }
-Board >> applyTileEffectTo: aSpaceship [
-	| tile |
-    "tile := self tileAt: aSpaceship position.
-    tile ifNotNil: [ tile applyEffectsTo: aSpaceship ]."
-	tile := self tileAt: aSpaceship position.
-	tile ifNotNil: [ tile applyEffectsTo: aSpaceship ].
+Board >> applyTileEffectTo: aSpaceship [ 	
+	| tile |   
+	tile := self tileAt: aSpaceship position. 	
+	tile ifNotNil: [ tile applyEffectsTo: aSpaceship in: game].
 ]
 
 { #category : 'check' }
@@ -68,12 +67,22 @@ Board >> checkLimits: aPosition [
 	^ 0. 
 ]
 
+{ #category : 'accessing' }
+Board >> game [ 	
+	^game
+]
+
 { #category : 'initialization' }
 Board >> initializeTiles [
     tiles := (1 to: size) collect: [ :i |
         (CommonTile new)
             position: i;
             yourself ].
+]
+
+{ #category : 'initialization' }
+Board >> setGame: aGame [ 
+	game := aGame.
 ]
 
 { #category : 'accessing' }
@@ -99,9 +108,10 @@ Board >> with: aBoardSize [
 	self initializeTiles.
 ]
 
-{ #category : 'initialization' }
-Board >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
+{ #category : 'instance creation' }
+Board >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [.
 	size := aBoardSize.
+	entranceBox := anEntranceBox.
+	exitBox := anEntranceBox.
 	self initializeTiles.
-	wormhole := Wormhole entrance: anEntranceBox exit: anExitBox.
 ]

@@ -1,14 +1,14 @@
 "
-Black hole
+atomib bomb
 "
 Class {
-	#name : 'BlackHole',
+	#name : 'AtomicBomb',
 	#superclass : 'BoardTile',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'effects' }
-BlackHole >> applyEffectsTo: aSpaceship in: aGame [
-	aSpaceship newPosition: -4.
+AtomicBomb >> applyEffectsTo: aSpaceship in: aGame [
+    aGame activateAtomicBomb.
 ]

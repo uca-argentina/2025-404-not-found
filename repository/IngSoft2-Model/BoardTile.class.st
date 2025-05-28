@@ -23,18 +23,18 @@ BoardTile class >> inPosition: aPosition withEffect: anEffect [
 ]
 
 { #category : 'effects' }
-BoardTile >> applyEffectsTo: aSpaceship [
+BoardTile >> applyEffectsTo: aSpaceship in: aGame [
     self subclassResponsibility.
 	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 BoardTile >> inPosition: aPosition [
 	position:=aPosition.
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 BoardTile >> inPosition: aPosition withEffect:anEffect [
 	effects :=anEffect.
 	position:=aPosition.

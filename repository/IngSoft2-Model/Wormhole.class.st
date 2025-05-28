@@ -1,3 +1,6 @@
+"
+wormhole
+"
 Class {
 	#name : 'WormHole',
 	#superclass : 'BoardTile',
@@ -9,20 +12,20 @@ Class {
 }
 
 { #category : 'effects' }
-WormHole >> applyEffectsTo: aSpaceship [
+WormHole >> applyEffectsTo: aSpaceship in: aGame [
 	aSpaceship newPosition: effects .
 
 
 	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 WormHole >> inPosition: aPosition withEffect:anEffect [
 	position :=aPosition.
 	effects :=anEffect.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 WormHole >> position: aPosition effect:anEffect [
 	position:=aPosition.
 	effect :=anEffect .

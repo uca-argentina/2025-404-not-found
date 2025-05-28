@@ -1,15 +1,75 @@
 Class {
 	#name : 'BoardTileEffectTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'aBoard',
+		'aSpaceship1',
+		'aSpaceship2',
+		'spaceships',
+		'aDie1',
+		'aDie2',
+		'dice',
+		'lap',
+		'aGame'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'running' }
+BoardTileEffectTest >> setUp [
+	super setUp.
+
+	"Put here a common initialization logic for tests"
+	aBoard := Board with: 20. 	
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30. 	
+	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 30. 	
+	spaceships := { aSpaceship1 . aSpaceship2}. 	
+	"1 vuelta = 6 nextTurn     1   2   1   2   1   2 " 	
+	aDie1 := LoadedDie with: { 3 . 4 . 3 . 2}. 
+	aDie2 := LoadedDie with: { 3 . 3 . 3 . 1}. 	
+	dice := { aDie1 . aDie2 }. 	lap := 2. 	
+	aGame := Game with: spaceships andDice: dice laps: lap. 	
+	aBoard setGame: aGame. 
+]
+
 { #category : 'tests' }
-BoardTileEffectTest >> testWhenBlackHoleEffectIsApliedThenFuelGoesDown [
-	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombAndGoesBackToOThenLapsDontChange [
+	| atomicBomb | 	 	
+	atomicBomb := AtomicBomb inPosition: 5. 	
+	aBoard addTile: atomicBomb.
+	aSpaceship1 move: 25.
+	aSpaceship1 move: 18. 
+	 
+	self assert: aSpaceship1 doneLaps equals: 1.
+	self assert: aSpaceship2 doneLaps equals: 0.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombThenAllSpaceshipsGoBackTo0 [
+	| atomicBomb | 	 	
+	atomicBomb := AtomicBomb inPosition: 9. 	
+	aBoard addTile: atomicBomb.
+	aSpaceship1 move: 9. 
+	 
+	self assert: aSpaceship2 position equals: 0.
+	self assert: aSpaceship1 position equals: 0.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombThenSpaceshipsDontUseFuel [
+	| atomicBomb | 	 	
+	atomicBomb := AtomicBomb inPosition: 9. 	
+	aBoard addTile: atomicBomb.
+	aSpaceship1 move: 9. 
+	 
+	self assert: aSpaceship2 fuel equals: 30.
+	self assert: aSpaceship1 fuel equals: 21.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testBHWhenBlackHoleEffectIsApliedThenFuelGoesDown [
+	| blackHole |
 	
 	blackHole:= BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
@@ -22,27 +82,37 @@ BoardTileEffectTest >> testWhenBlackHoleEffectIsApliedThenFuelGoesDown [
 ]
 
 { #category : 'tests' }
-BoardTileEffectTest >> testWhenGoingBackwardsCanReduceOneLap [
-	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20 .
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+BoardTileEffectTest >> testBHWhenFuelRunsOutDurginBlackHoleThenGoesBackTo0AndIsPenalized [
+	| blackHole |
 	
-	blackHole := BlackHole inPosition: 2.
+	blackHole := BlackHole inPosition: 7.
 	aBoard addTile: blackHole.
 	
-	aSpaceship1 move: 2.
+	aSpaceship1 move: 28.
 	
-	self assert: aSpaceship1 position equals: 18.
-	
+	self assert: aSpaceship1 position equals: 0.
+	self assert: aSpaceship1 doneLaps equals: 1.	
 
 ]
 
 { #category : 'tests' }
-BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOtherEffectIsApplied [
-	| aBoard aSpaceship1 blackHole blackHole2 |
-	aBoard := Board with: 20 .
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+BoardTileEffectTest >> testBHWhenGoingBackwardsCanReduceOneLap [
+	| blackHole |
 	
+	blackHole := BlackHole inPosition: 2.
+	aBoard addTile: blackHole.
+	
+	aSpaceship1 move: 23.
+	
+	self assert: aSpaceship1 position equals: 18.
+	self assert: aSpaceship1 doneLaps equals: 0.	
+
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOtherEffectIsApplied [
+	
+	| blackHole blackHole2 |
 	blackHole := BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
 	blackHole2 := BlackHole inPosition: 5.
@@ -56,10 +126,8 @@ BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOthe
 ]
 
 { #category : 'tests' }
-BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
-	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20.
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
+BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
+	| blackHole |
 
 	blackHole := BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
