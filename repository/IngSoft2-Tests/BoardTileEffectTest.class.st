@@ -168,6 +168,35 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThe
 ]
 
 { #category : 'tests' }
+BoardTileEffectTest >> testHJWhenSecondSpaceshipLandOnHyperJumpThenUsesSecondValue [
+	| hyperJump | 	 	
+	hyperJump := HyperJump inPosition: 4. 	
+	hyperJump convert: 2 with: aBoard size and: {10 . 12 . 8 . 5 . 3. 2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
+	aBoard addTile: hyperJump .
+	
+	aSpaceship1 move:4.
+	aSpaceship2 move:4.
+	 
+	self assert: aSpaceship1 position equals: 9.
+	self assert: aSpaceship2 position equals: 10.
+	
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testHJWhenSpaceShipLandsOnHyperJumpThenItMovesAccordingToParsecs [
+	| hyperJump | 	 	
+	hyperJump := HyperJump inPosition: 4. 	
+	hyperJump convert: 2 with: aBoard size and: {10 . 12 . 8 . 5 . 3. 2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
+	aBoard addTile: hyperJump .
+	
+	aSpaceship1 move:4.
+	
+	 
+	self assert: aSpaceship1 position equals: 9.
+	
+]
+
+{ #category : 'tests' }
 BoardTileEffectTest >> testMWCorrectFuelUsage [
 	| moonWalk | 	 	
 	moonWalk := MoonWalk inPosition: 4. 	
