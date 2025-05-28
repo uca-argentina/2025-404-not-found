@@ -1,6 +1,3 @@
-"
-atomib bomb
-"
 Class {
 	#name : 'AtomicBomb',
 	#superclass : 'BoardTile',

@@ -1,6 +1,3 @@
-"
-common tile
-"
 Class {
 	#name : 'CommonTile',
 	#superclass : 'BoardTile',

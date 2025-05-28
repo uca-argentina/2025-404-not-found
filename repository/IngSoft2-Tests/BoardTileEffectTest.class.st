@@ -166,3 +166,46 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThe
 	 
 	self assert: aSpaceship1 position equals: 6.
 ]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testMWCorrectFuelUsage [
+	| moonWalk | 	 	
+	moonWalk := MoonWalk inPosition: 4. 	
+	moonWalk tilesToBack: 3.
+	aBoard addTile: moonWalk .
+	
+	aSpaceship1 move:6.
+	aSpaceship2 move:4. "Cae en moonWalk y hace que la 1 retroceda"
+	 
+	self assert: aSpaceship2 fuel equals: 26.
+	self assert: aSpaceship1 fuel equals: 21.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testMWWhenOtherSpaceShipRunsOutOfFuelThenItApplisPenalization [
+	| moonWalk | 	 	
+	moonWalk := MoonWalk inPosition: 4. 	
+	moonWalk tilesToBack: 3.
+	aBoard addTile: moonWalk .
+	
+	aSpaceship1 move:28.
+	aSpaceship2 move:4. "Cae en moonWalk y hace que la 1 retroceda"
+	 
+	"self assert: aSpaceship2 fuel equals: 26."
+	self assert: aSpaceship2 position equals: 4.
+	self assert: aSpaceship1 position equals: 0.
+]
+
+{ #category : 'tests' }
+BoardTileEffectTest >> testMWWhenSpaceShipLandsOnMoonWalkThenOthersBack [
+	| moonWalk | 	 	
+	moonWalk := MoonWalk inPosition: 4. 	
+	moonWalk tilesToBack: 3.
+	aBoard addTile: moonWalk .
+	
+	aSpaceship1 move:6.
+	aSpaceship2 move:4. "Cae en moonWalk y hace que la 1 retroceda"
+	 
+	self assert: aSpaceship2 position equals: 4."se queda en su posicion"
+	self assert: aSpaceship1 position equals: 3. "retrocedio 3 posiciones"
+]

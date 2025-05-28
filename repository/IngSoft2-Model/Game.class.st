@@ -26,6 +26,16 @@ Game >> activateAtomicBomb [
 	self spaceships do: [:ship | ship resetToStartWithoutFuelLoss ].
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
+	self spaceships do: [:ship |
+		ship = triggeringSpaceship ifFalse: [
+			ship newPosition: nTiles negated
+		]
+	].
+"self spaceships do: [:ship | ship newPosition: nTiles negated]."
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	laps := numberLaps. 

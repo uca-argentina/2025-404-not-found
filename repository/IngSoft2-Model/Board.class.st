@@ -15,9 +15,11 @@ Class {
 }
 
 { #category : 'instance creation' }
-Board class >> with: aBoardSize [ 
-	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
-	^ self new with: aBoardSize
+Board class >> with: arg1 [
+
+	arg1 negative ifTrue: [
+		Error signal: 'Board size should be positive' ].
+	^ self new with: arg1
 ]
 
 { #category : 'instance creation' }
@@ -29,21 +31,20 @@ Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [
 ]
 
 { #category : 'adding' }
-Board >> addTile: aTile [
-	self tiles at: aTile position put: aTile.
+Board >> addTile: arg1 [
+
+	self tiles at: arg1 position put: arg1
 ]
 
 { #category : 'adding' }
-Board >> addWormHolewithEntraceTile: entrancePosition exitTile: exitPosition [ 
+Board >> addWormHolewithEntraceTile: arg1 exitTile: arg2 [
 
-	|wormholeEntrance wormholeExit |
-	
-	wormholeEntrance:= WormHole inPosition: entrancePosition withEffect: exitPosition -entrancePosition.
-	wormholeExit:= WormHole  inPosition:exitPosition withEffect:entrancePosition -exitPosition.
-	
-	self addTile:wormholeEntrance.
-	self addTile:wormholeExit.
-	 
+	| tmp1 tmp2 |
+	tmp1 := WormHole inPosition: arg1 withEffect: arg2 - arg1.
+	tmp2 := WormHole inPosition: arg2 withEffect: arg1 - arg2.
+	self
+		addTile: tmp1;
+		addTile: tmp2
 ]
 
 { #category : 'accessing' }
@@ -54,17 +55,23 @@ Board >> applyTileEffectTo: aSpaceship [
 ]
 
 { #category : 'check' }
-Board >> boardPosition: position [
-	(position < 0) ifTrue: [ ^ size + position ].
-	(position > size) ifTrue: [ ^ position \\ size -1].
-	^ position.
+Board >> boardPosition: arg1 [
+
+	arg1 < 0 ifTrue: [ ^ size + arg1 ].
+	nil.
+	arg1 > size ifTrue: [ ^ arg1 \\ size - 1 ].
+	nil.
+	^ arg1
 ]
 
 { #category : 'check' }
-Board >> checkLimits: aPosition [ 
-	(aPosition < 0) ifTrue: [ ^ -1 ].
-	(aPosition > size) ifTrue: [ ^ 1 ].
-	^ 0. 
+Board >> checkLimits: arg1 [
+
+	arg1 < 0 ifTrue: [ ^  -1 ].
+	nil.
+	arg1 > size ifTrue: [ ^ 1 ].
+	nil.
+	^ 0
 ]
 
 { #category : 'accessing' }
@@ -74,10 +81,13 @@ Board >> game [
 
 { #category : 'initialization' }
 Board >> initializeTiles [
-    tiles := (1 to: size) collect: [ :i |
-        (CommonTile new)
-            position: i;
-            yourself ].
+
+	tiles := (1 to: size) collect: [ :arg1 |
+		         | tmp2 |
+		         tmp2 := CommonTile new.
+		         tmp2
+			         position: arg1;
+			         yourself ]
 ]
 
 { #category : 'initialization' }
@@ -91,21 +101,24 @@ Board >> size [
 ]
 
 { #category : 'accessing' }
-Board >> tileAt: aPosition [
-    (aPosition = 0) ifTrue: [ ^ nil ].
-    ^ tiles at: aPosition.
+Board >> tileAt: arg1 [
 
+	arg1 = 0 ifTrue: [ ^ nil ].
+	nil.
+	^ tiles at: arg1
 ]
 
 { #category : 'accessing' }
 Board >> tiles [
-    ^ tiles
+
+	^ tiles
 ]
 
 { #category : 'initialization' }
-Board >> with: aBoardSize [
-	size := aBoardSize.
-	self initializeTiles.
+Board >> with: arg1 [
+
+	size := arg1.
+	self initializeTiles
 ]
 
 { #category : 'instance creation' }

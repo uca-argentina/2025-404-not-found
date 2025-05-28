@@ -1,6 +1,3 @@
-"
-wormhole
-"
 Class {
 	#name : 'WormHole',
 	#superclass : 'BoardTile',

@@ -32,12 +32,14 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 ]
 
 { #category : 'logic' }
-Spaceship >> checkLaps: aPosition [
-	doneLaps := doneLaps + (board checkLimits: aPosition)
+Spaceship >> checkLaps: arg1 [
+
+	doneLaps := doneLaps + (board checkLimits: arg1)
 ]
 
 { #category : 'accessing' }
 Spaceship >> doneLaps [
+
 	^ doneLaps
 ]
 
@@ -46,9 +48,15 @@ Spaceship >> fuel [
 	^fuel
 ]
 
+{ #category : 'testing' }
+Spaceship >> hasEnoughFuelFor: delta [
+	^ fuel >= delta abs.
+]
+
 { #category : 'logic' }
-Spaceship >> hasWon: requiredLaps [
-	^ doneLaps == requiredLaps
+Spaceship >> hasWon: arg1 [
+
+	^ doneLaps == arg1
 ]
 
 { #category : 'initialization' }
@@ -72,10 +80,12 @@ Spaceship >> lockUntil: anExitRoll [
 
 { #category : 'logic' }
 Spaceship >> managePenalization [
-	(penalization == 0) ifTrue: [^false].
+
+	penalization == 0 ifTrue: [ ^ false ].
+	nil.
 	penalization := penalization - 1.
-	(penalization == 0) ifTrue: [ self refuel ].
-	^true
+	penalization == 0 ifTrue: [ self refuel ].
+	^ true
 ]
 
 { #category : 'moving' }
@@ -101,10 +111,26 @@ Spaceship >> name [
 ]
 
 { #category : 'moving' }
-Spaceship >> newPosition: numberOfBoxes [
-	self useFuel: numberOfBoxes.
-	self checkLaps: position + numberOfBoxes.
-	position := board boardPosition: position + numberOfBoxes.
+Spaceship >> newPosition: delta [
+	| newPos |
+	newPos := position + delta.
+	
+	(self hasEnoughFuelFor: delta) ifFalse: [
+		position := 0.
+		penalization := 2.
+		^self
+	].
+
+	self useFuel: delta.
+	self checkLaps: newPos.
+	position := board boardPosition: newPos.
+	"
+	self
+		useFuel: arg1;
+		checkLaps: position + arg1.
+	position := board boardPosition: position + arg1
+	"
+	
 ]
 
 { #category : 'accessing' }
@@ -114,22 +140,26 @@ Spaceship >> position [
 
 { #category : 'moving' }
 Spaceship >> refuel [
-	fuel := maxFuel.
+
+	fuel := maxFuel
 ]
 
 { #category : 'initialization' }
-Spaceship >> resetToStartWithoutFuelLoss [     
-	position := 0.
+Spaceship >> resetToStartWithoutFuelLoss [
+
+	position := 0
 ]
 
 { #category : 'logic' }
 Spaceship >> tryUnlock: aRoll [
-	lock := (aRoll < exitRoll )
-	
+	(aRoll > exitRoll ) ifFalse: [^ self].
+	lock := false.
+	exitRoll := 0.
 ]
 
 { #category : 'moving' }
-Spaceship >> useFuel: numberOfBoxes [
-	fuel := fuel - (numberOfBoxes abs).
-	(fuel < 0) ifTrue: [ Error signal: 'Ran out of fuel']. 
+Spaceship >> useFuel: arg1 [
+
+	fuel := fuel - arg1 abs.
+	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
 ]

@@ -1,6 +1,3 @@
-"
-Hyper gravity
-"
 Class {
 	#name : 'HyperGravity',
 	#superclass : 'BoardTile',
