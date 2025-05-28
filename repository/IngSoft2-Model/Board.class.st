@@ -37,8 +37,8 @@ Board >> addWormHolewithEntraceTile: entrancePosition exitTile: exitPosition [
 
 	|wormholeEntrance wormholeExit |
 	
-	wormholeEntrance:= WormHole inPosition: 2 withEffect: exitPosition -entrancePosition.
-	wormholeExit:= WormHole  inPosition:6 withEffect:entrancePosition -exitPosition.
+	wormholeEntrance:= WormHole inPosition: entrancePosition withEffect: exitPosition -entrancePosition.
+	wormholeExit:= WormHole  inPosition:exitPosition withEffect:entrancePosition -exitPosition.
 	
 	self addTile:wormholeEntrance.
 	self addTile:wormholeExit.

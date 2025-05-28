@@ -24,7 +24,8 @@ GameWithFuelTest >> setUp [
 	aDie1 := LoadedDie with: { 3 . 3 . 3 . 3 . 1 . 1}.
 	aDie2 := LoadedDie with: { 3 . 3 . 3 . 3 . 2 . 2}.
 	dice := { aDie1 . aDie2 }.
-	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aBoard := Board with: 20.
+	aBoard addWormHolewithEntraceTile:12 exitTile:18.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 	spaceships := { aSpaceship1 }.
 	lap := 1.

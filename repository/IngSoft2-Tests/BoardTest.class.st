@@ -29,10 +29,10 @@ BoardTest >> testWhenBoardCreatedWithNegativeSizeThenCreationFails [
 BoardTest >> testWhenPositionIsOutOfBoardThenIsInvalid [
 	| sizeOfBoard aBoard positionOfShip  |
 	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
+	aBoard := Board with: sizeOfBoard.
 	positionOfShip := 11.
 	
-	self deny: (aBoard checkLimits: positionOfShip).
+	self assert: (aBoard checkLimits: positionOfShip) equals: 1.
 ]
 
 { #category : 'tests' }
