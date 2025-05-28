@@ -12,10 +12,33 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'as yet unclassified' }
+BoardTile class >> inPosition: aPosition [ 
+	^self new inPosition: aPosition 
+]
+
+{ #category : 'as yet unclassified' }
+BoardTile class >> inPosition: aPosition withEffect: anEffect [
+	^self new inPosition: aPosition withEffect: anEffect 
+]
+
 { #category : 'effects' }
 BoardTile >> applyEffectsTo: aSpaceship [
     self subclassResponsibility.
 	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."
+]
+
+{ #category : 'as yet unclassified' }
+BoardTile >> inPosition: aPosition [
+	position:=aPosition.
+
+]
+
+{ #category : 'as yet unclassified' }
+BoardTile >> inPosition: aPosition withEffect:anEffect [
+	effects :=anEffect.
+	position:=aPosition.
+
 ]
 
 { #category : 'accessing' }

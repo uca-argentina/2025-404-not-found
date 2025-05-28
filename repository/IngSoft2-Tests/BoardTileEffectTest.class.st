@@ -8,11 +8,10 @@ Class {
 { #category : 'tests' }
 BoardTileEffectTest >> testWhenBlackHoleEffectIsApliedThenFuelGoesDown [
 	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aBoard := Board with: 20.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	blackHole := BlackHole new.
-	blackHole position: 9.
+	blackHole:= BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
 	
 	aSpaceship1 move: 9.
@@ -25,11 +24,10 @@ BoardTileEffectTest >> testWhenBlackHoleEffectIsApliedThenFuelGoesDown [
 { #category : 'tests' }
 BoardTileEffectTest >> testWhenGoingBackwardsCanReduceOneLap [
 	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aBoard := Board with: 20 .
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	blackHole := BlackHole new.
-	blackHole position: 2.
+	blackHole := BlackHole inPosition: 2.
 	aBoard addTile: blackHole.
 	
 	aSpaceship1 move: 2.
@@ -42,14 +40,12 @@ BoardTileEffectTest >> testWhenGoingBackwardsCanReduceOneLap [
 { #category : 'tests' }
 BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOtherEffectIsApplied [
 	| aBoard aSpaceship1 blackHole blackHole2 |
-	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aBoard := Board with: 20 .
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	blackHole := BlackHole new.
-	blackHole position: 9.
+	blackHole := BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
-	blackHole2 := BlackHole new.
-	blackHole2 position: 5.
+	blackHole2 := BlackHole inPosition: 5.
 	aBoard addTile: blackHole2.
 	
 	aSpaceship1 move: 9.
@@ -62,11 +58,10 @@ BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOthe
 { #category : 'tests' }
 BoardTileEffectTest >> testWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
 	| aBoard aSpaceship1 blackHole |
-	aBoard := Board with: 20 entranceBox: 12 exitBox: 18.
+	aBoard := Board with: 20.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 
-	blackHole := BlackHole new.
-	blackHole position: 9.
+	blackHole := BlackHole inPosition: 9.
 	aBoard addTile: blackHole.
 	
 	aSpaceship1 move: 9.
