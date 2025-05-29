@@ -11,11 +11,15 @@ Class {
 
 { #category : 'as yet unclassified' }
 BoardTile class >> inPosition: aPosition [ 
+	aPosition negative ifTrue: [
+		Error signal: 'Tile should be a positive position' ].
 	^self new inPosition: aPosition 
 ]
 
 { #category : 'as yet unclassified' }
 BoardTile class >> inPosition: aPosition withEffect: anEffect [
+	aPosition negative ifTrue: [
+		Error signal: 'Tile should be a positive position' ].
 	^self new inPosition: aPosition withEffect: anEffect 
 ]
 

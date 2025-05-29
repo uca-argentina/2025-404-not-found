@@ -40,6 +40,8 @@ Board class >> withRandom: arg1 [
 
 { #category : 'adding' }
 Board >> addTile: arg1 [
+	(self checkLimits:(arg1 position) )~=0 ifTrue: [ 
+		 Error signal: 'Tile should be inside board'].
 
 	self tiles at: arg1 position put: arg1
 ]
@@ -48,6 +50,12 @@ Board >> addTile: arg1 [
 Board >> addWormHolewithEntraceTile: arg1 exitTile: arg2 [
 
 	| tmp1 tmp2 |
+	(arg1 > size)  ifTrue: [
+		Error signal: 'Tile should be inside the board' ].
+	(arg2 > size)  ifTrue: [
+		Error signal: 'Tile should be inside the board' ].
+	
+	
 	tmp1 := WormHole inPosition: arg1 withEffect: arg2 - arg1.
 	tmp2 := WormHole inPosition: arg2 withEffect: arg1 - arg2.
 	self
