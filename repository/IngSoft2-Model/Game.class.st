@@ -21,6 +21,21 @@ Game class >> with: spaceShips andDice: someDice laps: lap [
 	^ self new initializeWith: spaceShips andDice: someDice laps: lap
 ]
 
+{ #category : 'logic' }
+Game >> activateAtomicBomb [     
+	self spaceships do: [:ship | ship resetToStartWithoutFuelLoss ].
+]
+
+{ #category : 'as yet unclassified' }
+Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
+	self spaceships do: [:ship |
+		ship = triggeringSpaceship ifFalse: [
+			ship newPosition: nTiles negated
+		]
+	].
+"self spaceships do: [:ship | ship newPosition: nTiles negated]."
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	laps := numberLaps. 
@@ -38,9 +53,11 @@ Game >> isFinished [
 { #category : 'logic' }
 Game >> nextTurn [
 
+	| spaceship |
 	self isFinished ifTrue: [ ^ self ].
-	((spaceships at: turnNumber) managePenalization) ifFalse:[
-		(spaceships at: turnNumber) move: self rollDices.
+	spaceship := spaceships at: turnNumber.
+	((spaceship) managePenalization) ifFalse:[
+		(spaceship) move: self rollDices.
 	].
 	turnNumber := (turnNumber \\ numberSpaceships) + 1.
 

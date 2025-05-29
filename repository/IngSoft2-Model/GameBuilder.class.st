@@ -33,7 +33,8 @@ GameBuilder >> buildGame [
 	| dice board spaceships |
 	maxFuel := dieValues sum.
 	dice := dieValues collect: [ :val | Die with: val ].
-	board := Board with: boardSize entranceBox: wormholeEntrance exitBox: wormholeExit.
+	board := Board with: boardSize.
+	board addWormHolewithEntraceTile:wormholeEntrance exitTile:wormholeExit .
 	spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board withMaxFuel: maxFuel ].
 
 	^ Game with: spaceships andDice: dice laps: laps

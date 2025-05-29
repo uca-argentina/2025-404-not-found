@@ -5,36 +5,70 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-WormholeTest >> testWhenABoxIsAWormhole [
-	| sizeOfBoard aBoard aPosition |
-	aPosition:=2.
-	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	
-	self assert: (aBoard checkAndRelocate: aPosition) equals: 6.
+{ #category : 'running' }
+WormholeTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
 ]
 
 { #category : 'tests' }
 WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
-	| sizeOfBoard aBoard  aSpaceship |
-	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
+	| aBoard aSpaceship1 |
+	aBoard := Board with: 20.
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	aSpaceship move:2.
+	aBoard addWormHolewithEntraceTile:2 exitTile:6.
 	
-	self assert: aSpaceship position equals: 6.
+	aSpaceship1 move: 2.
+	
+	self assert: aSpaceship1 position equals:(6).
 ]
 
 { #category : 'tests' }
 WormholeTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [ 
-	| sizeOfBoard aBoard  aSpaceship |
-	sizeOfBoard := 10.
-	aBoard := Board with: sizeOfBoard entranceBox: 2 exitBox: 6.
-	aSpaceship:= Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
+	| aBoard aSpaceship1 |
+	aBoard := Board with: 20.
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30.
 	
-	aSpaceship move:6.
+	aBoard addWormHolewithEntraceTile:2 exitTile:6.
 	
-	self assert: aSpaceship position equals: 2.
+	aSpaceship1 move: 6.
+	
+	self assert: aSpaceship1 position equals:(2).
+]
+
+{ #category : 'tests' }
+WormholeTest >> testWhenWormholeEntranceBoxOutsideBoardThenCreationFails [
+	| sizeOfBoard aBoard|
+	sizeOfBoard := 20.
+	aBoard:=Board with: sizeOfBoard.
+	self
+		should: [ aBoard addWormHolewithEntraceTile:-1 exitTile:6.]
+		raise: Error
+		withMessageText: 'Tile should be a positive position'.
+		
+	self
+		should: [ aBoard addWormHolewithEntraceTile:22 exitTile:6. ]
+		raise: Error
+		withMessageText: 'Tile should be inside the board'.
+]
+
+{ #category : 'tests' }
+WormholeTest >> testWhenWormholeExitBoxOutsideBoardThenCreationFails [
+	| sizeOfBoard aBoard|
+	sizeOfBoard := 20.
+	aBoard:=Board with: sizeOfBoard.
+	self
+		should: [ aBoard addWormHolewithEntraceTile:2 exitTile:-6. ]
+		raise: Error
+		withMessageText: 'Tile should be a positive position'.
+		
+	self
+		should: [ aBoard addWormHolewithEntraceTile:2 exitTile:26. ]
+		raise: Error
+		withMessageText: 'Tile should be inside the board'.
 ]

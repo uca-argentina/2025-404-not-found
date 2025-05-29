@@ -11,7 +11,9 @@ Class {
 		'doneLaps',
 		'fuel',
 		'maxFuel',
-		'penalization'
+		'penalization',
+		'lock',
+		'exitRoll'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -29,16 +31,16 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
 ]
 
-{ #category : 'accessing' }
-Spaceship >> chargeFuel: amountFuel [ 
-	fuel := fuel + amountFuel.
+{ #category : 'logic' }
+Spaceship >> checkLaps: arg1 [
+
+	doneLaps := doneLaps + (board checkLimits: arg1)
 ]
 
-{ #category : 'as yet unclassified' }
-Spaceship >> checkLaps: aPosition [
-	(board checkLimits: aPosition ) ifFalse: [ 
-			doneLaps := doneLaps + 1.
-	].
+{ #category : 'accessing' }
+Spaceship >> doneLaps [
+
+	^ doneLaps
 ]
 
 { #category : 'accessing' }
@@ -47,8 +49,14 @@ Spaceship >> fuel [
 ]
 
 { #category : 'testing' }
-Spaceship >> hasWon: requiredLaps [
-	^ doneLaps == requiredLaps
+Spaceship >> hasEnoughFuelFor: delta [
+	^ fuel >= delta abs.
+]
+
+{ #category : 'logic' }
+Spaceship >> hasWon: arg1 [
+
+	^ doneLaps == arg1
 ]
 
 { #category : 'initialization' }
@@ -60,30 +68,39 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	fuel := aMaxFuel.
 	maxFuel := aMaxFuel.
 	penalization := 0.
+	lock := false.
+	exitRoll := 0.
 ]
 
-{ #category : 'testing' }
+{ #category : 'logic' }
+Spaceship >> lockUntil: anExitRoll [
+	lock := true.
+	exitRoll := anExitRoll.
+]
+
+{ #category : 'logic' }
 Spaceship >> managePenalization [
-	(penalization == 0) ifTrue: [^false].
+
+	penalization == 0 ifTrue: [ ^ false ].
+	nil.
 	penalization := penalization - 1.
-	(penalization == 0) ifTrue: [ self refuel ].
-	^true
+	penalization == 0 ifTrue: [ self refuel ].
+	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'moving' }
 Spaceship >> move: numberOfBoxes [
-	| newPosition necesaryFuel |
-	newPosition := position + numberOfBoxes.
-	necesaryFuel := board calculateMoves: position and: newPosition.
-	(fuel < necesaryFuel ) ifTrue: [  
+	[
+		self tryUnlock: numberOfBoxes.
+		(lock) ifFalse: [ 
+			self newPosition: numberOfBoxes.
+			board applyTileEffectTo: self.
+		]
+	] on: Error do: [ 
 		position := 0.
 		penalization := 2.
 		fuel := 0.
-	] ifFalse: [ 
-		self checkLaps: newPosition.
-		position := board checkAndRelocate: newPosition.
-		fuel := fuel - necesaryFuel.
-	].
+	]
 	
 	
 ]
@@ -93,12 +110,52 @@ Spaceship >> name [
 	^ name
 ]
 
+{ #category : 'moving' }
+Spaceship >> newPosition: delta [
+	| newPos |
+	newPos := position + delta.
+	
+	(self hasEnoughFuelFor: delta) ifFalse: [
+		position := 0.
+		penalization := 2.
+		^self
+	].
+	self useFuel: delta.
+	self checkLaps: newPos.
+	position := board boardPosition: newPos.
+	"self useFuel: delta.
+	self checkLaps: position + delta.
+	position := board boardPosition: position + delta."
+	
+]
+
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> refuel [
-	fuel := maxFuel.
+
+	fuel := maxFuel
+]
+
+{ #category : 'initialization' }
+Spaceship >> resetToStartWithoutFuelLoss [
+
+	position := 0
+]
+
+{ #category : 'logic' }
+Spaceship >> tryUnlock: aRoll [
+	(aRoll > exitRoll ) ifFalse: [^ self].
+	lock := false.
+	exitRoll := 0.
+]
+
+{ #category : 'moving' }
+Spaceship >> useFuel: arg1 [
+
+	fuel := fuel - arg1 abs.
+	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
 ]
