@@ -92,7 +92,7 @@ GameBuilderTest >> testWhenGameCreationWithInvalidWormholeEntranceThenFails [
 	self
 		should: [ game := builder buildGame ]
 		raise: Error
-		withMessageText: 'Entrance box should be inside the board'			
+		withMessageText: 'Tile should be a positive position'			
 				
 			
 		
@@ -114,7 +114,7 @@ GameBuilderTest >> testWhenGameCreationWithInvalidWormholeExitThenFails [
 	self
 		should: [ game := builder buildGame ]
 		raise: Error
-		withMessageText: 'Exit box should be inside the board'		
+		withMessageText: 'Tile should be a positive position'		
 				
 			
 		
