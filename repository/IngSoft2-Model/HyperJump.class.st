@@ -1,3 +1,6 @@
+"
+HyperJump
+"
 Class {
 	#name : 'HyperJump',
 	#superclass : 'BoardTile',
@@ -13,25 +16,22 @@ Class {
 
 { #category : 'as yet unclassified' }
 HyperJump >> applyEffectsTo: aSpaceship in: aGame [
-	| parsecsValue tilesToAdvance |
-	listOfValues isEmpty ifTrue: [ listOfValues := originalList copy ].
-	
-	"parsecsValue := listOfValues first.
-	listOfValues := listOfValues allButFirst."
-	parsecsValue := listOfValues max.
-	listOfValues remove: parsecsValue.
-	
-	
-	tilesToAdvance := parsecsValue // convertor.
-	aSpaceship newPosition: tilesToAdvance.
+    | parsecsValue tilesToAdvance |
+
+    listOfValues isEmpty ifTrue: [ listOfValues := originalList copy ].
+    parsecsValue := listOfValues max.
+    listOfValues remove: parsecsValue.
+
+    tilesToAdvance := parsecsValue // convertor.
+    aSpaceship newPosition: tilesToAdvance.
 ]
 
 { #category : 'as yet unclassified' }
 HyperJump >> convert: aConvertor with: sizeOfBoard and: aListOfValues [
 	convertor := aConvertor.
 	parsecs := convertor * sizeOfBoard.
-	originalList := aListOfValues copy.
-	listOfValues := originalList copy.
+	originalList := aListOfValues asSortedCollection.
+	listOfValues := originalList asSortedCollection.
 ]
 
 { #category : 'initialization' }

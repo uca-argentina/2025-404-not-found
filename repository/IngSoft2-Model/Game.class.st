@@ -57,7 +57,7 @@ Game >> nextTurn [
 	self isFinished ifTrue: [ ^ self ].
 	spaceship := spaceships at: turnNumber.
 	((spaceship) managePenalization) ifFalse:[
-		(spaceship) move: self rollDices.
+		spaceship turn: self rollDices.
 	].
 	turnNumber := (turnNumber \\ numberSpaceships) + 1.
 

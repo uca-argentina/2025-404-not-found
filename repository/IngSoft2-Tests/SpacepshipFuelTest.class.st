@@ -24,7 +24,7 @@ SpacepshipFuelTest >> testSpaceshipFuelDecreasesInWormHole [
 	aBoard addWormHolewithEntraceTile:8 exitTile:10.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 	
-	aSpaceship1 move:8.
+	aSpaceship1 turn: 8.
 	
 	self assert: aSpaceship1 fuel equals: 0.
 	

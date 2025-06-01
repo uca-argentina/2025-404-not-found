@@ -89,13 +89,11 @@ Spaceship >> managePenalization [
 ]
 
 { #category : 'moving' }
-Spaceship >> move: numberOfBoxes [
+Spaceship >> move: numberOfTiles [
 	[
-		self tryUnlock: numberOfBoxes.
-		(lock) ifFalse: [ 
-			self newPosition: numberOfBoxes.
-			board applyTileEffectTo: self.
-		]
+		self checkLaps: position + numberOfTiles.
+		position := board boardPosition: position + numberOfTiles.
+		self useFuel: numberOfTiles.
 	] on: Error do: [ 
 		position := 0.
 		penalization := 2.
@@ -153,9 +151,15 @@ Spaceship >> tryUnlock: aRoll [
 	exitRoll := 0.
 ]
 
-{ #category : 'moving' }
-Spaceship >> useFuel: arg1 [
+{ #category : 'as yet unclassified' }
+Spaceship >> turn: numberOfTiles [
+	self move: numberOfTiles.
+	board applyTileEffectTo: self.
+]
 
-	fuel := fuel - arg1 abs.
+{ #category : 'moving' }
+Spaceship >> useFuel: numberOfTiles [
+
+	fuel := fuel - numberOfTiles abs.
 	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
 ]

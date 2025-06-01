@@ -1,3 +1,6 @@
+"
+MoonWalk
+"
 Class {
 	#name : 'MoonWalk',
 	#superclass : 'BoardTile',

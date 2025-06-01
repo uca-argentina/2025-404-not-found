@@ -23,7 +23,7 @@ WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
 	
 	aBoard addWormHolewithEntraceTile:2 exitTile:6.
 	
-	aSpaceship1 move: 2.
+	aSpaceship1 turn: 2.
 	
 	self assert: aSpaceship1 position equals:(6).
 ]
@@ -36,7 +36,7 @@ WormholeTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [
 	
 	aBoard addWormHolewithEntraceTile:2 exitTile:6.
 	
-	aSpaceship1 move: 6.
+	aSpaceship1 turn: 6.
 	
 	self assert: aSpaceship1 position equals:(2).
 ]
