@@ -18,7 +18,7 @@ MoonWalk >> applyEffectsTo: aSpaceship in: aGame [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 MoonWalk >> tilesToBack: someTiles [
-	nTiles:= someTiles.
+	nTiles:= someTiles negated.
 ]

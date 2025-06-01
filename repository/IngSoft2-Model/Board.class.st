@@ -15,19 +15,11 @@ Class {
 }
 
 { #category : 'instance creation' }
-Board class >> with: arg1 [
+Board class >> with: aBoardSize [
 
-	arg1 negative ifTrue: [
+	aBoardSize negative ifTrue: [
 		Error signal: 'Board size should be positive' ].
-	^ self new with: arg1
-]
-
-{ #category : 'instance creation' }
-Board class >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [ 
-	aBoardSize negative ifTrue: [Error signal: 'Board size should be positive'].
-	((anEntranceBox negative) or: (anEntranceBox >aBoardSize )) ifTrue: [ Error signal: 'Entrance box should be inside the board' ].
-	((anExitBox negative) or: (anExitBox >aBoardSize )) ifTrue: [ Error signal: 'Exit box should be inside the board' ].
-	^ self new with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox.
+	^ self new with: aBoardSize
 ]
 
 { #category : 'instance creation' }
@@ -39,25 +31,25 @@ Board class >> withRandom: arg1 [
 ]
 
 { #category : 'adding' }
-Board >> addTile: arg1 [
-	(self checkLimits:(arg1 position) )~=0 ifTrue: [ 
+Board >> addTile: tile [
+	(self checkLimits:(tile position) )~=0 ifTrue: [ 
 		 Error signal: 'Tile should be inside board'].
 
-	self tiles at: arg1 position put: arg1
+	self tiles at: tile position put: tile
 ]
 
 { #category : 'adding' }
-Board >> addWormHolewithEntraceTile: arg1 exitTile: arg2 [
+Board >> addWormHolewithEntraceTile: entrance exitTile: exit [
 
 	| tmp1 tmp2 |
-	(arg1 > size)  ifTrue: [
+	(entrance > size)  ifTrue: [
 		Error signal: 'Tile should be inside the board' ].
-	(arg2 > size)  ifTrue: [
+	(exit > size)  ifTrue: [
 		Error signal: 'Tile should be inside the board' ].
 	
 	
-	tmp1 := WormHole inPosition: arg1 withEffect: arg2 - arg1.
-	tmp2 := WormHole inPosition: arg2 withEffect: arg1 - arg2.
+	tmp1 := WormHole inPosition: entrance withEffect: exit - entrance.
+	tmp2 := WormHole inPosition: exit withEffect: entrance - exit.
 	self
 		addTile: tmp1;
 		addTile: tmp2
@@ -71,22 +63,18 @@ Board >> applyTileEffectTo: aSpaceship [
 ]
 
 { #category : 'check' }
-Board >> boardPosition: arg1 [
+Board >> boardPosition: position [
 
-	arg1 < 0 ifTrue: [ ^ size + arg1 ].
-	nil.
-	arg1 > size ifTrue: [ ^ arg1 \\ size - 1 ].
-	nil.
-	^ arg1
+	position < 0 ifTrue: [ ^ size + position ].
+	position > size ifTrue: [ ^ position \\ size - 1 ].
+	^ position
 ]
 
 { #category : 'check' }
-Board >> checkLimits: arg1 [
+Board >> checkLimits: position [
 
-	arg1 < 0 ifTrue: [ ^  -1 ].
-	nil.
-	arg1 > size ifTrue: [ ^ 1 ].
-	nil.
+	position < 0 ifTrue: [ ^  -1 ].
+	position > size ifTrue: [ ^ 1 ].
 	^ 0
 ]
 
@@ -96,14 +84,13 @@ Board >> game [
 ]
 
 { #category : 'initialization' }
-Board >> initializeTiles [
-
-	tiles := (1 to: size) collect: [ :arg1 |
-		         | tmp2 |
-		         tmp2 := CommonTile new.
-		         tmp2
-			         position: arg1;
-			         yourself ]
+Board >> initializeTiles [		
+	tiles := (1 to: size) collect: [ :pos |
+        | tile |
+        tile := CommonTile new.
+        tile position: pos.
+        tile
+    ].
 
 ]
 
@@ -117,7 +104,7 @@ Board >> initializeTilesRandom [
     ].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 Board >> randomTile [
     | r |
     r := Random new next.
@@ -141,11 +128,10 @@ Board >> size [
 ]
 
 { #category : 'accessing' }
-Board >> tileAt: arg1 [
+Board >> tileAt: position [
 
-	arg1 = 0 ifTrue: [ ^ nil ].
-	nil.
-	^ tiles at: arg1
+	position = 0 ifTrue: [ ^ nil ].
+	^ tiles at: position
 ]
 
 { #category : 'accessing' }
@@ -155,23 +141,15 @@ Board >> tiles [
 ]
 
 { #category : 'initialization' }
-Board >> with: arg1 [
+Board >> with: aSize [
 
-	size := arg1.
+	size := aSize.
 	self initializeTiles
 ]
 
-{ #category : 'instance creation' }
-Board >> with: aBoardSize entranceBox: anEntranceBox exitBox: anExitBox [.
-	size := aBoardSize.
-	entranceBox := anEntranceBox.
-	exitBox := anEntranceBox.
-	self initializeTiles.
-]
-
 { #category : 'initialization' }
-Board >> withRandom: arg1 [
+Board >> withRandom: aSize [
 
-	size := arg1.
+	size := aSize.
 	self initializeTilesRandom
 ]

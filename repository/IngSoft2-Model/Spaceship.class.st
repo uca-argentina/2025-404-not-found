@@ -12,18 +12,11 @@ Class {
 		'fuel',
 		'maxFuel',
 		'penalization',
-		'lock',
 		'exitRoll'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
-
-{ #category : 'instance creation' }
-Spaceship class >> withName: aName withBoard:aBoard [
-	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
-	^ self new initializeWith: aName withBoard: aBoard 
-]
 
 { #category : 'instance creation' }
 Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
@@ -32,9 +25,9 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 ]
 
 { #category : 'logic' }
-Spaceship >> checkLaps: arg1 [
+Spaceship >> checkLaps: newPosition [
 
-	doneLaps := doneLaps + (board checkLimits: arg1)
+	doneLaps := doneLaps + (board checkLimits: newPosition)
 ]
 
 { #category : 'accessing' }
@@ -48,15 +41,10 @@ Spaceship >> fuel [
 	^fuel
 ]
 
-{ #category : 'testing' }
-Spaceship >> hasEnoughFuelFor: delta [
-	^ fuel >= delta abs.
-]
-
 { #category : 'logic' }
-Spaceship >> hasWon: arg1 [
+Spaceship >> hasWon: laps [
 
-	^ doneLaps == arg1
+	^ doneLaps == laps
 ]
 
 { #category : 'initialization' }
@@ -68,13 +56,11 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	fuel := aMaxFuel.
 	maxFuel := aMaxFuel.
 	penalization := 0.
-	lock := false.
 	exitRoll := 0.
 ]
 
 { #category : 'logic' }
 Spaceship >> lockUntil: anExitRoll [
-	lock := true.
 	exitRoll := anExitRoll.
 ]
 
@@ -108,25 +94,6 @@ Spaceship >> name [
 	^ name
 ]
 
-{ #category : 'moving' }
-Spaceship >> newPosition: delta [
-	| newPos |
-	newPos := position + delta.
-	
-	(self hasEnoughFuelFor: delta) ifFalse: [
-		position := 0.
-		penalization := 2.
-		^self
-	].
-	self useFuel: delta.
-	self checkLaps: newPos.
-	position := board boardPosition: newPos.
-	"self useFuel: delta.
-	self checkLaps: position + delta.
-	position := board boardPosition: position + delta."
-	
-]
-
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
@@ -134,8 +101,7 @@ Spaceship >> position [
 
 { #category : 'moving' }
 Spaceship >> refuel [
-
-	fuel := maxFuel
+	fuel := maxFuel.
 ]
 
 { #category : 'initialization' }
@@ -145,16 +111,13 @@ Spaceship >> resetToStartWithoutFuelLoss [
 ]
 
 { #category : 'logic' }
-Spaceship >> tryUnlock: aRoll [
-	(aRoll > exitRoll ) ifFalse: [^ self].
-	lock := false.
-	exitRoll := 0.
-]
-
-{ #category : 'as yet unclassified' }
 Spaceship >> turn: numberOfTiles [
+	(numberOfTiles < exitRoll ) ifTrue: [^self].
+	exitRoll := 0.
 	self move: numberOfTiles.
 	board applyTileEffectTo: self.
+
+	
 ]
 
 { #category : 'moving' }

@@ -10,7 +10,7 @@ Class {
 
 { #category : 'effects' }
 WormHole >> applyEffectsTo: aSpaceship in: aGame [
-	aSpaceship newPosition: effects .
+	aSpaceship move: effects .
 
 
 	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."

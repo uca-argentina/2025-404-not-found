@@ -23,7 +23,7 @@ SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
 	aBoard := Board with: sizeOfBoard .
 	
 	self
-		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard. ]
+		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard withMaxFuel: 10. ]
 		raise: Error
 		withMessageText: 'Name should have at least one character'
 ]

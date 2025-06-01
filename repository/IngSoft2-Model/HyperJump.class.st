@@ -14,7 +14,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 HyperJump >> applyEffectsTo: aSpaceship in: aGame [
     | parsecsValue tilesToAdvance |
 
@@ -23,10 +23,10 @@ HyperJump >> applyEffectsTo: aSpaceship in: aGame [
     listOfValues remove: parsecsValue.
 
     tilesToAdvance := parsecsValue // convertor.
-    aSpaceship newPosition: tilesToAdvance.
+    aSpaceship move: tilesToAdvance.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 HyperJump >> convert: aConvertor with: sizeOfBoard and: aListOfValues [
 	convertor := aConvertor.
 	parsecs := convertor * sizeOfBoard.

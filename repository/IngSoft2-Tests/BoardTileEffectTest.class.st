@@ -26,8 +26,8 @@ BoardTileEffectTest >> setUp [
 	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 30. 	
 	spaceships := { aSpaceship1 . aSpaceship2}. 	
 	"1 vuelta = 6 nextTurn     1   2   1   2   1   2 " 	
-	aDie1 := LoadedDie with: { 3 . 4 . 3 . 2}. 
-	aDie2 := LoadedDie with: { 3 . 3 . 3 . 1}. 	
+	aDie1 := LoadedDie with: { 3 . 4 . 3 . 1}. 
+	aDie2 := LoadedDie with: { 3 . 3 . 3 . 2}. 	
 	dice := { aDie1 . aDie2 }. 	lap := 2. 	
 	aGame := Game with: spaceships andDice: dice laps: lap. 	
 	aBoard setGame: aGame. 
@@ -62,7 +62,7 @@ BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombThenSpaceshipsDontUse
 	| atomicBomb | 	 	
 	atomicBomb := AtomicBomb inPosition: 9. 	
 	aBoard addTile: atomicBomb.
-	aSpaceship1 move: 9. 
+	aSpaceship1 turn: 9. 
 	 
 	self assert: aSpaceship2 fuel equals: 30.
 	self assert: aSpaceship1 fuel equals: 21.
@@ -143,15 +143,14 @@ BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
 { #category : 'tests' }
 BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityAndRollIsBiggerThenMoves [
 	| hyperGravity | 	 	
-	hyperGravity := HyperGravity inPosition: 2. 	
-	hyperGravity exitRoll: 10.
+	hyperGravity := HyperGravity inPosition: 6. 	
+	hyperGravity exitRoll: 2.
 	aBoard addTile: hyperGravity .
 	
-	aGame nextTurn.
-	aGame nextTurn.
-	aGame nextTurn. "tira 6 y necesita 2"
+	aSpaceship1 turn: 6.
+	aSpaceship1 turn: 6.
 	 
-	self assert: aSpaceship1 position equals: 13."mal aproposito"
+	self assert: aSpaceship1 position equals: 12.
 ]
 
 { #category : 'tests' }
@@ -161,9 +160,8 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThe
 	hyperGravity exitRoll: 10.
 	aBoard addTile: hyperGravity .
 	
-	aGame nextTurn.
-	aGame nextTurn.
-	aGame nextTurn. "tira 6 pero necesita 10"
+	aSpaceship1 turn: 6.
+	aSpaceship1 turn: 6.
 	 
 	self assert: aSpaceship1 position equals: 6.
 ]
