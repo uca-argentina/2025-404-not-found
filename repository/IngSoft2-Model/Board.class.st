@@ -32,7 +32,7 @@ Board class >> withRandom: arg1 [
 
 { #category : 'adding' }
 Board >> addTile: tile [
-	(self checkLimits:(tile position) )~=0 ifTrue: [ 
+	(self checkLimits:(tile position) ) ifFalse: [ 
 		 Error signal: 'Tile should be inside board'].
 
 	tiles at: tile position put: tile
@@ -65,17 +65,20 @@ Board >> applyTileEffectTo: aSpaceship [
 { #category : 'check' }
 Board >> boardPosition: position [
 
-	position < 0 ifTrue: [ ^ size + position ].
+	"position < 0 ifTrue: [ ^ size + position ].
 	position > size ifTrue: [ ^ position \\ size - 1 ].
-	^ position
+	^ position"
+	
+	| finalPosition |
+	finalPosition := position inside: size.
+	^finalPosition
+	
 ]
 
-{ #category : 'check' }
-Board >> checkLimits: position [
-
-	position < 0 ifTrue: [ ^  -1 ].
-	position > size ifTrue: [ ^ 1 ].
-	^ 0
+{ #category : 'as yet unclassified' }
+Board >> checkLimits: aNumber [
+	^ (aNumber<size) & (aNumber>0)
+	
 ]
 
 { #category : 'initialization' }
@@ -91,8 +94,8 @@ Board >> size [
 { #category : 'accessing' }
 Board >> tileAt: position [
 
-	position = 0 ifTrue: [ ^ nil ].
-	^ tiles at: position
+	position index = 0 ifTrue: [ ^ nil ].
+	^ tiles at: position index
 ]
 
 { #category : 'initialization' }

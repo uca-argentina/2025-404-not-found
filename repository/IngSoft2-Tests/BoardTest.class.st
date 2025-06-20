@@ -32,5 +32,5 @@ BoardTest >> testWhenPositionIsOutOfBoardThenIsInvalid [
 	aBoard := Board with: sizeOfBoard.
 	positionOfShip := 11.
 	
-	self assert: (aBoard checkLimits: positionOfShip) equals: 1.
+	self assert: (aBoard checkLimits: positionOfShip) equals: false
 ]

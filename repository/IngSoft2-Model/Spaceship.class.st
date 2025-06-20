@@ -24,18 +24,6 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
 ]
 
-{ #category : 'logic' }
-Spaceship >> checkLaps: newPosition [
-
-	doneLaps := doneLaps + (board checkLimits: newPosition)
-]
-
-{ #category : 'accessing' }
-Spaceship >> doneLaps [
-
-	^ doneLaps
-]
-
 { #category : 'accessing' }
 Spaceship >> fuel [
 	^fuel
@@ -44,13 +32,13 @@ Spaceship >> fuel [
 { #category : 'logic' }
 Spaceship >> hasWon: laps [
 
-	^ doneLaps == laps
+	^ position hasDoneLaps: laps
 ]
 
 { #category : 'initialization' }
 Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	board:=aBoard.
-	position := 0.
+	position := Position in: 0 at: 0.
 	name := aName.
 	doneLaps := 0.
 	fuel := aMaxFuel.
@@ -76,7 +64,7 @@ Spaceship >> managePenalization [
 
 { #category : 'moving' }
 Spaceship >> move: numberOfTiles [
-	[
+	"[
 		self checkLaps: position + numberOfTiles.
 		position := board boardPosition: position + numberOfTiles.
 		self useFuel: numberOfTiles.
@@ -84,7 +72,16 @@ Spaceship >> move: numberOfTiles [
 		position := 0.
 		penalization := 2.
 		fuel := 0.
+	]"
+	[
+		position := board boardPosition: position + numberOfTiles.
+		self useFuel: numberOfTiles.
+	] on: Error do: [ 
+		position := position backToZero.
+		penalization := 2.
+		fuel := 0.
 	]
+	
 	
 	
 ]
@@ -107,7 +104,7 @@ Spaceship >> refuel [
 { #category : 'initialization' }
 Spaceship >> resetToStartWithoutFuelLoss [
 
-	position := 0
+	position := position backToZero.
 ]
 
 { #category : 'logic' }
@@ -125,4 +122,5 @@ Spaceship >> useFuel: numberOfTiles [
 
 	fuel := fuel - numberOfTiles abs.
 	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
+		
 ]

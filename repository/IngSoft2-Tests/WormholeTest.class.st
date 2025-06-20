@@ -25,7 +25,7 @@ WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
 	
 	aSpaceship1 turn: 2.
 	
-	self assert: aSpaceship1 position equals:(6).
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0).
 ]
 
 { #category : 'tests' }
@@ -38,7 +38,7 @@ WormholeTest >> testWhenSpaceshipLandsOnExitHoleThenGoesThroughEntranceHole [
 	
 	aSpaceship1 turn: 6.
 	
-	self assert: aSpaceship1 position equals:(2).
+	self assert: aSpaceship1 position equals: (Position in: 2 at: 0).
 ]
 
 { #category : 'tests' }

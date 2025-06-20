@@ -36,13 +36,13 @@ BoardTileEffectTest >> setUp [
 { #category : 'tests' }
 BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombAndGoesBackToOThenLapsDontChange [
 	| atomicBomb | 	 	
-	atomicBomb := AtomicBomb inPosition: 5. 	
+	atomicBomb := AtomicBomb inPosition: 4. 	
 	aBoard addTile: atomicBomb.
 	aSpaceship2 turn: 18.
 	aSpaceship1 turn: 25.
-	 
-	self assert: aSpaceship1 doneLaps equals: 1.
-	self assert: aSpaceship2 doneLaps equals: 0.
+	
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 1).
+	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 ]
 
 { #category : 'tests' }
@@ -53,8 +53,8 @@ BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombThenAllSpaceshipsGoBa
 	aSpaceship2 turn: 8.	
 	aSpaceship1 turn: 9. 
 	
-	self assert: aSpaceship1 position equals: 0.
-	self assert: aSpaceship2 position equals: 0.
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 ]
 
 { #category : 'tests' }
@@ -91,8 +91,7 @@ BoardTileEffectTest >> testBHWhenFuelRunsOutDurginBlackHoleThenGoesBackTo0AndIsP
 	
 	aSpaceship1 turn: 28.
 	
-	self assert: aSpaceship1 position equals: 0.
-	self assert: aSpaceship1 doneLaps equals: 1.	
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 1).	
 
 ]
 
@@ -105,8 +104,7 @@ BoardTileEffectTest >> testBHWhenGoingBackwardsCanReduceOneLap [
 	
 	aSpaceship1 turn: 23.
 	
-	self assert: aSpaceship1 position equals: 18.
-	self assert: aSpaceship1 doneLaps equals: 0.	
+	self assert: aSpaceship1 position equals: (Position in: 18 at: 0).	
 
 ]
 
@@ -121,7 +119,7 @@ BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleMovesBackwardsThenNoOt
 	
 	aSpaceship1 turn: 9.
 	
-	self assert: aSpaceship1 position equals:(5).
+	self assert: aSpaceship1 position equals:(Position in: 5 at: 0).
 	
 
 ]
@@ -135,7 +133,7 @@ BoardTileEffectTest >> testBHWhenSpaceShipLandsOnBlackHoleThenItMovesBackwards [
 	
 	aSpaceship1 turn: 9.
 	
-	self assert: aSpaceship1 position equals:(5).
+	self assert: aSpaceship1 position equals:(Position in: 5 at: 0).
 	
 
 ]
@@ -150,7 +148,7 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityAndRollIsBiggerThen
 	aSpaceship1 turn: 6.
 	aSpaceship1 turn: 6.
 	 
-	self assert: aSpaceship1 position equals: 12.
+	self assert: aSpaceship1 position equals: (Position in: 12 at: 0).
 ]
 
 { #category : 'tests' }
@@ -163,7 +161,7 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThe
 	aSpaceship1 turn: 6.
 	aSpaceship1 turn: 6.
 	 
-	self assert: aSpaceship1 position equals: 6.
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0).
 ]
 
 { #category : 'tests' }
@@ -176,8 +174,8 @@ BoardTileEffectTest >> testHJWhenSecondSpaceshipLandOnHyperJumpThenUsesSecondVal
 	aSpaceship1 turn: 4.
 	aSpaceship2 turn: 4.
 	 
-	self assert: aSpaceship1 position equals: 10.
-	self assert: aSpaceship2 position equals: 9.
+	self assert: aSpaceship1 position equals: (Position in: 10 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 9 at: 0).
 	
 ]
 
@@ -190,7 +188,7 @@ BoardTileEffectTest >> testHJWhenSpaceShipLandsOnHyperJumpThenItMovesAccordingTo
 	
 	aSpaceship1 turn: 4.
 	
-	self assert: aSpaceship1 position equals: 10.
+	self assert: aSpaceship1 position equals: (Position in: 10 at: 0).
 	
 ]
 
@@ -219,8 +217,8 @@ BoardTileEffectTest >> testMWWhenOtherSpaceShipRunsOutOfFuelThenItApplisPenaliza
 	aSpaceship2 turn: 4. "Cae en moonWalk y hace que la 1 retroceda"
 	 
 	"self assert: aSpaceship2 fuel equals: 26."
-	self assert: aSpaceship1 position equals: 0.
-	self assert: aSpaceship2 position equals: 4.
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 1).
+	self assert: aSpaceship2 position equals: (Position in: 4 at: 0).
 	
 ]
 
@@ -234,6 +232,6 @@ BoardTileEffectTest >> testMWWhenSpaceShipLandsOnMoonWalkThenOthersBack [
 	aSpaceship1 turn: 6.
 	aSpaceship2 turn: 4. "Cae en moonWalk y hace que la 1 retroceda"
 	 
-	self assert: aSpaceship2 position equals: 4."se queda en su posicion"
-	self assert: aSpaceship1 position equals: 3. "retrocedio 3 posiciones"
+	self assert: aSpaceship2 position equals: (Position in: 4 at: 0)."se queda en su posicion"
+	self assert: aSpaceship1 position equals: (Position in: 3 at: 0). "retrocedio 3 posiciones"
 ]

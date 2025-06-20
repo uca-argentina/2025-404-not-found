@@ -37,7 +37,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenGoesBackToTheBeggining [
 	aGame nextTurn.
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 0
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0)
 	
 ]
 
@@ -50,7 +50,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenLosesTwoTurns [
 	aGame nextTurn.
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 0
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0)
 	
 ]
 
@@ -65,7 +65,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenLosesTwoTurnsAndMovesAgain
 	"can move"
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 6
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0)
 	
 ]
 

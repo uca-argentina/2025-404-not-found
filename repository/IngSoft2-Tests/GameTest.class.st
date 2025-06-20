@@ -38,7 +38,7 @@ GameTest >> setUp [
 { #category : 'tests' }
 GameTest >> testAllTheSpaceshipsStartAtPosition0 [
 	
-	self assert: (aGame spaceships allSatisfy: [ :spaceship | spaceship position = 0 ]).
+	self assert: (aGame spaceships allSatisfy: [ :spaceship | spaceship position = (Position in: 0 at: 0) ]).
 ]
 
 { #category : 'tests' }
@@ -71,8 +71,8 @@ GameTest >> testTwoShipsMoveInDifferentTurns [
 	aGame nextTurn.
 	aGame nextTurn.
 	
-	self assert: aSpaceship1 position equals: 6.
-	self assert: aSpaceship2 position equals: 6.
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 6 at: 0).
 ]
 
 { #category : 'tests' }
@@ -80,8 +80,8 @@ GameTest >> testWhenADiceIsRolledOneSpaceshipMovesAndTheOtherDoesnt [
 
 	aGame nextTurn.
 	
-	self assert: aSpaceship1 position equals: 6.
-	self assert: aSpaceship2 position equals: 0.
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 	
 	
 ]
@@ -93,7 +93,7 @@ GameTest >> testWhenASpaceShipHasFallenIntoWormholeThenItChangesPosition [
 	aGame nextTurn.
 	aGame nextTurn.
 	
-	self assert: aSpaceship1 position equals: 18.
+	self assert: aSpaceship1 position equals: (Position in: 18 at: 0).
 	
 ]
 
@@ -108,7 +108,7 @@ GameTest >> testWhenTheDiceIsRolledASpaceshipMoves [
 
 	aGame nextTurn.
 	
-	self assert: aSpaceship1 position equals: 6
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0)
 	
 	
 ]
