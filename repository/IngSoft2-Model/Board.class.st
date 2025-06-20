@@ -35,7 +35,7 @@ Board >> addTile: tile [
 	(self checkLimits:(tile position) )~=0 ifTrue: [ 
 		 Error signal: 'Tile should be inside board'].
 
-	self tiles at: tile position put: tile
+	tiles at: tile position put: tile
 ]
 
 { #category : 'adding' }
@@ -78,52 +78,13 @@ Board >> checkLimits: position [
 	^ 0
 ]
 
-{ #category : 'accessing' }
-Board >> game [ 	
-	^game
-]
-
-{ #category : 'initialization' }
-Board >> initializeTiles [		
-	tiles := (1 to: size) collect: [ :pos |
-        | tile |
-        tile := CommonTile new.
-        tile position: pos.
-        tile
-    ].
-
-]
-
-{ #category : 'initialization' }
-Board >> initializeTilesRandom [
-    tiles := (1 to: size) collect: [ :i |
-        | tile |
-        tile := self randomTile.
-        tile position: i.
-        tile
-    ].
-]
-
-{ #category : 'initialization' }
-Board >> randomTile [
-    | r |
-    r := Random new next.
-
-    (r < 0.40) ifTrue: [ ^ CommonTile new ].
-    (r < 0.60) ifTrue: [ ^ BlackHole new ].
-    (r < 0.80) ifTrue: [ ^ HyperGravity new ].
-    (r < 0.90) ifTrue: [ ^ MoonWalk new ].
-    (r < 0.92) ifTrue: [ ^ AtomicBomb new ].
-    ^ HyperJump new.
-]
-
 { #category : 'initialization' }
 Board >> setGame: aGame [ 
 	game := aGame.
 ]
 
 { #category : 'accessing' }
-Board >> size [ 
+Board >> size [
 	^size
 ]
 
@@ -134,22 +95,16 @@ Board >> tileAt: position [
 	^ tiles at: position
 ]
 
-{ #category : 'accessing' }
-Board >> tiles [
-
-	^ tiles
-]
-
 { #category : 'initialization' }
 Board >> with: aSize [
 
 	size := aSize.
-	self initializeTiles
+	tiles := (TileDistributionStrategy new) initializeTiles: aSize.
 ]
 
 { #category : 'initialization' }
 Board >> withRandom: aSize [
 
 	size := aSize.
-	self initializeTilesRandom
+	tiles := (TileDistributionStrategy new) initializeTilesRandom: aSize.
 ]
