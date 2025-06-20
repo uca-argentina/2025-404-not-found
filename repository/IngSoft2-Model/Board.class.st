@@ -63,19 +63,14 @@ Board >> applyTileEffectTo: aSpaceship [
 ]
 
 { #category : 'check' }
-Board >> boardPosition: position [
-
-	"position < 0 ifTrue: [ ^ size + position ].
-	position > size ifTrue: [ ^ position \\ size - 1 ].
-	^ position"
-	
+Board >> boardPosition: position [	
 	| finalPosition |
 	finalPosition := position inside: size.
 	^finalPosition
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'check' }
 Board >> checkLimits: aNumber [
 	^ (aNumber<size) & (aNumber>0)
 	

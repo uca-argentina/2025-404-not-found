@@ -8,11 +8,9 @@ Class {
 		'position',
 		'name',
 		'board',
-		'doneLaps',
-		'fuel',
-		'maxFuel',
 		'penalization',
-		'exitRoll'
+		'exitRoll',
+		'fuelTank'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,7 +24,7 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 
 { #category : 'accessing' }
 Spaceship >> fuel [
-	^fuel
+	^ fuelTank fuel
 ]
 
 { #category : 'logic' }
@@ -40,9 +38,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	board:=aBoard.
 	position := Position in: 0 at: 0.
 	name := aName.
-	doneLaps := 0.
-	fuel := aMaxFuel.
-	maxFuel := aMaxFuel.
+	fuelTank := FuelTank with: aMaxFuel.
 	penalization := 0.
 	exitRoll := 0.
 ]
@@ -58,29 +54,15 @@ Spaceship >> managePenalization [
 	penalization == 0 ifTrue: [ ^ false ].
 	nil.
 	penalization := penalization - 1.
-	penalization == 0 ifTrue: [ self refuel ].
+	penalization == 0 ifTrue: [ fuelTank refuel ].
 	^ true
 ]
 
 { #category : 'moving' }
 Spaceship >> move: numberOfTiles [
-	"[
-		self checkLaps: position + numberOfTiles.
-		position := board boardPosition: position + numberOfTiles.
-		self useFuel: numberOfTiles.
-	] on: Error do: [ 
-		position := 0.
-		penalization := 2.
-		fuel := 0.
-	]"
-	[
-		position := board boardPosition: position + numberOfTiles.
-		self useFuel: numberOfTiles.
-	] on: Error do: [ 
-		position := position backToZero.
-		penalization := 2.
-		fuel := 0.
-	]
+
+	position := board boardPosition: position + numberOfTiles.
+	fuelTank useFuel: numberOfTiles from: self.
 	
 	
 	
@@ -91,6 +73,12 @@ Spaceship >> name [
 	^ name
 ]
 
+{ #category : 'logic' }
+Spaceship >> penalize [
+	position := position backToZero.
+	penalization := 2.
+]
+
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
@@ -98,7 +86,7 @@ Spaceship >> position [
 
 { #category : 'moving' }
 Spaceship >> refuel [
-	fuel := maxFuel.
+	fuelTank refuel
 ]
 
 { #category : 'initialization' }
@@ -115,12 +103,4 @@ Spaceship >> turn: numberOfTiles [
 	board applyTileEffectTo: self.
 
 	
-]
-
-{ #category : 'moving' }
-Spaceship >> useFuel: numberOfTiles [
-
-	fuel := fuel - numberOfTiles abs.
-	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
-		
 ]
