@@ -13,8 +13,7 @@ TileDistributionStrategy >> initializeTiles: numberOfTiles [
 	| tiles |
 	tiles := (1 to: numberOfTiles) collect: [ :pos |
         | tile |
-        tile := CommonTile new.
-        tile position: pos.
+        tile := CommonTile inPosition: pos.
         tile
     ].
 	^ tiles

@@ -10,7 +10,8 @@ Class {
 		'board',
 		'penalization',
 		'exitRoll',
-		'fuelTank'
+		'fuelTank',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,6 +21,16 @@ Class {
 Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
+]
+
+{ #category : 'accessing' }
+Spaceship >> cards [
+	^cards size
+]
+
+{ #category : 'cardLogic' }
+Spaceship >> drawCard: aCard [
+	cards add: aCard
 ]
 
 { #category : 'accessing' }
@@ -41,6 +52,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	fuelTank := FuelTank with: aMaxFuel.
 	penalization := 0.
 	exitRoll := 0.
+	cards := OrderedCollection new.
 ]
 
 { #category : 'logic' }
