@@ -11,7 +11,8 @@ Class {
 		'penalization',
 		'exitRoll',
 		'fuelTank',
-		'cards'
+		'cards',
+		'minusMoves'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -53,6 +54,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	penalization := 0.
 	exitRoll := 0.
 	cards := OrderedCollection new.
+	minusMoves :=0.
 ]
 
 { #category : 'logic' }
@@ -96,6 +98,11 @@ Spaceship >> position [
 	^ position
 ]
 
+{ #category : 'enumerating' }
+Spaceship >> reduce: penalty [ 
+	minusMoves:=penalty .
+]
+
 { #category : 'moving' }
 Spaceship >> refuel [
 	fuelTank refuel
@@ -111,8 +118,18 @@ Spaceship >> resetToStartWithoutFuelLoss [
 Spaceship >> turn: numberOfTiles [
 	(numberOfTiles < exitRoll ) ifTrue: [^self].
 	exitRoll := 0.
-	self move: numberOfTiles.
+	self move: numberOfTiles-minusMoves .
 	board applyTileEffectTo: self.
 
 	
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCardAgainst: anotherSpaceship [ 
+	| overloadCard |
+	overloadCard:= cards detect:[:card | card is:'overload' ] ifNone:[nil].
+	overloadCard ifNotNil: [ 
+		cards remove: overloadCard.
+		board applyCard: overloadCard to:anotherSpaceship 
+		].
 ]

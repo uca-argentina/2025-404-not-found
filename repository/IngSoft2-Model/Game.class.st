@@ -9,7 +9,8 @@ Class {
 		'dice',
 		'turnNumber',
 		'numberSpaceships',
-		'laps'
+		'laps',
+		'permanentCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,6 +36,13 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 	].
 ]
 
+{ #category : 'adding' }
+Game >> addPermanentCard: anOverloadCard against: aSpaceship [ 
+	permanentCards add: anOverloadCard.
+	anOverloadCard appliedTo:aSpaceship.
+	aSpaceship reduce: anOverloadCard penalty .
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	laps := numberLaps. 
@@ -42,6 +50,7 @@ Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	dice := someDice.
 	turnNumber := 1.
 	numberSpaceships := spaceships size.
+	permanentCards :=OrderedCollection new.
 ]
 
 { #category : 'logic' }

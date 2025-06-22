@@ -18,7 +18,7 @@ CardDeck >> addCard: aCard [
 
 { #category : 'drawing' }
 CardDeck >> draw [
-	^ 1
+	^ cards removeLast. 
 ]
 
 { #category : 'adding' }

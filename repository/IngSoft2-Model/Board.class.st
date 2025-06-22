@@ -55,6 +55,11 @@ Board >> addWormHolewithEntraceTile: entrance exitTile: exit [
 		addTile: tmp2
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> applyCard: anOverloadCard to: aSpaceship [ 
+	game addPermanentCard:anOverloadCard against:aSpaceship .
+]
+
 { #category : 'accessing' }
 Board >> applyTileEffectTo: aSpaceship [ 	
 	| tile |   

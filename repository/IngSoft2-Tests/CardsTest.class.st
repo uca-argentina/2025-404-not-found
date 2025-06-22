@@ -39,8 +39,10 @@ CardsTest >> setUp [
 
 { #category : 'tests' }
 CardsTest >> test01WhenSpaceshipLandsOnCardTileThenReceivesACard [
-	
-	drawCardTile setCardDeck: CardDeck new.
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: OverloadCard new.
+	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
 	
 	self assert: aSpaceship1 cards equals: 1.
@@ -50,10 +52,15 @@ CardsTest >> test01WhenSpaceshipLandsOnCardTileThenReceivesACard [
 { #category : 'tests' }
 CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 	
-	| drawCardTile2 |
-	drawCardTile setCardDeck: CardDeck new.
+	| drawCardTile2 aCardDeck1 aCardDeck2|
+	aCardDeck1:=CardDeck new.
+	aCardDeck1 addCard: OverloadCard new.
+	aCardDeck2:=CardDeck new.
+	aCardDeck2 addCard: OverloadCard new.
+	
+	drawCardTile setCardDeck: aCardDeck1 .
 	drawCardTile2 := DrawCardTile inPosition: 12.
-	drawCardTile2 setCardDeck: CardDeck new.
+	drawCardTile2 setCardDeck: aCardDeck2 .
 	aBoard addTile: drawCardTile2.
 	
 	aSpaceship1 turn: 6.
@@ -61,4 +68,32 @@ CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 	
 	self assert: aSpaceship1 cards equals: 2.
 	 
+]
+
+{ #category : 'tests' }
+CardsTest >> testWhenSpaceShipPicksUpOverloadCardAndUses [
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: OverloadCard new.
+	drawCardTile setCardDeck: aCardDeck.
+	
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: aSpaceship2 .
+	
+	self assert: aSpaceship1 cards equals: 0.
+]
+
+{ #category : 'tests' }
+CardsTest >> testWhenSpaceShipUsesOverloadCardAndApplyEffect [
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: OverloadCard new.
+	drawCardTile setCardDeck: aCardDeck.
+	
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: aSpaceship2 .
+	
+	aSpaceship2 turn:4.
+	
+	self assert: aSpaceship2 position equals:(Position in: 2 at: 0).
 ]
