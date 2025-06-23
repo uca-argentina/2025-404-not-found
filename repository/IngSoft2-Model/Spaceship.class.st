@@ -12,7 +12,8 @@ Class {
 		'exitRoll',
 		'fuelTank',
 		'cards',
-		'minusMoves'
+		'minusMoves',
+		'ally'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -22,6 +23,18 @@ Class {
 Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
 	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> allyWith: aSpaceship [
+	ally := aSpaceship.
+	
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> askForFuel: fuelNeeded [
+	ally ifNil: [ ^false ].
+	^ally shareFuel: fuelNeeded
 ]
 
 { #category : 'accessing' }
@@ -55,6 +68,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	exitRoll := 0.
 	cards := OrderedCollection new.
 	minusMoves :=0.
+	ally := nil.
 ]
 
 { #category : 'logic' }
@@ -114,6 +128,13 @@ Spaceship >> resetToStartWithoutFuelLoss [
 	position := position backToZero.
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> shareFuel: fuelNeeded [
+	^fuelTank shareFuel: fuelNeeded from: self.
+	
+	
+]
+
 { #category : 'logic' }
 Spaceship >> turn: numberOfTiles [
 	(numberOfTiles < exitRoll ) ifTrue: [^self].
@@ -124,7 +145,7 @@ Spaceship >> turn: numberOfTiles [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Spaceship >> useCardAgainst: anotherSpaceship [ 
 	| overloadCard |
 	overloadCard:= cards detect:[:card | card is:'overload' ] ifNone:[nil].
@@ -132,4 +153,9 @@ Spaceship >> useCardAgainst: anotherSpaceship [
 		cards remove: overloadCard.
 		board applyCard: overloadCard to:anotherSpaceship 
 		].
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCardAgainst: aSpaceship in: aGame [
+	(cards at: 1) useAgainst: aSpaceship from: self in: aGame
 ]

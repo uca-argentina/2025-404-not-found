@@ -22,9 +22,9 @@ CardsTest >> setUp [
 	super setUp.
 
 	"Put here a common initialization logic for tests"
-	aBoard := Board with: 20. 	
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 30. 	
-	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 30. 	
+	aBoard := Board with: 30. 	
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10. 	
+	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 10. 	
 	spaceships := { aSpaceship1 . aSpaceship2}. 	
 	"1 vuelta = 6 nextTurn     1   2   1   2   1   2 " 	
 	aDie1 := LoadedDie with: { 3 . 3 . 3 . 3}. 
@@ -59,19 +59,19 @@ CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 	aCardDeck2 addCard: OverloadCard new.
 	
 	drawCardTile setCardDeck: aCardDeck1 .
-	drawCardTile2 := DrawCardTile inPosition: 12.
+	drawCardTile2 := DrawCardTile inPosition: 9.
 	drawCardTile2 setCardDeck: aCardDeck2 .
 	aBoard addTile: drawCardTile2.
 	
 	aSpaceship1 turn: 6.
-	aSpaceship1 turn: 6.
+	aSpaceship1 turn: 3.
 	
 	self assert: aSpaceship1 cards equals: 2.
 	 
 ]
 
 { #category : 'tests' }
-CardsTest >> testWhenSpaceShipPicksUpOverloadCardAndUses [
+CardsTest >> test03WhenSpaceShipPicksUpOverloadCardAndUses [
 	| aCardDeck |
 	aCardDeck:=CardDeck new.
 	aCardDeck addCard: OverloadCard new.
@@ -84,7 +84,7 @@ CardsTest >> testWhenSpaceShipPicksUpOverloadCardAndUses [
 ]
 
 { #category : 'tests' }
-CardsTest >> testWhenSpaceShipUsesOverloadCardAndApplyEffect [
+CardsTest >> test04WhenSpaceShipUsesOverloadCardAndApplyEffect [
 	| aCardDeck |
 	aCardDeck:=CardDeck new.
 	aCardDeck addCard: OverloadCard new.
@@ -96,4 +96,48 @@ CardsTest >> testWhenSpaceShipUsesOverloadCardAndApplyEffect [
 	aSpaceship2 turn:4.
 	
 	self assert: aSpaceship2 position equals:(Position in: 2 at: 0).
+]
+
+{ #category : 'tests' }
+CardsTest >> test05WhenUsedAllyCardThenBothSpaceshipFuelsGoDown [
+
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: (Card with: Ally new).
+	drawCardTile setCardDeck: aCardDeck.
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn: 6.
+	
+	self assert: aSpaceship2 fuel equals: 8
+]
+
+{ #category : 'tests' }
+CardsTest >> test06WhenAllyRunsOutOfFuelThenBothRunOutOfFuel [
+
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: (Card with: Ally new).
+	drawCardTile setCardDeck: aCardDeck.
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn: 15.
+	
+	self assert: aSpaceship1 fuel equals: 0.
+	self assert: aSpaceship2 fuel equals: 0
+]
+
+{ #category : 'tests' }
+CardsTest >> test07WhenAllyRunsOutOfFuelThenBothRGoBackToZero [
+
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: (Card with: Ally new).
+	drawCardTile setCardDeck: aCardDeck.
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn: 15.
+	
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 ]

@@ -33,11 +33,21 @@ FuelTank >> refuel [
 	fuel := maxFuel.
 ]
 
+{ #category : 'as yet unclassified' }
+FuelTank >> shareFuel: fuelNeeded from: aSpaceship [
+	fuel := fuel - fuelNeeded abs.
+	fuel > 0 ifTrue: [ ^true ].
+	aSpaceship penalize.
+	fuel := 0.
+	^false.
+]
+
 { #category : 'moving' }
 FuelTank >> useFuel: numberOfTiles from: spaceship [
 
 	fuel := fuel - numberOfTiles abs.
 	fuel > 0 ifTrue: [ ^self ].
+	(spaceship askForFuel: fuel abs) ifTrue: [ ^self ].
 	spaceship penalize.
 	fuel := 0.
 ]

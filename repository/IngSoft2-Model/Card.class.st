@@ -1,0 +1,24 @@
+Class {
+	#name : 'Card',
+	#superclass : 'Object',
+	#instVars : [
+		'action'
+	],
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
+}
+
+{ #category : 'instance creation' }
+Card class >> with: anAction [
+	^ self new initializeWith: anAction.
+]
+
+{ #category : 'initialization' }
+Card >> initializeWith: anAction [
+	action := anAction 
+]
+
+{ #category : 'as yet unclassified' }
+Card >> useAgainst: aSpaceship from: cardSpaceship in: aGame [
+	action actOn: aSpaceship from: cardSpaceship in: aGame
+]
