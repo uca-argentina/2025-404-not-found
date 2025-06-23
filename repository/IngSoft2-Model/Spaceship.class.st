@@ -13,7 +13,8 @@ Class {
 		'fuelTank',
 		'cards',
 		'minusMoves',
-		'ally'
+		'ally',
+		'rollAddOn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -69,6 +70,7 @@ Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
 	cards := OrderedCollection new.
 	minusMoves :=0.
 	ally := nil.
+	rollAddOn := 0.
 ]
 
 { #category : 'logic' }
@@ -84,6 +86,11 @@ Spaceship >> managePenalization [
 	penalization := penalization - 1.
 	penalization == 0 ifTrue: [ fuelTank refuel ].
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> modifyRoll: aNumber [
+	rollAddOn := rollAddOn + aNumber.
 ]
 
 { #category : 'moving' }
@@ -139,7 +146,7 @@ Spaceship >> shareFuel: fuelNeeded [
 Spaceship >> turn: numberOfTiles [
 	(numberOfTiles < exitRoll ) ifTrue: [^self].
 	exitRoll := 0.
-	self move: numberOfTiles-minusMoves .
+	self move: numberOfTiles + rollAddOn.
 	board applyTileEffectTo: self.
 
 	

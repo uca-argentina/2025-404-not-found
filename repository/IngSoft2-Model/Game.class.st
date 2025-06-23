@@ -40,7 +40,7 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 Game >> addPermanentCard: anOverloadCard against: aSpaceship [ 
 	permanentCards add: anOverloadCard.
 	anOverloadCard appliedTo:aSpaceship.
-	aSpaceship reduce: anOverloadCard penalty .
+	aSpaceship modifyRoll: anOverloadCard penalty .
 ]
 
 { #category : 'initialization' }
@@ -56,6 +56,13 @@ Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 { #category : 'logic' }
 Game >> isFinished [
 	^ spaceships anySatisfy: [ :ship | ship hasWon: laps ].
+]
+
+{ #category : 'as yet unclassified' }
+Game >> modifyRollAll: aNumber [
+	
+	spaceships do: [ :ship | ship modifyRoll: aNumber ].
+	
 ]
 
 { #category : 'logic' }

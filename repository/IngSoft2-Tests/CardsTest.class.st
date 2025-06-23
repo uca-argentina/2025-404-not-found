@@ -141,3 +141,33 @@ CardsTest >> test07WhenAllyRunsOutOfFuelThenBothRGoBackToZero [
 	self assert: aSpaceship1 position equals: (Position in: 0 at: 0).
 	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 ]
+
+{ #category : 'tests' }
+CardsTest >> test08WhenAccelerationCardIsUsedThenTheNextMoveIsUpByOne [
+
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: (Card with: Acceleration new).
+	drawCardTile setCardDeck: aCardDeck.
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: nil in: aGame.
+	aSpaceship1 turn: 2.
+	
+	self assert: aSpaceship1 position equals: (Position in: 9 at: 0).
+]
+
+{ #category : 'tests' }
+CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
+
+	| aCardDeck |
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: (Card with: Acceleration new).
+	drawCardTile setCardDeck: aCardDeck.
+	aSpaceship1 turn: 6.
+	aSpaceship1 useCardAgainst: nil in: aGame.
+	aSpaceship2 turn: 6.
+	aSpaceship1 turn: 2.
+	
+	self assert: aSpaceship1 position equals: (Position in: 9 at: 0).
+	self assert: aSpaceship2 position equals: (Position in: 7 at: 0).
+]
