@@ -164,5 +164,6 @@ Spaceship >> useCardAgainst: anotherSpaceship [
 
 { #category : 'as yet unclassified' }
 Spaceship >> useCardAgainst: aSpaceship in: aGame [
-	(cards at: 1) useAgainst: aSpaceship from: self in: aGame
+	(cards at: 1) useAgainst: aSpaceship from: self in: aGame.
+	cards remove: (cards at: 1).
 ]

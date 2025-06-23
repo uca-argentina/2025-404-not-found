@@ -1,12 +1,12 @@
 Class {
-	#name : 'Acceleration',
+	#name : 'Cancellation',
 	#superclass : 'CardAction',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-Acceleration >> actOn: aSpaceship from: cardSpaceship in: aGame [ 
-	aGame modifyRollAll: 1
+Cancellation >> actOn: aSpaceship from: cardSpaceship in: aGame [
+	aGame removeCard 
 
 ]

@@ -74,11 +74,11 @@ CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 CardsTest >> test03WhenSpaceShipPicksUpOverloadCardAndUses [
 	| aCardDeck |
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: OverloadCard new.
+	aCardDeck addCard: (Card with: Overload new).
 	drawCardTile setCardDeck: aCardDeck.
 	
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 .
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
 	
 	self assert: aSpaceship1 cards equals: 0.
 ]
@@ -87,11 +87,11 @@ CardsTest >> test03WhenSpaceShipPicksUpOverloadCardAndUses [
 CardsTest >> test04WhenSpaceShipUsesOverloadCardAndApplyEffect [
 	| aCardDeck |
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: OverloadCard new.
+	aCardDeck addCard:(Card with: Overload new).
 	drawCardTile setCardDeck: aCardDeck.
 	
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 .
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
 	
 	aSpaceship2 turn:4.
 	

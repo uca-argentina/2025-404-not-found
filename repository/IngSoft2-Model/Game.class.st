@@ -80,6 +80,11 @@ Game >> nextTurn [
 	
 ]
 
+{ #category : 'removing' }
+Game >> removeCard [
+	permanentCards removeAt: 1.
+]
+
 { #category : 'logic' }
 Game >> rollDices [
 	| resultados |

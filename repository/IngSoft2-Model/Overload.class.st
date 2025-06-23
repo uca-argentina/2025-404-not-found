@@ -1,12 +1,12 @@
 Class {
-	#name : 'Acceleration',
+	#name : 'Overload',
 	#superclass : 'CardAction',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-Acceleration >> actOn: aSpaceship from: cardSpaceship in: aGame [ 
-	aGame modifyRollAll: 1
+Overload >> actOn: aSpaceship from: cardSpaceship in: aGame [
+	aSpaceship modifyRoll: -2
 
 ]
