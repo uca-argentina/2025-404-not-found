@@ -152,16 +152,6 @@ Spaceship >> turn: numberOfTiles [
 	
 ]
 
-{ #category : 'logic' }
-Spaceship >> useCardAgainst: anotherSpaceship [ 
-	| overloadCard |
-	overloadCard:= cards detect:[:card | card is:'overload' ] ifNone:[nil].
-	overloadCard ifNotNil: [ 
-		cards remove: overloadCard.
-		board applyCard: overloadCard to:anotherSpaceship 
-		].
-]
-
 { #category : 'as yet unclassified' }
 Spaceship >> useCardAgainst: aSpaceship in: aGame [
 	(cards at: 1) useAgainst: aSpaceship from: self in: aGame.

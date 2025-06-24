@@ -91,10 +91,24 @@ Game >> permanentCards [
 ]
 
 { #category : 'removing' }
+Game >> readLastCard [
+	permanentCards isEmptyOrNil ifTrue:[
+		^ NullCard with: NullAction new.
+	].
+	^ permanentCards removeAt: 1.
+	
+]
+
+{ #category : 'removing' }
 Game >> removeCard [
 	| removedCard |
-	removedCard := permanentCards removeAt: 1.
-	removedCard removeAction.
+	removedCard :=NullCard new.
+	permanentCards isEmptyOrNil ifFalse:[
+		removedCard := permanentCards removeAt: 1.
+		removedCard removeAction.
+		
+	].
+	^removedCard 
 	
 ]
 

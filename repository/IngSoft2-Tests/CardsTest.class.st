@@ -238,3 +238,38 @@ CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
 	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
 	
 ]
+
+{ #category : 'tests' }
+CardsTest >> test14WhenRepeatCardUsedPlaysLatestPlayedCard [
+	| repeat overload|
+	repeat := Card with: Repeat new.
+	overload := Card with: Overload new.
+	aSpaceship1 drawCard: repeat.
+	aSpaceship2 drawCard: overload. 
+	aSpaceship2 useCardAgainst: aSpaceship1 in: aGame. "uso de overload"
+	aSpaceship1 turn: 5. "caeria en 3"
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship2 turn: 3. "caeria en 1"
+
+"con debug, da una cosa si no otra"
+	self assert: aSpaceship2 position equals: (Position in: 1 at: 0).
+	self assert: aSpaceship1 position equals: (Position in: 3 at: 0).
+	self assert: aGame permanentCards equals: 2.
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test15WhenNotCardsInGameThenRepeatNoEffect [
+	| repeat overload|
+	repeat := Card with: Repeat new.
+	overload := Card with: Overload new.
+	aSpaceship1 drawCard: repeat.
+
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship2 turn: 3. "caeria en 1"
+
+"con debug, da una cosa si no otra"
+	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
+	self assert: aGame permanentCards equals: 0.
+	
+]
