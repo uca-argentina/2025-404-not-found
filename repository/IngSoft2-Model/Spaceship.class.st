@@ -40,7 +40,8 @@ Spaceship >> askForFuel: fuelNeeded [
 
 { #category : 'as yet unclassified' }
 Spaceship >> breakAlliance [
-	ally := nil.
+
+	ally := nil
 ]
 
 { #category : 'accessing' }
@@ -143,14 +144,22 @@ Spaceship >> shareFuel: fuelNeeded [
 ]
 
 { #category : 'logic' }
-Spaceship >> turn: numberOfTiles [
-	"ACA,chequea si saque max roll"
-	(numberOfTiles < exitRoll ) ifTrue: [^self].
-	exitRoll := 0.
-	self move: numberOfTiles + rollAddOn.
-	board applyTileEffectTo: self.
+Spaceship >> turn: arg1 [
 
-	
+	arg1 < exitRoll ifTrue: [ ^ self ].
+	nil.
+	exitRoll := 0.
+	self move: arg1 + rollAddOn.
+	board applyTileEffectTo: self
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCancellationOn: cardToRemove inGame: aGame [
+	| cancellationCard |
+	cancellationCard := cards detect: [:c | c action class = Cancellation] ifNone: [ Error signal:'No cancellation card was found' ].
+	cards remove: cancellationCard.
+	aGame removeCard: cardToRemove . 
+   ^cancellationCard 
 ]
 
 { #category : 'as yet unclassified' }

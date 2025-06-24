@@ -37,6 +37,16 @@ CardsTest >> setUp [
 	aBoard addTile: drawCardTile.
 ]
 
+{ #category : 'asserting' }
+CardsTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
+]
+
 { #category : 'tests' }
 CardsTest >> test01WhenSpaceshipLandsOnCardTileThenReceivesACard [
 	| aCardDeck |
@@ -175,7 +185,7 @@ CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
 ]
 
 { #category : 'tests' }
-CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminated [
+CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminatedtest [
 
 	| cancellation acceleration |
 	cancellation := Card with: Cancellation new.
@@ -183,7 +193,7 @@ CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminated [
 	aSpaceship1 drawCard: acceleration.
 	aSpaceship2 drawCard: cancellation. 
 	aSpaceship1 useCardAgainst: nil in: aGame. "uso de acceleration"
-	aSpaceship2 useCardAgainst: nil in: aGame. "uso de cancellation"
+	aSpaceship2 useCancellationOn: acceleration inGame: aGame. "uso de cancellation"
 	
 	self assert: aGame permanentCards equals: 0.
 	
@@ -199,7 +209,7 @@ CardsTest >> test11WhenUsedACancellationCardThenAccelerationActionIsGone [
 	aSpaceship2 drawCard: cancellation. 
 	aSpaceship1 useCardAgainst: nil in: aGame. "uso de acceleration"
 	aSpaceship1 turn: 2. "caeria en 3"
-	aSpaceship2 useCardAgainst: nil in: aGame. "uso de cancellation"
+	aSpaceship2 useCancellationOn: acceleration inGame: aGame. "uso de cancellation"
 	aSpaceship1 turn: 1. "caeria en 4 en vez de 5 ya que no esta mas"
 	
 	self assert: aSpaceship1 position equals: (Position in: 4 at: 0).
@@ -216,7 +226,7 @@ CardsTest >> test12WhenUsedACancellationCardThenOverloadActionIsGone [
 	aSpaceship2 drawCard: cancellation. 
 	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de overload"
 	aSpaceship2 turn: 5. "caeria en 3"
-	aSpaceship2 useCardAgainst: aSpaceship2 in: aGame. "uso de cancellation"
+	aSpaceship2 useCancellationOn: overload inGame: aGame. "uso de cancellation"
 	aSpaceship2 turn: 1. "caeria en 4" 
 	
 	self assert: aSpaceship2 position equals: (Position in: 4 at: 0).
@@ -234,7 +244,7 @@ CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
 	
 	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de overload"
 	aSpaceship1 turn: 12. "usa 2 combustible del otro"
-	aSpaceship2 useCardAgainst: aSpaceship2 in: aGame. "uso de cancellation"
+	aSpaceship2 useCancellationOn: ally inGame: aGame. "uso de cancellation"
 	aSpaceship1 turn: 2. "no tiene mas ally, se queda sin y vuelve a 0"
 	
 	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
@@ -242,7 +252,26 @@ CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
 ]
 
 { #category : 'tests' }
-CardsTest >> test14WhenRedoCardUsedPlaysLatestPlayedCard [
+CardsTest >> test14WhenUsedACancellationCardOnANonExistenCardThenIsInvalid [
+	| cancellation ally acceleration|
+	cancellation := Card with: Cancellation new.
+	ally := Card with: Ally new.
+	acceleration := Card with: Acceleration new.
+	aSpaceship1 drawCard: ally.
+	aSpaceship2 drawCard: cancellation. 
+	
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de ally"
+	aSpaceship1 turn: 12. "usa 2 combustible del otro"
+	 "uso de cancellation"
+	self
+		should: [ aSpaceship2 useCancellationOn: acceleration inGame: aGame.]
+		raise: Error
+		withMessageText: 'La carta a eliminar no esta en juego'.
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test15WhenRedoCardUsedPlaysLatestPlayedCard [
 	| redo overload|
 	redo := Card with: Redo new.
 	overload := Card with: Overload new.
@@ -261,7 +290,7 @@ CardsTest >> test14WhenRedoCardUsedPlaysLatestPlayedCard [
 ]
 
 { #category : 'tests' }
-CardsTest >> test15WhenNotCardsInGameThenRedoNoEffect [
+CardsTest >> test16WhenNotCardsInGameThenRedoNoEffect [
 	| redo overload|
 	redo := Card with: Redo new.
 	overload := Card with: Overload new.
@@ -270,14 +299,13 @@ CardsTest >> test15WhenNotCardsInGameThenRedoNoEffect [
 	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de redo"
 	aSpaceship2 turn: 3. "caeria en 1"
 
-"con debug, da una cosa si no otra"
 	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
 	self assert: aGame permanentCards equals: 0.
 	
 ]
 
 { #category : 'tests' }
-CardsTest >> test16WhenRedoCardUsedPlaysLatestAccelerationCard [
+CardsTest >> test17WhenRedoCardUsedPlaysLatestAccelerationCard [
 	|redo acceleration aCardDeck|
 	redo := Card with: Redo new.
 	acceleration := Card with: Acceleration new.

@@ -13,6 +13,11 @@ Card class >> with: anAction [
 	^ self new initializeWith: anAction.
 ]
 
+{ #category : 'accessing' }
+Card >> action [
+    ^ action
+]
+
 { #category : 'initialization' }
 Card >> initializeWith: anAction [
 	action := anAction 

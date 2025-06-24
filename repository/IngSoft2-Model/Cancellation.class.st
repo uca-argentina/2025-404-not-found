@@ -16,3 +16,9 @@ Cancellation >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	aGame removeCard. 
 
 ]
+
+{ #category : 'as yet unclassified' }
+Cancellation >> nameOfCard [
+^'cancellation'
+
+]

@@ -100,15 +100,14 @@ Game >> readLastCard [
 ]
 
 { #category : 'removing' }
-Game >> removeCard [
-	| removedCard |
-	removedCard :=NullCard new.
-	permanentCards isEmptyOrNil ifFalse:[
-		removedCard := permanentCards removeAt: 1.
-		removedCard removeAction.
-		
-	].
-	^removedCard 
+Game >> removeCard:aCard [
+     |toRemove |
+    toRemove := permanentCards detect: [:c | c class = aCard action class]
+        ifNone: [ Error signal: 'La carta a eliminar no esta en juego' ].
+
+    permanentCards remove: toRemove.
+    toRemove removeAction.
+    ^ toRemove
 	
 ]
 

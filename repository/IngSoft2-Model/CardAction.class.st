@@ -11,6 +11,11 @@ CardAction >> actOn: aSpaceship from: cardSpaceship in: aGame [
 
 ]
 
+{ #category : 'as yet unclassified' }
+CardAction >> nameOfCard [ 
+^self subclassResponsibility.
+]
+
 { #category : 'removing' }
 CardAction >> removeAction [
 	self subclassResponsibility.

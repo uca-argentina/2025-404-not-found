@@ -18,6 +18,11 @@ Overload >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 
 ]
 
+{ #category : 'as yet unclassified' }
+Overload >> nameOfCard [ 
+^'overload'
+]
+
 { #category : 'removing' }
 Overload >> removeAction [
 	spaceship modifyRoll: 2. 

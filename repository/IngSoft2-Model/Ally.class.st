@@ -19,6 +19,11 @@ Ally >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 
 ]
 
+{ #category : 'as yet unclassified' }
+Ally >> nameOfCard [ 
+^'ally'
+]
+
 { #category : 'removing' }
 Ally >> removeAction [
 	spaceship breakAlliance.

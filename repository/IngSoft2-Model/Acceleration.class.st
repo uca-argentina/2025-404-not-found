@@ -20,6 +20,11 @@ Acceleration >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 
 ]
 
+{ #category : 'as yet unclassified' }
+Acceleration >> nameOfCard [ 
+^'acceleration'
+]
+
 { #category : 'removing' }
 Acceleration >> removeAction [
 	game modifyRollAll: -1.

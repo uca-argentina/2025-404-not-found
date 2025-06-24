@@ -17,3 +17,8 @@ Redo >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	newCard:=(aGame readLastCard) class new.
 	newCard actOn: aSpaceship from: aCardSpaceship in: aGame.
 ]
+
+{ #category : 'as yet unclassified' }
+Redo >> nameOfCard [ 
+^'redo'
+]
