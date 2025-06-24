@@ -38,6 +38,11 @@ Spaceship >> askForFuel: fuelNeeded [
 	^ally shareFuel: fuelNeeded
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> breakAlliance [
+	ally := nil.
+]
+
 { #category : 'accessing' }
 Spaceship >> cards [
 	^cards size
@@ -117,11 +122,6 @@ Spaceship >> penalize [
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
-]
-
-{ #category : 'enumerating' }
-Spaceship >> reduce: penalty [ 
-	minusMoves:=penalty .
 ]
 
 { #category : 'moving' }

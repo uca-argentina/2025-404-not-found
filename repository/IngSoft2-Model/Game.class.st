@@ -37,6 +37,11 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 ]
 
 { #category : 'adding' }
+Game >> addCard: aCard [
+	permanentCards add: aCard.
+]
+
+{ #category : 'adding' }
 Game >> addPermanentCard: anOverloadCard against: aSpaceship [ 
 	permanentCards add: anOverloadCard.
 	anOverloadCard appliedTo:aSpaceship.
@@ -50,7 +55,7 @@ Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
 	dice := someDice.
 	turnNumber := 1.
 	numberSpaceships := spaceships size.
-	permanentCards :=OrderedCollection new.
+	permanentCards := OrderedCollection new.
 ]
 
 { #category : 'logic' }
@@ -80,9 +85,17 @@ Game >> nextTurn [
 	
 ]
 
+{ #category : 'accessing' }
+Game >> permanentCards [
+	^permanentCards size
+]
+
 { #category : 'removing' }
 Game >> removeCard [
-	permanentCards removeAt: 1.
+	| removedCard |
+	removedCard := permanentCards removeAt: 1.
+	removedCard removeAction.
+	
 ]
 
 { #category : 'logic' }

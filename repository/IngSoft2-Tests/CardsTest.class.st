@@ -171,3 +171,70 @@ CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
 	self assert: aSpaceship1 position equals: (Position in: 9 at: 0).
 	self assert: aSpaceship2 position equals: (Position in: 7 at: 0).
 ]
+
+{ #category : 'tests' }
+CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminated [
+
+	| cancellation acceleration |
+	cancellation := Card with: Cancellation new.
+	acceleration := Card with: Acceleration new.
+	aSpaceship1 drawCard: acceleration.
+	aSpaceship2 drawCard: cancellation. 
+	aSpaceship1 useCardAgainst: nil in: aGame. "uso de acceleration"
+	aSpaceship2 useCardAgainst: nil in: aGame. "uso de cancellation"
+	
+	self assert: aGame permanentCards equals: 0.
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test11WhenUsedACancellationCardThenAccelerationActionIsGone [
+
+	| cancellation acceleration |
+	cancellation := Card with: Cancellation new.
+	acceleration := Card with: Acceleration new.
+	aSpaceship1 drawCard: acceleration.
+	aSpaceship2 drawCard: cancellation. 
+	aSpaceship1 useCardAgainst: nil in: aGame. "uso de acceleration"
+	aSpaceship1 turn: 2. "caeria en 3"
+	aSpaceship2 useCardAgainst: nil in: aGame. "uso de cancellation"
+	aSpaceship1 turn: 1. "caeria en 4 en vez de 5 ya que no esta mas"
+	
+	self assert: aSpaceship1 position equals: (Position in: 4 at: 0).
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test12WhenUsedACancellationCardThenOverloadActionIsGone [
+
+	| cancellation overload |
+	cancellation := Card with: Cancellation new.
+	overload := Card with: Overload new.
+	aSpaceship1 drawCard: overload.
+	aSpaceship2 drawCard: cancellation. 
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de overload"
+	aSpaceship2 turn: 5. "caeria en 3"
+	aSpaceship2 useCardAgainst: aSpaceship2 in: aGame. "uso de cancellation"
+	aSpaceship2 turn: 1. "caeria en 4" 
+	
+	self assert: aSpaceship2 position equals: (Position in: 4 at: 0).
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
+
+	| cancellation ally |
+	cancellation := Card with: Cancellation new.
+	ally := Card with: Ally new.
+	aSpaceship1 drawCard: ally.
+	aSpaceship2 drawCard: cancellation. 
+	
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de overload"
+	aSpaceship1 turn: 12. "usa 2 combustible del otro"
+	aSpaceship2 useCardAgainst: aSpaceship2 in: aGame. "uso de cancellation"
+	aSpaceship1 turn: 2. "no tiene mas ally, se queda sin y vuelve a 0"
+	
+	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
+	
+]

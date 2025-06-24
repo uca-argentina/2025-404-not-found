@@ -1,5 +1,5 @@
 Class {
-	#name : 'Overload',
+	#name : 'Cancellation',
 	#superclass : 'CardAction',
 	#instVars : [
 		'spaceship',
@@ -10,15 +10,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Overload >> actOn: aSpaceship from: aCardSpaceship in: aGame [
+Cancellation >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	spaceship := aSpaceship.
 	cardSpaceship := aCardSpaceship.
-	aGame addCard: self.
-	aSpaceship modifyRoll: -2
+	aGame removeCard. 
 
-]
-
-{ #category : 'removing' }
-Overload >> removeAction [
-	spaceship modifyRoll: 2. 
 ]

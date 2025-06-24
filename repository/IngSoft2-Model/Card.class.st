@@ -19,6 +19,6 @@ Card >> initializeWith: anAction [
 ]
 
 { #category : 'as yet unclassified' }
-Card >> useAgainst: aSpaceship from: cardSpaceship in: aGame [
-	action actOn: aSpaceship from: cardSpaceship in: aGame
+Card >> useAgainst: aSpaceship from: aCardSpaceship in: aGame [
+	action actOn: aSpaceship from: aCardSpaceship in: aGame
 ]

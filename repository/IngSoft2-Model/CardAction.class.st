@@ -10,3 +10,8 @@ CardAction >> actOn: aSpaceship from: cardSpaceship in: aGame [
 	self subclassResponsibility 
 
 ]
+
+{ #category : 'removing' }
+CardAction >> removeAction [
+	self subclassResponsibility.
+]
