@@ -28,9 +28,11 @@ HyperJump >> applyEffectsTo: aSpaceship in: aGame [
 
 { #category : 'effects' }
 HyperJump >> convert: aConvertor with: sizeOfBoard and: aListOfValues [
+	| results |
 	convertor := aConvertor.
-	parsecs := convertor * sizeOfBoard.
-	originalList := aListOfValues asSortedCollection.
+	parsecs := convertor * (sizeOfBoard parsec).
+	results := aListOfValues collect: [ :each | each parsec ].
+	originalList := results asSortedCollection.
 	listOfValues := originalList asSortedCollection.
 ]
 

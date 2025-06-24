@@ -168,7 +168,7 @@ BoardTileEffectTest >> testHGWhenSpaceshipLandsOnHyperGravityButRollIsSmallerThe
 BoardTileEffectTest >> testHJWhenSecondSpaceshipLandOnHyperJumpThenUsesSecondValue [
 	| hyperJump | 	 	
 	hyperJump := HyperJump inPosition: 4. 	
-	hyperJump convert: 2 with: aBoard size and: {10 . 12 . 8 . 5 . 3. 2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
+	hyperJump convert: 2 with: (Parsec with:(aBoard size))and: {Parsec with:10 . Parsec with:12 . Parsec with:8 . Parsec with:5 . Parsec with:3. Parsec with:2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
 	aBoard addTile: hyperJump .
 	
 	aSpaceship1 turn: 4.
@@ -183,7 +183,7 @@ BoardTileEffectTest >> testHJWhenSecondSpaceshipLandOnHyperJumpThenUsesSecondVal
 BoardTileEffectTest >> testHJWhenSpaceShipLandsOnHyperJumpThenItMovesAccordingToParsecs [
 	| hyperJump | 	 	
 	hyperJump := HyperJump inPosition: 4. 	
-	hyperJump convert: 2 with: aBoard size and: {10 . 12 . 8 . 5 . 3. 2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
+	hyperJump convert: 2 with: (Parsec with:(aBoard size)) and: {Parsec with:10 . Parsec with:12 . Parsec with:8 . Parsec with:5 . Parsec with:3. Parsec with:2} . "es decir si el tamaño es 20, tendra 20*2 = 40 parsecs y esa es mi lista de valores maximos"
 	aBoard addTile: hyperJump .
 	
 	aSpaceship1 turn: 4.

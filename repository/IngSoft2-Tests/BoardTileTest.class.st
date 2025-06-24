@@ -86,7 +86,7 @@ BoardTileTest >> testWhenHyperJumpOutsideBoardThenNotAddedToBoard [
 	| hyperJump aBoard| 	 	
 	aBoard := Board with: 20. 
 	hyperJump := HyperJump inPosition: 22. 	 	
-	hyperJump convert: 2 with: aBoard size and: {10 . 12 . 8 . 5 . 3. 2} .
+	hyperJump convert: 2 with: (Parsec with:(aBoard size)) and: {Parsec with:10 . Parsec with:12 .Parsec with:8 . Parsec with:5 . Parsec with:3. Parsec with:2} .
 	self
 		should: [aBoard addTile: hyperJump .]
 		raise: Error

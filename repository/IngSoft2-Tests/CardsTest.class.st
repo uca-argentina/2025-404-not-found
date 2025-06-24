@@ -40,8 +40,9 @@ CardsTest >> setUp [
 { #category : 'tests' }
 CardsTest >> test01WhenSpaceshipLandsOnCardTileThenReceivesACard [
 	| aCardDeck |
+	
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: OverloadCard new.
+	aCardDeck addCard: (Card with: Overload new).
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
 	
@@ -53,10 +54,11 @@ CardsTest >> test01WhenSpaceshipLandsOnCardTileThenReceivesACard [
 CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 	
 	| drawCardTile2 aCardDeck1 aCardDeck2|
+	
 	aCardDeck1:=CardDeck new.
-	aCardDeck1 addCard: OverloadCard new.
+	aCardDeck1 addCard: (Card with: Overload new).
 	aCardDeck2:=CardDeck new.
-	aCardDeck2 addCard: OverloadCard new.
+	aCardDeck2 addCard: (Card with: Overload new).
 	
 	drawCardTile setCardDeck: aCardDeck1 .
 	drawCardTile2 := DrawCardTile inPosition: 9.
@@ -260,6 +262,38 @@ CardsTest >> test14WhenRepeatCardUsedPlaysLatestPlayedCard [
 
 { #category : 'tests' }
 CardsTest >> test15WhenNotCardsInGameThenRepeatNoEffect [
+	| repeat overload|
+	repeat := Card with: Repeat new.
+	overload := Card with: Overload new.
+	aSpaceship1 drawCard: repeat.
+
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship2 turn: 3. "caeria en 1"
+
+"con debug, da una cosa si no otra"
+	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
+	self assert: aGame permanentCards equals: 0.
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test15WhenUsedARedoCardAppliesSameEffectFromLastCard [
+	| repeat overload|
+	repeat := Card with: Repeat new.
+	overload := Card with: Overload new.
+	aSpaceship1 drawCard: repeat.
+
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship2 turn: 3. "caeria en 1"
+
+"con debug, da una cosa si no otra"
+	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
+	self assert: aGame permanentCards equals: 0.
+	
+]
+
+{ #category : 'tests' }
+CardsTest >> test16WhenUsedARedoCardAppliesSameEffectFromLastCard [
 	| repeat overload|
 	repeat := Card with: Repeat new.
 	overload := Card with: Overload new.

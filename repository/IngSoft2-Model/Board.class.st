@@ -81,6 +81,12 @@ Board >> checkLimits: aNumber [
 	
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> gotMaxRoll: valueRoll [
+	^ game maxRoll = valueRoll .
+	
+]
+
 { #category : 'initialization' }
 Board >> setGame: aGame [ 
 	game := aGame.

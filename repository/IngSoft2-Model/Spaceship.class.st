@@ -144,6 +144,7 @@ Spaceship >> shareFuel: fuelNeeded [
 
 { #category : 'logic' }
 Spaceship >> turn: numberOfTiles [
+	"ACA,chequea si saque max roll"
 	(numberOfTiles < exitRoll ) ifTrue: [^self].
 	exitRoll := 0.
 	self move: numberOfTiles + rollAddOn.
