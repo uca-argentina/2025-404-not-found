@@ -1,5 +1,5 @@
 Class {
-	#name : 'Repeat',
+	#name : 'Redo',
 	#superclass : 'CardAction',
 	#instVars : [
 		'spaceship',
@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Repeat >> actOn: aSpaceship from: aCardSpaceship in: aGame [ 
-	| lastCardPlayed newCard |
+Redo >> actOn: aSpaceship from: aCardSpaceship in: aGame [ 
+	| newCard |
 	spaceship:=aSpaceship .
 	cardSpaceship:=aCardSpaceship .
 	newCard:=(aGame readLastCard) class new.

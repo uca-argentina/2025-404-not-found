@@ -95,7 +95,7 @@ Game >> readLastCard [
 	permanentCards isEmptyOrNil ifTrue:[
 		^ NullCard with: NullAction new.
 	].
-	^ permanentCards removeAt: 1.
+	^ permanentCards last. "ya que usamos add para agregar al final"
 	
 ]
 

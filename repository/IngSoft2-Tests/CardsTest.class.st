@@ -242,15 +242,15 @@ CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
 ]
 
 { #category : 'tests' }
-CardsTest >> test14WhenRepeatCardUsedPlaysLatestPlayedCard [
-	| repeat overload|
-	repeat := Card with: Repeat new.
+CardsTest >> test14WhenRedoCardUsedPlaysLatestPlayedCard [
+	| redo overload|
+	redo := Card with: Redo new.
 	overload := Card with: Overload new.
-	aSpaceship1 drawCard: repeat.
+	aSpaceship1 drawCard: redo.
 	aSpaceship2 drawCard: overload. 
 	aSpaceship2 useCardAgainst: aSpaceship1 in: aGame. "uso de overload"
 	aSpaceship1 turn: 5. "caeria en 3"
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de redo"
 	aSpaceship2 turn: 3. "caeria en 1"
 
 "con debug, da una cosa si no otra"
@@ -261,13 +261,13 @@ CardsTest >> test14WhenRepeatCardUsedPlaysLatestPlayedCard [
 ]
 
 { #category : 'tests' }
-CardsTest >> test15WhenNotCardsInGameThenRepeatNoEffect [
-	| repeat overload|
-	repeat := Card with: Repeat new.
+CardsTest >> test15WhenNotCardsInGameThenRedoNoEffect [
+	| redo overload|
+	redo := Card with: Redo new.
 	overload := Card with: Overload new.
-	aSpaceship1 drawCard: repeat.
+	aSpaceship1 drawCard: redo.
 
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
+	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de redo"
 	aSpaceship2 turn: 3. "caeria en 1"
 
 "con debug, da una cosa si no otra"
@@ -277,33 +277,23 @@ CardsTest >> test15WhenNotCardsInGameThenRepeatNoEffect [
 ]
 
 { #category : 'tests' }
-CardsTest >> test15WhenUsedARedoCardAppliesSameEffectFromLastCard [
-	| repeat overload|
-	repeat := Card with: Repeat new.
-	overload := Card with: Overload new.
-	aSpaceship1 drawCard: repeat.
-
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
-	aSpaceship2 turn: 3. "caeria en 1"
-
-"con debug, da una cosa si no otra"
-	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
-	self assert: aGame permanentCards equals: 0.
+CardsTest >> test16WhenRedoCardUsedPlaysLatestAccelerationCard [
+	|redo acceleration aCardDeck|
+	redo := Card with: Redo new.
+	acceleration := Card with: Acceleration new.
+	aCardDeck:=CardDeck new.
+	aCardDeck addCard: acceleration .
+	drawCardTile setCardDeck: aCardDeck.
 	
-]
-
-{ #category : 'tests' }
-CardsTest >> test16WhenUsedARedoCardAppliesSameEffectFromLastCard [
-	| repeat overload|
-	repeat := Card with: Repeat new.
-	overload := Card with: Overload new.
-	aSpaceship1 drawCard: repeat.
-
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame. "uso de repeat"
-	aSpaceship2 turn: 3. "caeria en 1"
-
-"con debug, da una cosa si no otra"
-	self assert: aSpaceship2 position equals: (Position in: 3 at: 0).
-	self assert: aGame permanentCards equals: 0.
+	aSpaceship1 drawCard: redo.
+	aSpaceship2 turn:6. "cae y se le asigna acceleration"
+	aSpaceship2 useCardAgainst: nil in: aGame. "usa la carta"
+	aSpaceship1 turn: 4. "caeria en 5"
+	aSpaceship1 useCardAgainst: nil in: aGame. "uso de redo"
+	aSpaceship2 turn: 1. "caeria en 9"
 	
+
+	self assert: aSpaceship2 position equals: (Position in: 9 at: 0).
+	self assert: aSpaceship1 position equals: (Position in: 5 at: 0).
+	self assert: aGame permanentCards equals: 2.
 ]
