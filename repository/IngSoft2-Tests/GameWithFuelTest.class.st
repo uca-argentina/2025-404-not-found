@@ -30,6 +30,7 @@ GameWithFuelTest >> setUp [
 	spaceships := { aSpaceship1 }.
 	lap := 1.
 	aGame := Game with: spaceships andDice: dice laps: lap.
+	
 ]
 
 { #category : 'tests' }

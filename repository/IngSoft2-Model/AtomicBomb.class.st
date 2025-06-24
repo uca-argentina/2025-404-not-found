@@ -7,5 +7,6 @@ Class {
 
 { #category : 'effects' }
 AtomicBomb >> applyEffectsTo: aSpaceship in: aGame [
-    aGame activateAtomicBomb.
+	aGame saveLastEffect: [:aShip | aShip resetToStartWithoutFuelLoss ].
+   aGame activateAtomicBomb.
 ]

@@ -30,6 +30,7 @@ CircularGameTest >> setUp [
 	dice := { aDie1 . aDie2 }.
 	lap := 2.
 	aGame := Game with: spaceships andDice: dice laps: lap.
+	
 ]
 
 { #category : 'tests' }

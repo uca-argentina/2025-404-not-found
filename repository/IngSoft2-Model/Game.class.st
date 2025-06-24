@@ -10,7 +10,8 @@ Class {
 		'turnNumber',
 		'numberSpaceships',
 		'laps',
-		'permanentCards'
+		'permanentCards',
+		'lastEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -37,8 +38,9 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 ]
 
 { #category : 'adding' }
-Game >> addCard: aCard [
-	permanentCards add: aCard.
+Game >> addCard: arg1 [
+
+	permanentCards add: arg1
 ]
 
 { #category : 'adding' }
@@ -49,18 +51,24 @@ Game >> addPermanentCard: anOverloadCard against: aSpaceship [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: someSpaceShips andDice: someDice laps: numberLaps [
-	laps := numberLaps. 
-	spaceships := someSpaceShips.
-	dice := someDice.
+Game >> initializeWith: arg1 andDice: arg2 laps: arg3 [
+
+	laps := arg3.
+	spaceships := arg1.
+	dice := arg2.
 	turnNumber := 1.
 	numberSpaceships := spaceships size.
-	permanentCards := OrderedCollection new.
+	permanentCards := OrderedCollection new
 ]
 
 { #category : 'logic' }
 Game >> isFinished [
 	^ spaceships anySatisfy: [ :ship | ship hasWon: laps ].
+]
+
+{ #category : 'accessing' }
+Game >> lastEffect [
+^lastEffect 
 ]
 
 { #category : 'as yet unclassified' }
@@ -87,28 +95,30 @@ Game >> nextTurn [
 
 { #category : 'accessing' }
 Game >> permanentCards [
-	^permanentCards size
+
+	^ permanentCards size
 ]
 
 { #category : 'removing' }
 Game >> readLastCard [
-	permanentCards isEmptyOrNil ifTrue:[
-		^ NullCard with: NullAction new.
-	].
-	^ permanentCards last. "ya que usamos add para agregar al final"
-	
+
+	permanentCards isEmptyOrNil ifTrue: [
+		^ NullCard with: NullAction new ].
+	nil.
+	^ permanentCards last
 ]
 
 { #category : 'removing' }
-Game >> removeCard:aCard [
-     |toRemove |
-    toRemove := permanentCards detect: [:c | c class = aCard action class]
-        ifNone: [ Error signal: 'La carta a eliminar no esta en juego' ].
+Game >> removeCard: arg1 [
 
-    permanentCards remove: toRemove.
-    toRemove removeAction.
-    ^ toRemove
-	
+	| tmp1 |
+	tmp1 := permanentCards
+		        detect: [ :arg2 | arg2 class = arg1 action class ]
+		        ifNone: [
+		        Error signal: 'La carta a eliminar no esta en juego' ].
+	permanentCards remove: tmp1.
+	tmp1 removeAction.
+	^ tmp1
 ]
 
 { #category : 'logic' }
@@ -117,6 +127,11 @@ Game >> rollDices [
 	resultados := dice collect: [ :dado | dado roll ].
 	^ resultados sum.
 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> saveLastEffect: aBlock [
+	lastEffect :=aBlock .
 ]
 
 { #category : 'logic' }

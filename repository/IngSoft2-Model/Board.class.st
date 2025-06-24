@@ -64,7 +64,13 @@ Board >> applyCard: anOverloadCard to: aSpaceship [
 Board >> applyTileEffectTo: aSpaceship [ 	
 	| tile |   
 	tile := self tileAt: aSpaceship position. 	
-	tile ifNotNil: [ tile applyEffectsTo: aSpaceship in: game].
+	"
+	(tile notNil and: [ tile class ~= CommonTile ]) ifTrue: [
+        game ifNotNil: [ game saveLastEffect: tile ].
+    ]."
+    tile ifNotNil: [
+        tile applyEffectsTo: aSpaceship in: game
+    ].
 ]
 
 { #category : 'check' }

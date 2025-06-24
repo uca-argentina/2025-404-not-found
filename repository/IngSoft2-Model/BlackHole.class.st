@@ -7,5 +7,6 @@ Class {
 
 { #category : 'effects' }
 BlackHole >> applyEffectsTo: aSpaceship in: aGame [
+	aGame saveLastEffect: [:aShip | aShip move: -4. ].
 	aSpaceship move: -4.
 ]

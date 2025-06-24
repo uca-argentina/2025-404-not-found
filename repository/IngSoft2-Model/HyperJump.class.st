@@ -17,12 +17,13 @@ Class {
 { #category : 'effects' }
 HyperJump >> applyEffectsTo: aSpaceship in: aGame [
     | parsecsValue tilesToAdvance |
-
+	
     listOfValues isEmpty ifTrue: [ listOfValues := originalList copy ].
     parsecsValue := listOfValues max.
     listOfValues remove: parsecsValue.
 
     tilesToAdvance := parsecsValue // convertor.
+	 aGame saveLastEffect: [:aShip | aShip move:tilesToAdvance ].
     aSpaceship move: tilesToAdvance.
 ]
 

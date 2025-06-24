@@ -144,12 +144,12 @@ Spaceship >> shareFuel: fuelNeeded [
 ]
 
 { #category : 'logic' }
-Spaceship >> turn: arg1 [
+Spaceship >> turn: toMove [
 
-	arg1 < exitRoll ifTrue: [ ^ self ].
+	toMove < exitRoll ifTrue: [ ^ self ].
 	nil.
 	exitRoll := 0.
-	self move: arg1 + rollAddOn.
+	self move: toMove + rollAddOn.
 	board applyTileEffectTo: self
 ]
 
