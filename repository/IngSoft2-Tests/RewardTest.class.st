@@ -31,20 +31,23 @@ RewardTest >> setUp [
 	aDie2 := LoadedDie with: { 3 . 3 . 3 . 3}. 	
 	dice := { aDie1 . aDie2 }. 	lap := 2. 	
 	aGame := Game with: spaceships andDice: dice laps: lap. 	
-	aBoard setGame: aGame. 
-	
-	drawCardTile := DrawCardTile inPosition: 6.
-	aBoard addTile: drawCardTile.
+	aBoard setGame: aGame.
+
 ]
 
 { #category : 'tests' }
-RewardTest >> testWhenMaxRollGetsMaxFullPermanently [
-	| fullTank |
-	fullTank:= aSpaceship1 fuel.
-	aSpaceship1 turn:4.
-	aSpaceship2 turn:3.
-	aSpaceship1 turn:12.
-	
-	self assert: aSpaceship1 fuel equals: fullTank.
+RewardTest >> test01WhenMaxRollGetsMaxFuelPermanently [
+	aGame applyRewardTo: aSpaceship1 withPorcentageOf:100.
+	"Inicialmente tiene 10 de fuel, luego tendra un maximo en el tanque de 11, pero recordemos que el fuel que tiene seguira siendo 10 de 11"
+	self assert: aSpaceship1 checkFuelCapacity equals:11. "luego de un turno y de moverse 6 lugares quiero que se le sume 1 de fuel"
+
+]
+
+{ #category : 'tests' }
+RewardTest >> test02WhenMaxRollGetsOneLessFuel [
+	aGame applyRewardTo: aSpaceship1 withPorcentageOf:0.
+	"Inicialmente tiene 10 de fuel, pasara a 9 el que tiene, no del tanque"
+	self assert: aSpaceship1 fuel equals:9.
+
 
 ]

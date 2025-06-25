@@ -57,6 +57,12 @@ Spaceship >> cards [
 	^cards size
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> checkFuelCapacity [
+^fuelTank maxFuel
+
+]
+
 { #category : 'cardLogic' }
 Spaceship >> drawCard: aCard [
 	cards add: aCard
@@ -71,6 +77,12 @@ Spaceship >> fuel [
 Spaceship >> hasWon: laps [
 
 	^ position hasDoneLaps: laps
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> increaseMaxFuelBy: aNumberToIncreaseTank [
+	fuelTank increaseSize:aNumberToIncreaseTank.
+
 ]
 
 { #category : 'initialization' }
@@ -131,6 +143,12 @@ Spaceship >> penalize [
 { #category : 'accessing' }
 Spaceship >> position [
 	^ position
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> reduceFuelBy:aNumber [
+	fuelTank useFuel: 1 from: self.
+
 ]
 
 { #category : 'moving' }

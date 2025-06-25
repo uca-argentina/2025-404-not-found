@@ -22,10 +22,22 @@ FuelTank >> fuel [
 	^fuel
 ]
 
+{ #category : 'as yet unclassified' }
+FuelTank >> increaseSize:aNumber [
+	maxFuel := maxFuel +aNumber.
+
+]
+
 { #category : 'initialization' }
 FuelTank >> initializeWith: aMaxFuel [
 	fuel := aMaxFuel.
 	maxFuel := aMaxFuel.
+]
+
+{ #category : 'accessing' }
+FuelTank >> maxFuel [ 
+^maxFuel
+
 ]
 
 { #category : 'moving' }

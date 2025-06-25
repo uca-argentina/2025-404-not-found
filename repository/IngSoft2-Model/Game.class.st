@@ -50,6 +50,18 @@ Game >> addPermanentCard: anOverloadCard against: aSpaceship [
 	aSpaceship modifyRoll: anOverloadCard penalty .
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> applyRewardTo: aSpaceship withPorcentageOf: aPorcentage [
+	| randomNumber |
+
+    randomNumber := (Random new next * 100) rounded.
+
+    randomNumber <= aPorcentage
+        ifTrue: [ aSpaceship increaseMaxFuelBy: 1 ]
+        ifFalse: [ aSpaceship reduceFuelBy: 1 ].
+
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: arg1 andDice: arg2 laps: arg3 [
 
@@ -71,6 +83,12 @@ Game >> lastEffect [
 ^lastEffect 
 ]
 
+{ #category : 'accessing' }
+Game >> maximumValueOfDice [
+	 ^ dice sum: [:die | die numberSides]
+
+]
+
 { #category : 'as yet unclassified' }
 Game >> modifyRollAll: aNumber [
 	
@@ -81,13 +99,16 @@ Game >> modifyRollAll: aNumber [
 { #category : 'logic' }
 Game >> nextTurn [
 
-	| spaceship |
+	| spaceship positionsToMove|
 	self isFinished ifTrue: [ ^ self ].
 	spaceship := spaceships at: turnNumber.
 	((spaceship) managePenalization) ifFalse:[
-		spaceship turn: self rollDices.
+		positionsToMove:= self rollDices.
+		(positionsToMove = self maximumValueOfDice)ifTrue: [self applyRewardTo: spaceship withPorcentageOf: 80].
+		spaceship turn: positionsToMove.
 	].
 	turnNumber := (turnNumber \\ numberSpaceships) + 1.
+
 
 
 	
