@@ -24,8 +24,8 @@ CardsTest >> setUp [
 
 	"Put here a common initialization logic for tests"
 	aBoard := Board with: 30. 	
-	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10. 	
-	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 10. 	
+	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10 withCards: OrderedCollection new. 	
+	aSpaceship2 := Spaceship withName: 'Nave 2' withBoard: aBoard withMaxFuel: 10 withCards: OrderedCollection new. 	
 	aSpaceship3 := Spaceship withName: 'Nave 3' withBoard: aBoard withMaxFuel: 20. 
 	spaceships := { aSpaceship1 . aSpaceship2 . aSpaceship3}. 	
 	"1 vuelta = 6 nextTurn     1   2   1   2   1   2 " 	

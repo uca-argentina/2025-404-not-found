@@ -21,9 +21,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
+Spaceship class >> withName: aName withBoard: aBoard withMaxFuel: maxFuel [
+
+	aName size < 1 ifTrue: [
+		Error signal: 'Name should have at least one character' ].
+	^ self new initializeWith: aName withBoard: aBoard	 withMaxFuel: maxFuel withCards: nil
+]
+
+{ #category : 'instance creation' }
+Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel withCards: cards [
 	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
-	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
+	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel withCards: cards
 ]
 
 { #category : 'as yet unclassified' }
@@ -66,14 +74,14 @@ Spaceship >> hasWon: laps [
 ]
 
 { #category : 'initialization' }
-Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
+Spaceship >> initializeWith: aName withBoard: aBoard withMaxFuel: aMaxFuel withCards: someCards [
 	board:=aBoard.
 	position := Position in: 0 at: 0.
 	name := aName.
 	fuelTank := FuelTank with: aMaxFuel.
 	penalization := 0.
 	exitRoll := 0.
-	cards := OrderedCollection new.
+	cards := someCards.
 	minusMoves :=0.
 	ally := nil.
 	rollAddOn := 0.

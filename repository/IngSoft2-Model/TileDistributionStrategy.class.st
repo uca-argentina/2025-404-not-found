@@ -22,10 +22,10 @@ TileDistributionStrategy >> initializeTiles: numberOfTiles [
 { #category : 'initialization' }
 TileDistributionStrategy >> initializeTilesRandom: numberOfTiles [
    | tiles |
-	tiles := (1 to: numberOfTiles) collect: [ :i |
+	tiles := (1 to: numberOfTiles) collect: [ :pos |
         | tile |
         tile := self randomTile.
-        tile position: i.
+        tile position: pos.
         tile
     ].
 	^ tiles
