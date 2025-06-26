@@ -41,18 +41,18 @@ Board >> addTile: tile [
 { #category : 'adding' }
 Board >> addWormHolewithEntraceTile: entrance exitTile: exit [
 
-	| tmp1 tmp2 |
+	| entranceWormhole exitWormhole |
 	(entrance > size)  ifTrue: [
 		Error signal: 'Tile should be inside the board' ].
 	(exit > size)  ifTrue: [
 		Error signal: 'Tile should be inside the board' ].
 	
 	
-	tmp1 := WormHole inPosition: entrance withEffect: exit - entrance.
-	tmp2 := WormHole inPosition: exit withEffect: entrance - exit.
+	entranceWormhole := WormHole inPosition: entrance withEffect: exit - entrance.
+	exitWormhole := WormHole inPosition: exit withEffect: entrance - exit.
 	self
-		addTile: tmp1;
-		addTile: tmp2
+		addTile: entranceWormhole;
+		addTile: exitWormhole
 ]
 
 { #category : 'as yet unclassified' }

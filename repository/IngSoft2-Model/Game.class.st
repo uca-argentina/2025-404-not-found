@@ -38,9 +38,9 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 ]
 
 { #category : 'adding' }
-Game >> addCard: arg1 [
+Game >> addCard: aCard [
 
-	permanentCards add: arg1
+	permanentCards add: aCard 
 ]
 
 { #category : 'adding' }
@@ -63,11 +63,11 @@ Game >> applyRewardTo: aSpaceship withPorcentageOf: aPorcentage [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWith: arg1 andDice: arg2 laps: arg3 [
+Game >> initializeWith: someSpaceships andDice: someDice laps: someLaps [
 
-	laps := arg3.
-	spaceships := arg1.
-	dice := arg2.
+	laps := someLaps.
+	spaceships := someSpaceships.
+	dice := someDice.
 	turnNumber := 1.
 	numberSpaceships := spaceships size.
 	permanentCards := OrderedCollection new
@@ -130,16 +130,16 @@ Game >> readLastCard [
 ]
 
 { #category : 'removing' }
-Game >> removeCard: arg1 [
+Game >> removeCard: aCardToRemove [
 
-	| tmp1 |
-	tmp1 := permanentCards
-		        detect: [ :arg2 | arg2 class = arg1 action class ]
+	| cardToRemoveFromGame  |
+	cardToRemoveFromGame  := permanentCards
+		        detect: [ :aPermanentCard  | aPermanentCard  class = aCardToRemove action class ]
 		        ifNone: [
 		        Error signal: 'La carta a eliminar no esta en juego' ].
-	permanentCards remove: tmp1.
-	tmp1 removeAction.
-	^ tmp1
+	permanentCards remove: cardToRemoveFromGame .
+	cardToRemoveFromGame  removeAction.
+	^ cardToRemoveFromGame 
 ]
 
 { #category : 'logic' }
@@ -153,15 +153,6 @@ Game >> rollDices [
 { #category : 'as yet unclassified' }
 Game >> saveLastEffect: aBlock [
 	lastEffect :=aBlock .
-]
-
-{ #category : 'logic' }
-Game >> showStatus [
-	| status |
-	status := Dictionary new.
-	spaceships do: [ :ship  | 
-		status at: ship name put: { ship position . ship hasWon}].
-	^ status
 ]
 
 { #category : 'logic' }
