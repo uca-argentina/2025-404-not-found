@@ -25,6 +25,11 @@ LoadedDie >> initialize: anArrayNumbers [
 	index := 1.
 ]
 
+{ #category : 'accessing' }
+LoadedDie >> numberSides [
+	^6.
+]
+
 { #category : 'roll' }
 LoadedDie >> roll [
 	| result |

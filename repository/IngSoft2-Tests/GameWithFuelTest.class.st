@@ -30,6 +30,17 @@ GameWithFuelTest >> setUp [
 	spaceships := { aSpaceship1 }.
 	lap := 1.
 	aGame := Game with: spaceships andDice: dice laps: lap.
+	
+]
+
+{ #category : 'asserting' }
+GameWithFuelTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
 ]
 
 { #category : 'tests' }
@@ -37,7 +48,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenGoesBackToTheBeggining [
 	aGame nextTurn.
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 0
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0)
 	
 ]
 
@@ -50,7 +61,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenLosesTwoTurns [
 	aGame nextTurn.
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 0
+	self assert: aSpaceship1 position equals: (Position in: 0 at: 0)
 	
 ]
 
@@ -65,7 +76,7 @@ GameWithFuelTest >> testWhenSpaceshipRunsOutOfFuelThenLosesTwoTurnsAndMovesAgain
 	"can move"
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 position equals: 6
+	self assert: aSpaceship1 position equals: (Position in: 6 at: 0)
 	
 ]
 

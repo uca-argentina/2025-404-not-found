@@ -8,73 +8,99 @@ Class {
 		'position',
 		'name',
 		'board',
-		'doneLaps',
-		'fuel',
-		'maxFuel',
 		'penalization',
-		'lock',
-		'exitRoll'
+		'exitRoll',
+		'fuelTank',
+		'cards',
+		'minusMoves',
+		'ally',
+		'rollAddOn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'instance creation' }
-Spaceship class >> withName: aName withBoard:aBoard [
-	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
-	^ self new initializeWith: aName withBoard: aBoard 
+Spaceship class >> withName: aName withBoard: aBoard withMaxFuel: maxFuel [
+
+	aName size < 1 ifTrue: [
+		Error signal: 'Name should have at least one character' ].
+	^ self new initializeWith: aName withBoard: aBoard	 withMaxFuel: maxFuel withCards: nil
 ]
 
 { #category : 'instance creation' }
-Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel [
+Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel withCards: cards [
 	(aName size < 1) ifTrue: [ Error signal: 'Name should have at least one character'].
-	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel
+	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel withCards: cards
 ]
 
-{ #category : 'logic' }
-Spaceship >> checkLaps: arg1 [
+{ #category : 'as yet unclassified' }
+Spaceship >> allyWith: aSpaceship [
+	ally := aSpaceship.
+	
+]
 
-	doneLaps := doneLaps + (board checkLimits: arg1)
+{ #category : 'as yet unclassified' }
+Spaceship >> askForFuel: fuelNeeded [
+	ally ifNil: [ ^false ].
+	^ally shareFuel: fuelNeeded
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> breakAlliance [
+
+	ally := nil
 ]
 
 { #category : 'accessing' }
-Spaceship >> doneLaps [
+Spaceship >> cards [
+	^cards size
+]
 
-	^ doneLaps
+{ #category : 'as yet unclassified' }
+Spaceship >> checkFuelCapacity [
+^fuelTank maxFuel
+
+]
+
+{ #category : 'cardLogic' }
+Spaceship >> drawCard: aCard [
+	cards add: aCard
 ]
 
 { #category : 'accessing' }
 Spaceship >> fuel [
-	^fuel
-]
-
-{ #category : 'testing' }
-Spaceship >> hasEnoughFuelFor: delta [
-	^ fuel >= delta abs.
+	^ fuelTank fuel
 ]
 
 { #category : 'logic' }
-Spaceship >> hasWon: arg1 [
+Spaceship >> hasWon: laps [
 
-	^ doneLaps == arg1
+	^ position hasDoneLaps: laps
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> increaseMaxFuelBy: aNumberToIncreaseTank [
+	fuelTank increaseSize:aNumberToIncreaseTank.
+
 ]
 
 { #category : 'initialization' }
-Spaceship >> initializeWith: aName withBoard:aBoard withMaxFuel: aMaxFuel [
+Spaceship >> initializeWith: aName withBoard: aBoard withMaxFuel: aMaxFuel withCards: someCards [
 	board:=aBoard.
-	position := 0.
+	position := Position in: 0 at: 0.
 	name := aName.
-	doneLaps := 0.
-	fuel := aMaxFuel.
-	maxFuel := aMaxFuel.
+	fuelTank := FuelTank with: aMaxFuel.
 	penalization := 0.
-	lock := false.
 	exitRoll := 0.
+	cards := someCards.
+	minusMoves :=0.
+	ally := nil.
+	rollAddOn := 0.
 ]
 
 { #category : 'logic' }
 Spaceship >> lockUntil: anExitRoll [
-	lock := true.
 	exitRoll := anExitRoll.
 ]
 
@@ -84,23 +110,21 @@ Spaceship >> managePenalization [
 	penalization == 0 ifTrue: [ ^ false ].
 	nil.
 	penalization := penalization - 1.
-	penalization == 0 ifTrue: [ self refuel ].
+	penalization == 0 ifTrue: [ fuelTank refuel ].
 	^ true
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> modifyRoll: aNumber [
+	rollAddOn := rollAddOn + aNumber.
+]
+
 { #category : 'moving' }
-Spaceship >> move: numberOfBoxes [
-	[
-		self tryUnlock: numberOfBoxes.
-		(lock) ifFalse: [ 
-			self newPosition: numberOfBoxes.
-			board applyTileEffectTo: self.
-		]
-	] on: Error do: [ 
-		position := 0.
-		penalization := 2.
-		fuel := 0.
-	]
+Spaceship >> move: numberOfTiles [
+
+	position := board boardPosition: position + numberOfTiles.
+	fuelTank useFuel: numberOfTiles from: self.
+	
 	
 	
 ]
@@ -110,23 +134,10 @@ Spaceship >> name [
 	^ name
 ]
 
-{ #category : 'moving' }
-Spaceship >> newPosition: delta [
-	| newPos |
-	newPos := position + delta.
-	
-	(self hasEnoughFuelFor: delta) ifFalse: [
-		position := 0.
-		penalization := 2.
-		^self
-	].
-	self useFuel: delta.
-	self checkLaps: newPos.
-	position := board boardPosition: newPos.
-	"self useFuel: delta.
-	self checkLaps: position + delta.
-	position := board boardPosition: position + delta."
-	
+{ #category : 'logic' }
+Spaceship >> penalize [
+	position := position backToZero.
+	penalization := 2.
 ]
 
 { #category : 'accessing' }
@@ -134,28 +145,73 @@ Spaceship >> position [
 	^ position
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> reduceFuelBy:aNumber [
+	fuelTank useFuel: 1 from: self.
+
+]
+
 { #category : 'moving' }
 Spaceship >> refuel [
-
-	fuel := maxFuel
+	fuelTank refuel
 ]
 
 { #category : 'initialization' }
 Spaceship >> resetToStartWithoutFuelLoss [
 
-	position := 0
+	position := position backToZero.
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> shareFuel: fuelNeeded [
+	^fuelTank shareFuel: fuelNeeded from: self.
+	
+	
 ]
 
 { #category : 'logic' }
-Spaceship >> tryUnlock: aRoll [
-	(aRoll > exitRoll ) ifFalse: [^ self].
-	lock := false.
+Spaceship >> turn: toMove [
+
+	toMove < exitRoll ifTrue: [ ^ self ].
+	nil.
 	exitRoll := 0.
+	self move: toMove + rollAddOn.
+	board applyTileEffectTo: self
 ]
 
-{ #category : 'moving' }
-Spaceship >> useFuel: arg1 [
+{ #category : 'as yet unclassified' }
+Spaceship >> turn: aNumber playCard: aCard against: aSpaceship in:aGame [
+	self useCard: aCard against:aSpaceship during:aGame .
+	self turn: aNumber 
+]
 
-	fuel := fuel - arg1 abs.
-	fuel < 0 ifTrue: [ Error signal: 'Ran out of fuel' ]
+{ #category : 'as yet unclassified' }
+Spaceship >> useCancellationOn: cardToRemove inGame: aGame [
+	| cancellationCard |
+	cancellationCard := cards detect: [:c | c action class = Cancellation] ifNone: [ Error signal:'No cancellation card was found' ].
+	cards remove: cancellationCard.
+	aGame removeCard: cardToRemove . 
+   ^cancellationCard 
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCard: aCard against: aSpaceship during: aGame [
+	| cardToUse |
+	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].
+	cardToUse useAgainst: aSpaceship from: self during: aGame.
+	cards remove: (cards at: 1).
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCard: aCard against: aSpaceship in: aGame [
+	| cardToUse |
+	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].
+	cardToUse useAgainst: aSpaceship from: self in: aGame.
+	cards remove: (cards at: 1).
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCardAgainst: aSpaceship in: aGame [
+	(cards at: 1) useAgainst: aSpaceship from: self in: aGame.
+	cards remove: (cards at: 1).
 ]

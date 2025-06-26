@@ -26,7 +26,6 @@ BoardTile class >> inPosition: aPosition withEffect: anEffect [
 { #category : 'effects' }
 BoardTile >> applyEffectsTo: aSpaceship in: aGame [
     self subclassResponsibility.
-	"effects ifNotNil: [effects do: [ :effect | effect applyTo: aSpaceship ] ]."
 ]
 
 { #category : 'accessing' }
@@ -45,9 +44,4 @@ BoardTile >> inPosition: aPosition withEffect:anEffect [
 { #category : 'accessing' }
 BoardTile >> position [
 	^position 
-]
-
-{ #category : 'accessing' }
-BoardTile >> position: aNumber [
-	position:= aNumber
 ]

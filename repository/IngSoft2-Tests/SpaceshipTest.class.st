@@ -23,7 +23,7 @@ SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
 	aBoard := Board with: sizeOfBoard .
 	
 	self
-		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard. ]
+		should: [ aSpaceship := Spaceship withName: '' withBoard: aBoard withMaxFuel: 10. ]
 		raise: Error
 		withMessageText: 'Name should have at least one character'
 ]
@@ -36,7 +36,7 @@ SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
 	aBoard := Board with: sizeOfBoard .
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 
-	self assert: aSpaceship position equals: 0
+	self assert: aSpaceship position equals: (Position in: 0 at: 0)
 ]
 
 { #category : 'tests' }
@@ -59,7 +59,7 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	aSpaceship move: 8.
 
-	self assert: aSpaceship position equals: 8
+	self assert: aSpaceship position equals: (Position in: 8 at: 0)
 ]
 
 { #category : 'tests' }
@@ -71,5 +71,5 @@ SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
 	aSpaceship := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 20.
 	aSpaceship move: 1.
 
-	self assert: aSpaceship position equals: 1
+	self assert: aSpaceship position equals: (Position in: 1 at: 0)
 ]

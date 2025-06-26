@@ -22,6 +22,11 @@ Die >> initializeWith: sides [
 	numberSides := sides.
 ]
 
+{ #category : 'accessing' }
+Die >> numberSides [
+	^numberSides 
+]
+
 { #category : 'roll' }
 Die >> roll [
 	"Answer a random integer in the interval [1, anInteger]. De la biblioteca random"
