@@ -80,26 +80,28 @@ CardsTest >> test02WhenSpaceshipLandsOnCardTileTwiceThenHasTwoCards [
 
 { #category : 'tests' }
 CardsTest >> test03WhenSpaceShipPicksUpOverloadCardAndUses [
-	| aCardDeck |
+	| aCardDeck overloadCard|
+	overloadCard:=Card with: Overload new.
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Overload new).
+	aCardDeck addCard: overloadCard.
 	drawCardTile setCardDeck: aCardDeck.
 	
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn:1 playCard: overloadCard against: aSpaceship2 in:aGame .
 	
 	self assert: aSpaceship1 cards equals: 0.
 ]
 
 { #category : 'tests' }
 CardsTest >> test04WhenSpaceShipUsesOverloadCardAndApplyEffect [
-	| aCardDeck |
+	| aCardDeck overloadCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard:(Card with: Overload new).
+	overloadCard:=Card with: Overload new.
+	aCardDeck addCard:overloadCard.
 	drawCardTile setCardDeck: aCardDeck.
 	
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn:1 playCard: overloadCard against: aSpaceship2 in:aGame .
 	
 	aSpaceship2 turn:4.
 	
@@ -109,13 +111,13 @@ CardsTest >> test04WhenSpaceShipUsesOverloadCardAndApplyEffect [
 { #category : 'tests' }
 CardsTest >> test05WhenUsedAllyCardThenBothSpaceshipFuelsGoDown [
 
-	| aCardDeck |
+	| aCardDeck allyCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Ally new).
+	allyCard:=Card with: Ally new.
+	aCardDeck addCard: allyCard.
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
-	aSpaceship1 turn: 6.
+	aSpaceship1 turn:6 playCard: allyCard against: aSpaceship2 in: aGame.
 	
 	self assert: aSpaceship2 fuel equals: 8
 ]
@@ -123,13 +125,13 @@ CardsTest >> test05WhenUsedAllyCardThenBothSpaceshipFuelsGoDown [
 { #category : 'tests' }
 CardsTest >> test06WhenAllyRunsOutOfFuelThenBothRunOutOfFuel [
 
-	| aCardDeck |
+	| aCardDeck allyCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Ally new).
+	allyCard:=Card with:Ally new.
+	aCardDeck addCard: allyCard.
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
-	aSpaceship1 turn: 15.
+	aSpaceship1 turn:15 playCard: allyCard against: aSpaceship2 in: aGame.
 	
 	self assert: aSpaceship1 fuel equals: 0.
 	self assert: aSpaceship2 fuel equals: 0
@@ -138,13 +140,14 @@ CardsTest >> test06WhenAllyRunsOutOfFuelThenBothRunOutOfFuel [
 { #category : 'tests' }
 CardsTest >> test07WhenAllyRunsOutOfFuelThenBothRGoBackToZero [
 
-	| aCardDeck |
+	| aCardDeck allyCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Ally new).
+	allyCard:=Card with: Ally new.
+	aCardDeck addCard: allyCard.
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
-	aSpaceship1 turn: 15.
+	aSpaceship1 turn:15 playCard: allyCard against: aSpaceship2 in: aGame.
+
 	
 	self assert: aSpaceship1 position equals: (Position in: 0 at: 0).
 	self assert: aSpaceship2 position equals: (Position in: 0 at: 0).
@@ -153,13 +156,13 @@ CardsTest >> test07WhenAllyRunsOutOfFuelThenBothRGoBackToZero [
 { #category : 'tests' }
 CardsTest >> test08WhenAccelerationCardIsUsedThenTheNextMoveIsUpByOne [
 
-	| aCardDeck |
+	| aCardDeck accelerationCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Acceleration new).
+	accelerationCard:=Card with: Acceleration new.
+	aCardDeck addCard: accelerationCard.
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: nil in: aGame.
-	aSpaceship1 turn: 2.
+	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
 	
 	self assert: aSpaceship1 position equals: (Position in: 9 at: 0).
 ]
@@ -167,14 +170,14 @@ CardsTest >> test08WhenAccelerationCardIsUsedThenTheNextMoveIsUpByOne [
 { #category : 'tests' }
 CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
 
-	| aCardDeck |
+	| aCardDeck accelerationCard|
 	aCardDeck:=CardDeck new.
-	aCardDeck addCard: (Card with: Acceleration new).
+	accelerationCard:=Card with: Acceleration new.
+	aCardDeck addCard: accelerationCard.
 	drawCardTile setCardDeck: aCardDeck.
 	aSpaceship1 turn: 6.
-	aSpaceship1 useCardAgainst: nil in: aGame.
+	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
 	aSpaceship2 turn: 6.
-	aSpaceship1 turn: 2.
 	
 	self assert: aSpaceship1 position equals: (Position in: 9 at: 0).
 	self assert: aSpaceship2 position equals: (Position in: 7 at: 0).
@@ -183,28 +186,27 @@ CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
 { #category : 'tests' }
 CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminatedtest [
 
-	| tmp1 tmp2 |
+	| tmp1 accelerationCard |
 	tmp1 := Card with: Cancellation new.
-	tmp2 := Card with: Acceleration new.
-	aSpaceship1 drawCard: tmp2.
+	accelerationCard := Card with: Acceleration new.
+	aSpaceship1 drawCard: accelerationCard.
 	aSpaceship2 drawCard: tmp1.
-	aSpaceship1 useCardAgainst: nil in: aGame.
-	aSpaceship2 useCancellationOn: tmp2 inGame: aGame.
+	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
+	aSpaceship2 useCancellationOn: accelerationCard inGame: aGame.
 	self assert: aGame permanentCards equals: 0
 ]
 
 { #category : 'tests' }
 CardsTest >> test11WhenUsedACancellationCardThenAccelerationActionIsGone [
 
-	| tmp1 tmp2 |
+	| tmp1 accelerationCard |
 	tmp1 := Card with: Cancellation new.
-	tmp2 := Card with: Acceleration new.
-	aSpaceship1 drawCard: tmp2.
+	accelerationCard := Card with: Acceleration new.
+	aSpaceship1 drawCard: accelerationCard.
 	aSpaceship2 drawCard: tmp1.
-	aSpaceship1
-		useCardAgainst: nil in: aGame;
-		turn: 2.
-	aSpaceship2 useCancellationOn: tmp2 inGame: aGame.
+	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
+	
+	aSpaceship2 useCancellationOn: accelerationCard inGame: aGame.
 	aSpaceship1 turn: 1.
 	self assert: aSpaceship1 position equals: (Position in: 4 at: 0)
 ]
@@ -217,7 +219,7 @@ CardsTest >> test12WhenUsedACancellationCardThenOverloadActionIsGone [
 	tmp2 := Card with: Overload new.
 	aSpaceship1 drawCard: tmp2.
 	aSpaceship2 drawCard: tmp1.
-	aSpaceship1 useCardAgainst: aSpaceship2 in: aGame.
+	aSpaceship1 turn:1 playCard:tmp2 against:aSpaceship2 in:aGame.
 	aSpaceship2
 		turn: 5;
 		useCancellationOn: tmp2 inGame: aGame;
@@ -233,9 +235,8 @@ CardsTest >> test13WhenUsedACancellationCardThenAllyActionIsGone [
 	tmp2 := Card with: Ally new.
 	aSpaceship1 drawCard: tmp2.
 	aSpaceship2 drawCard: tmp1.
-	aSpaceship1
-		useCardAgainst: aSpaceship2 in: aGame;
-		turn: 12.
+	aSpaceship1 turn: 12 playCard: tmp2 against:aSpaceship2 in:aGame .
+		
 	aSpaceship2 useCancellationOn: tmp2 inGame: aGame.
 	aSpaceship1 turn: 2.
 	self assert: aSpaceship2 position equals: (Position in: 0 at: 0)
@@ -250,9 +251,7 @@ CardsTest >> test14WhenUsedACancellationCardOnANonExistenCardThenIsInvalid [
 	tmp3 := Card with: Acceleration new.
 	aSpaceship1 drawCard: tmp2.
 	aSpaceship2 drawCard: tmp1.
-	aSpaceship1
-		useCardAgainst: aSpaceship2 in: aGame;
-		turn: 12.
+	aSpaceship1 turn:12 playCard:tmp2 against:aSpaceship2 in:aGame .
 	self
 		should: [ aSpaceship2 useCancellationOn: tmp3 inGame: aGame ]
 		raise: Error
@@ -268,13 +267,13 @@ CardsTest >> test15WhenRedoCardUsedPlaysLatestPlayedCard [
 	aSpaceship1 drawCard: tmp1.
 	aSpaceship2
 		drawCard: tmp2;
-		useCardAgainst: aSpaceship1 in: aGame.
-	aSpaceship1
-		turn: 5;
-		useCardAgainst: aSpaceship2 in: aGame.
+		turn:1 playCard:tmp2 against:aSpaceship1 in:aGame.
+	aSpaceship1 turn:5 playCard:tmp1 against:aSpaceship2 in:aGame.
+		"turn: 5;
+		useCardAgainst: aSpaceship2 in: aGame."
 	aSpaceship2 turn: 3.
 	self
-		assert: aSpaceship2 position equals: (Position in: 1 at: 0);
+		assert: aSpaceship2 position equals: (Position in: 2 at: 0);
 		assert: aSpaceship1 position equals: (Position in: 3 at: 0);
 		assert: aGame permanentCards equals: 2
 ]
@@ -297,19 +296,19 @@ CardsTest >> test16WhenNotCardsInGameThenRedoNoEffect [
 { #category : 'tests' }
 CardsTest >> test17WhenRedoCardUsedPlaysLatestAccelerationCard [
 
-	| tmp1 tmp2 tmp3 |
+	| tmp1 accelerationCard tmp3 |
 	tmp1 := Card with: Redo new.
-	tmp2 := Card with: Acceleration new.
+	accelerationCard := Card with: Acceleration new.
 	tmp3 := CardDeck new.
-	tmp3 addCard: tmp2.
+	tmp3 addCard: accelerationCard.
 	drawCardTile setCardDeck: tmp3.
 	aSpaceship1 drawCard: tmp1.
 	aSpaceship2
 		turn: 6;
-		useCardAgainst: nil in: aGame.
+		turn: 1 playCard: accelerationCard against: nil in: aGame .
+	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
 	aSpaceship1
-		turn: 4;
-		useCardAgainst: nil in: aGame.
+		 turn: 4 playCard: accelerationCard against: nil in: aGame .
 	aSpaceship2 turn: 1.
 	self
 		assert: aSpaceship2 position equals: (Position in: 9 at: 0);

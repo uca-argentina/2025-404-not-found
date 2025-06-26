@@ -10,11 +10,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Overload >> actOn: aSpaceship from: aCardSpaceship in: aGame [
+Overload >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
 	spaceship := aSpaceship.
 	cardSpaceship := aCardSpaceship.
 	aGame addCard: self.
 	aSpaceship modifyRoll: -2
+]
+
+{ #category : 'as yet unclassified' }
+Overload >> actOn: aSpaceship from: aCardSpaceship in: aGame [
+	Error signal:'Permanent Card can only be played turing turn'
 
 ]
 

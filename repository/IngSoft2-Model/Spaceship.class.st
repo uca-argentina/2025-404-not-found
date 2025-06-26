@@ -180,12 +180,34 @@ Spaceship >> turn: toMove [
 ]
 
 { #category : 'as yet unclassified' }
+Spaceship >> turn: aNumber playCard: aCard against: aSpaceship in:aGame [
+	self useCard: aCard against:aSpaceship during:aGame .
+	self turn: aNumber 
+]
+
+{ #category : 'as yet unclassified' }
 Spaceship >> useCancellationOn: cardToRemove inGame: aGame [
 	| cancellationCard |
 	cancellationCard := cards detect: [:c | c action class = Cancellation] ifNone: [ Error signal:'No cancellation card was found' ].
 	cards remove: cancellationCard.
 	aGame removeCard: cardToRemove . 
    ^cancellationCard 
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCard: aCard against: aSpaceship during: aGame [
+	| cardToUse |
+	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].
+	cardToUse useAgainst: aSpaceship from: self during: aGame.
+	cards remove: (cards at: 1).
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> useCard: aCard against: aSpaceship in: aGame [
+	| cardToUse |
+	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].
+	cardToUse useAgainst: aSpaceship from: self in: aGame.
+	cards remove: (cards at: 1).
 ]
 
 { #category : 'as yet unclassified' }
