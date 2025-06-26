@@ -296,23 +296,20 @@ CardsTest >> test16WhenNotCardsInGameThenRedoNoEffect [
 { #category : 'tests' }
 CardsTest >> test17WhenRedoCardUsedPlaysLatestAccelerationCard [
 
-	| tmp1 accelerationCard tmp3 |
-	tmp1 := Card with: Redo new.
+	| redoCard accelerationCard tmp3 |
+	redoCard := Card with: Redo new.
 	accelerationCard := Card with: Acceleration new.
 	tmp3 := CardDeck new.
 	tmp3 addCard: accelerationCard.
 	drawCardTile setCardDeck: tmp3.
-	aSpaceship1 drawCard: tmp1.
+	aSpaceship1 drawCard: redoCard.
 	aSpaceship2
 		turn: 6;
 		turn: 1 playCard: accelerationCard against: nil in: aGame .
-	aSpaceship1 turn: 2 playCard: accelerationCard against: nil in: aGame .
-	aSpaceship1
-		 turn: 4 playCard: accelerationCard against: nil in: aGame .
-	aSpaceship2 turn: 1.
+	aSpaceship1 turn: 2 playCard: redoCard against: nil in: aGame .
 	self
-		assert: aSpaceship2 position equals: (Position in: 9 at: 0);
-		assert: aSpaceship1 position equals: (Position in: 5 at: 0);
+		assert: aSpaceship2 position equals: (Position in: 8 at: 0);
+		assert: aSpaceship1 position equals: (Position in: 4 at: 0);
 		assert: aGame permanentCards equals: 2
 ]
 

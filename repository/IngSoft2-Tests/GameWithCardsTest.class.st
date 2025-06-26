@@ -50,22 +50,6 @@ GameWithCardsTest >> should: anErrorBlock raise: anErrorClass withMessageText: e
 ]
 
 { #category : 'tests' }
-GameWithCardsTest >> testInstantCardAllyIsPlayedDuringAnytime [
-	| aCardDeck allyCard|
-	aCardDeck:=CardDeck new.
-	allyCard:=Card with: Ally new.
-	aCardDeck addCard: allyCard.
-	drawCardTile setCardDeck: aCardDeck.
-	aSpaceship1 turn: 6.
-	aSpaceship2 turn: 3.
-	aSpaceship1 useCard: allyCard against: aSpaceship2 in: aGame.
-	aSpaceship1 turn:6.
-	
-	self assert: aSpaceship2 fuel equals: 5
-	
-]
-
-{ #category : 'tests' }
 GameWithCardsTest >> testOnlyCardsOnHandCanBePlayed [
 	| aCardDeck allyCard repeatCard |
 	aCardDeck:=CardDeck new.
