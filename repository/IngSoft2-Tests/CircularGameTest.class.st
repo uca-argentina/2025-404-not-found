@@ -29,7 +29,8 @@ CircularGameTest >> setUp [
 	aDie2 := LoadedDie with: { 3 . 3 . 3 . 1}.
 	dice := { aDie1 . aDie2 }.
 	lap := 2.
-	aGame := Game with: spaceships andDice: dice laps: lap in:aBoard .
+	aGame := Game with: spaceships andDice: dice laps: lap .
+	aBoard setGame: aGame .
 	
 ]
 

@@ -47,7 +47,7 @@ GameBuilder >> buildGame [
 	cards := self addCards.
 	spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board withMaxFuel: maxFuel withCards: cards].
 
-	^ Game with: spaceships andDice: dice laps: laps in:board 
+	^ Game with: spaceships andDice: dice laps: laps 
 ]
 
 { #category : 'initialization' }

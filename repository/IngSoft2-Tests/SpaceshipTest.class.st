@@ -16,7 +16,7 @@ SpaceshipTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-SpaceshipTest >> testSpacheShipWithEmptyNameThenCreationFails [
+SpaceshipTest >> testSpaceShipWithEmptyNameThenCreationFails [
 
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.

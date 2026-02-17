@@ -23,11 +23,11 @@ Board class >> with: aBoardSize [
 ]
 
 { #category : 'instance creation' }
-Board class >> withRandom: arg1 [
+Board class >> withRandom: aNumber [
 
-	arg1 negative ifTrue: [
+	aNumber negative ifTrue: [
 		Error signal: 'Board size should be positive' ].
-	^ self new withRandom: arg1
+	^ self new withRandom: aNumber
 ]
 
 { #category : 'adding' }
@@ -89,7 +89,7 @@ Board >> checkLimits: aNumber [
 
 { #category : 'as yet unclassified' }
 Board >> gotMaxRoll: valueRoll [
-	^ game maxRoll = valueRoll .
+	^ game maximumValueOfDice = valueRoll .
 	
 ]
 

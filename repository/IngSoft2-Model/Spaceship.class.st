@@ -14,7 +14,8 @@ Class {
 		'cards',
 		'minusMoves',
 		'ally',
-		'rollAddOn'
+		'rollAddOn',
+		'jailTime'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -74,6 +75,12 @@ Spaceship >> fuel [
 ]
 
 { #category : 'logic' }
+Spaceship >> goToJailIn:aPosition [
+	position := Position in:aPosition at:0.
+	jailTime:=1.
+]
+
+{ #category : 'logic' }
 Spaceship >> hasWon: laps [
 
 	^ position hasDoneLaps: laps
@@ -97,24 +104,27 @@ Spaceship >> initializeWith: aName withBoard: aBoard withMaxFuel: aMaxFuel withC
 	minusMoves :=0.
 	ally := nil.
 	rollAddOn := 0.
-]
-
-{ #category : 'initialization' }
-Spaceship >> initializeWith: aName  withMaxFuel: aMaxFuel withCards: someCards [
-	position := Position in: 0 at: 0.
-	name := aName.
-	fuelTank := FuelTank with: aMaxFuel.
-	penalization := 0.
-	exitRoll := 0.
-	cards := someCards.
-	minusMoves :=0.
-	ally := nil.
-	rollAddOn := 0.
+	jailTime :=0.
 ]
 
 { #category : 'logic' }
 Spaceship >> lockUntil: anExitRoll [
 	exitRoll := anExitRoll.
+]
+
+{ #category : 'logic' }
+Spaceship >> manageJail: aRoll [
+	(aRoll isNumber )ifTrue: [  
+		(board gotMaxRoll: aRoll) ifTrue:[
+		jailTime:=0.
+		].
+		^jailTime = 1.
+	]
+	 ifFalse: [jailTime:=0.].
+	
+	
+	
+	
 ]
 
 { #category : 'logic' }
@@ -184,12 +194,15 @@ Spaceship >> shareFuel: fuelNeeded [
 
 { #category : 'logic' }
 Spaceship >> turn: toMove [
-
+	
 	toMove < exitRoll ifTrue: [ ^ self ].
 	nil.
 	exitRoll := 0.
-	self move: toMove + rollAddOn.
-	board applyTileEffectTo: self
+	(self manageJail:toMove) ifFalse:  [ 
+		self move: toMove + rollAddOn.
+		board applyTileEffectTo: self.
+		
+		 ]
 ]
 
 { #category : 'as yet unclassified' }
