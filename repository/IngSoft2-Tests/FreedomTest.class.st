@@ -1,12 +1,12 @@
 Class {
-	#name : 'InstantCardsTest',
+	#name : 'FreedomTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-InstantCardsTest >> testWhenSpaceshipJailedAndPlaysFreedomCard [
+FreedomTest >> testWhenSpaceshipJailedAndPlaysFreedomCard [
 
 	| aBoard aSpaceship1 aSpaceship2 spaceships aDie1 aDie2 dice lap aGame jail drawCardTile aCardDeck freedomCard |
 	aBoard := Board with: 20. 	
@@ -39,7 +39,7 @@ InstantCardsTest >> testWhenSpaceshipJailedAndPlaysFreedomCard [
 ]
 
 { #category : 'tests' }
-InstantCardsTest >> testWhenSpaceshipJailedReleasedAndPlaysRedo [
+FreedomTest >> testWhenSpaceshipJailedReleasedAndPlaysRedo [
 
 	| aBoard aSpaceship1 aSpaceship2 spaceships aDie1 aDie2 dice lap aGame jail drawCardTile aCardDeck freedomCard redoCard |
 	aBoard := Board with: 20. 	
