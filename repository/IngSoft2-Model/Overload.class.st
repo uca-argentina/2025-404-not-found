@@ -23,6 +23,6 @@ Overload >> nameOfCard [
 ]
 
 { #category : 'removing' }
-Overload >> removeAction: aGame [
+Overload >> removeAction:aSpaceship in:aGame [
 	aGame modifyRollAll: 2.
 ]

@@ -68,6 +68,24 @@ GameWithCardsTest >> testOnlyCardsOnHandCanBePlayed [
 ]
 
 { #category : 'tests' }
+GameWithCardsTest >> testPermanentCardAOverloadIsCantBePlayedOutsideTurn [
+	| aCardDeck overloadCard|
+	aCardDeck:=CardDeck new.
+	overloadCard:=Card with: Overload new.
+	aCardDeck addCard: overloadCard.
+	drawCardTile:= DrawCardTile inPosition: 6 withDeck: aCardDeck.
+	aBoard addTile: drawCardTile .
+
+	aSpaceship1 turn:6.
+	self
+		should: [ aSpaceship1 useCard: overloadCard against: aSpaceship2 in:aGame]
+		raise: Error
+		withMessageText: 'Permanent Card can only be played turing turn'
+		
+	
+]
+
+{ #category : 'tests' }
 GameWithCardsTest >> testPermanentCardAOverloadIsPlayedDuringTurn [
 	| aCardDeck overloadCard|
 	aCardDeck:=CardDeck new.
@@ -136,5 +154,21 @@ GameWithCardsTest >> testPermanentCardAllyIsCantBePlayedOutsideTurn [
 		withMessageText: 'Permanent Card can only be played turing turn'
 
 
+	
+]
+
+{ #category : 'tests' }
+GameWithCardsTest >> testPermanentCardAllyIsPlayedDuringTurn [
+	| aCardDeck allyCard |
+	aCardDeck:=CardDeck new.
+	allyCard:=Card with: Ally new.
+	aCardDeck addCard: allyCard.
+	drawCardTile:= DrawCardTile inPosition: 6 withDeck: aCardDeck.
+	aBoard addTile: drawCardTile .
+
+	aSpaceship2 turn:6 .
+	aSpaceship2 turn:2 playCard: allyCard against:aSpaceship1 in:aGame .
+	
+	self assert: aSpaceship2 position equals: (Position in: 8 at: 0).
 	
 ]

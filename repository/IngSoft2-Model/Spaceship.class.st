@@ -49,8 +49,11 @@ Spaceship >> askForFuel: fuelNeeded [
 
 { #category : 'as yet unclassified' }
 Spaceship >> breakAlliance [
-
-	ally := nil
+	|lostAlly|
+	lostAlly :=ally.
+	ally := nil.
+	^lostAlly .
+	
 ]
 
 { #category : 'accessing' }

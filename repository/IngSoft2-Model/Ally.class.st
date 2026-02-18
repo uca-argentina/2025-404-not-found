@@ -25,8 +25,7 @@ Ally >> nameOfCard [
 ]
 
 { #category : 'removing' }
-Ally >> removeAction:allies in:aGame [
-	allies first breakAlliance.
-	allies second breakAlliance.
+Ally >> removeAction:aSpaceship in:aGame [
+	(aSpaceship breakAlliance)breakAlliance .
 	
 ]

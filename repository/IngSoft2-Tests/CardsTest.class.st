@@ -192,7 +192,7 @@ CardsTest >> test09WhenAccelerationCardIsUsedThenAllMovesAreUpByOne [
 ]
 
 { #category : 'tests' }
-CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminatedtest [
+CardsTest >> test10WhenUsedACancellationCardThenAPermanentCardIsEliminated [
 
 	| cancellationCard accelerationCard |
 	cancellationCard := Card with: Cancellation new.

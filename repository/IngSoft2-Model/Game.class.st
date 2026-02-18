@@ -142,10 +142,10 @@ Game >> removeCard: aCardToRemove [
 	
 	permanentCards remove: cardToRemoveFromGame .
 	
-	targetSpaceship:= cardTargets at:aCardToRemove ifAbsent: [ nil ].
+	targetSpaceship:= (cardTargets at:cardToRemoveFromGame).
 	targetSpaceship ifNotNil: [ 
-		aCardToRemove removeAction:targetSpaceship in:self.
-		cardTargets removeKey:aCardToRemove ]ifNil: [ cardToRemoveFromGame  removeAction:self. ].
+		cardToRemoveFromGame removeAction:targetSpaceship in:self.
+		cardTargets removeKey:cardToRemoveFromGame ]ifNil: [ cardToRemoveFromGame  removeAction:self . ].
 	
 	^ cardToRemoveFromGame 
 ]
