@@ -26,7 +26,7 @@ Spaceship class >> withName: aName withBoard: aBoard withMaxFuel: maxFuel [
 
 	aName size < 1 ifTrue: [
 		Error signal: 'Name should have at least one character' ].
-	^ self new initializeWith: aName withBoard: aBoard	 withMaxFuel: maxFuel withCards: nil
+	^ self new initializeWith: aName withBoard: aBoard	 withMaxFuel: maxFuel withCards: OrderedCollection new.
 ]
 
 { #category : 'instance creation' }
@@ -75,6 +75,18 @@ Spaceship >> drawCard: aCard [
 { #category : 'accessing' }
 Spaceship >> fuel [
 	^ fuelTank fuel
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> getRewardWithPorcentage:aPorcentage [
+	| randomNumber |
+
+    randomNumber := (Random new next * 100) rounded.
+
+    randomNumber <= aPorcentage
+        ifTrue: [ self increaseMaxFuelBy: 1 ]
+        ifFalse: [ self reduceFuelBy: 1 ].
+	
 ]
 
 { #category : 'logic' }
@@ -132,11 +144,20 @@ Spaceship >> manageJail: aRoll [
 
 { #category : 'logic' }
 Spaceship >> managePenalization [
+	penalization isZero ifTrue: [ ^ false ].
 
-	penalization == 0 ifTrue: [ ^ false ].
-	nil.
 	penalization := penalization - 1.
-	penalization == 0 ifTrue: [ fuelTank refuel ].
+	penalization isZero ifTrue: [ fuelTank refuel ].
+
+	^ true
+]
+
+{ #category : 'logic' }
+Spaceship >> manageSkip [
+	penalization isZero ifTrue: [ ^ false ].
+
+	penalization := penalization - 1.
+
 	^ true
 ]
 
@@ -163,7 +184,7 @@ Spaceship >> name [
 { #category : 'logic' }
 Spaceship >> penalize [
 	position := position backToZero.
-	penalization := 2.
+	penalization := penalization +2.
 ]
 
 { #category : 'accessing' }
@@ -196,15 +217,18 @@ Spaceship >> shareFuel: fuelNeeded [
 ]
 
 { #category : 'logic' }
+Spaceship >> skip [
+	penalization := penalization + 1.
+]
+
+{ #category : 'logic' }
 Spaceship >> turn: toMove [
-	
-	toMove < exitRoll ifTrue: [ ^ self ].
-	nil.
-	exitRoll := 0.
+	(toMove < exitRoll )ifTrue: [ ^ self ].
+	(self manageSkip )ifTrue: [ ^self ].
+
 	(self manageJail:toMove) ifFalse:  [ 
 		self move: toMove + rollAddOn.
 		board applyTileEffectTo: self.
-		
 		 ]
 ]
 

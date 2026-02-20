@@ -12,7 +12,9 @@ Class {
 		'laps',
 		'permanentCards',
 		'lastEffect',
-		'cardTargets'
+		'cardTargets',
+		'orderTurns',
+		'extraTurn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -44,31 +46,25 @@ Game >> addCard: aCard against:aSpaceship [
 	cardTargets at: aCard put:aSpaceship .
 ]
 
+{ #category : 'logic' }
+Game >> addExtraTurn [
+	extraTurn :=true.
+]
+
 { #category : 'adding' }
 Game >> addPermanentCard: anOverloadCard against: aSpaceship [ 
 	self addCard:anOverloadCard against: aSpaceship .
 	aSpaceship modifyRoll: anOverloadCard penalty .
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> applyRewardTo: aSpaceship withPorcentageOf: aPorcentage [
-	| randomNumber |
-
-    randomNumber := (Random new next * 100) rounded.
-
-    randomNumber <= aPorcentage
-        ifTrue: [ aSpaceship increaseMaxFuelBy: 1 ]
-        ifFalse: [ aSpaceship reduceFuelBy: 1 ].
-
-]
-
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceships andDice: someDice laps: someLaps [
-	
+	extraTurn :=false.
 	laps := someLaps.
 	spaceships := someSpaceships.
 	dice := someDice.
 	turnNumber := 1.
+	orderTurns :=true.
 	numberSpaceships := spaceships size.
 	permanentCards := OrderedCollection new.
 	cardTargets:=Dictionary new.
@@ -82,6 +78,21 @@ Game >> isFinished [
 { #category : 'accessing' }
 Game >> lastEffect [
 ^lastEffect 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> manageTurn [
+	(extraTurn)ifFalse: [  
+		(orderTurns)ifTrue: [ 
+			turnNumber := (turnNumber \\ numberSpaceships) + 1.
+		 	] ifFalse: [ 
+				turnNumber := (turnNumber - 2 \\ numberSpaceships) + 1.
+			 ]
+		].
+	extraTurn :=false.
+
+	
+	
 ]
 
 { #category : 'accessing' }
@@ -99,17 +110,40 @@ Game >> modifyRollAll: aNumber [
 
 { #category : 'logic' }
 Game >> nextTurn [
-
 	| spaceship positionsToMove|
-	self isFinished ifTrue: [ ^ self ].
+	self isFinished ifTrue: [ ^ self ]. "veo si el juego esta terminado"
+	
 	spaceship := spaceships at: turnNumber. "obtengo nave actual"
 	
-	((spaceship) managePenalization) ifFalse:[
+	(spaceship managePenalization) ifFalse:[
 		positionsToMove:= self rollDices.
-		(positionsToMove = self maximumValueOfDice)ifTrue: [self applyRewardTo: spaceship withPorcentageOf: 80].
+		(positionsToMove = self maximumValueOfDice)ifTrue: [
+			spaceship getRewardWithPorcentage:80.
+		].
 		spaceship turn: positionsToMove.
 	].
-	turnNumber := (turnNumber \\ numberSpaceships) + 1.
+	self manageTurn .
+
+
+
+	
+]
+
+{ #category : 'logic' }
+Game >> nextTurnWithCard:aCard against:aSpaceship [
+	| spaceship positionsToMove|
+	self isFinished ifTrue: [ ^ self ]. "veo si el juego esta terminado"
+	
+	spaceship := spaceships at: turnNumber. "obtengo nave actual"
+	
+	(spaceship managePenalization) ifFalse:[
+		positionsToMove:= self rollDices.
+		(positionsToMove = self maximumValueOfDice)ifTrue: [
+			spaceship getRewardWithPorcentage:80.
+		].
+		spaceship turn: positionsToMove playCard: aCard against:aSpaceship in: self.
+	].
+	self manageTurn .
 
 
 
@@ -148,6 +182,12 @@ Game >> removeCard: aCardToRemove [
 		cardTargets removeKey:cardToRemoveFromGame ]ifNil: [ cardToRemoveFromGame  removeAction:self . ].
 	
 	^ cardToRemoveFromGame 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> reverseTurns [
+	orderTurns :=orderTurns not.
+	
 ]
 
 { #category : 'logic' }
