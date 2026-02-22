@@ -56,6 +56,21 @@ Spaceship >> breakAlliance [
 	
 ]
 
+{ #category : 'as yet unclassified' }
+Spaceship >> canExecuteMove:toMove [
+	(toMove < exitRoll) ifTrue: [ ^ false ].
+
+    "2. Validación de estado de salto (Skip)"
+    (self manageSkip) ifTrue: [ ^ false ].
+
+    "3. Validación de estado de cárcel (Jail)"
+    "Si manageJail devuelve true, significa que está atrapado [cite: 17]"
+    (self manageJail: toMove) ifTrue: [ ^ false ].
+
+    "Si pasó todas las validaciones, el camino está libre"
+    ^ true
+]
+
 { #category : 'accessing' }
 Spaceship >> cards [
 	^cards size
@@ -97,7 +112,6 @@ Spaceship >> goToJailIn:aPosition [
 
 { #category : 'logic' }
 Spaceship >> hasWon: laps [
-
 	^ position hasDoneLaps: laps
 ]
 
@@ -223,19 +237,19 @@ Spaceship >> skip [
 
 { #category : 'logic' }
 Spaceship >> turn: toMove [
-	(toMove < exitRoll )ifTrue: [ ^ self ].
-	(self manageSkip )ifTrue: [ ^self ].
-
-	(self manageJail:toMove) ifFalse:  [ 
-		self move: toMove + rollAddOn.
-		board applyTileEffectTo: self.
-		 ]
+	self turn: toMove playCard: nil against: nil in:nil.
 ]
 
 { #category : 'as yet unclassified' }
-Spaceship >> turn: aNumber playCard: aCard against: aSpaceship in:aGame [
-	self useCard: aCard against:aSpaceship during:aGame .
-	self turn: aNumber 
+Spaceship >> turn: toMove playCard: aCard against: aSpaceship in:aGame [
+	aCard ifNotNil: [ self useCard: aCard against: aSpaceship during: aGame ]. 
+
+    "2. Validación de Movimiento: Protección y Ocultamiento [cite: 17, 27]"
+    (self canExecuteMove: toMove) ifFalse: [ ^ self ].
+
+    "3. Ejecución: Acceso Uniforme y Mapeo Directo [cite: 32, 20]"
+    self move: (toMove + rollAddOn).
+    board applyTileEffectTo: self.
 ]
 
 { #category : 'as yet unclassified' }

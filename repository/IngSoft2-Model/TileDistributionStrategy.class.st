@@ -33,13 +33,16 @@ TileDistributionStrategy >> initializeTilesRandom: numberOfTiles [
 
 { #category : 'initialization' }
 TileDistributionStrategy >> randomTile [
-    | r |
+   | r strategies |
     r := Random new next.
-
-    (r < 0.40) ifTrue: [ ^ CommonTile new ].
-    (r < 0.60) ifTrue: [ ^ BlackHole new ].
-    (r < 0.80) ifTrue: [ ^ HyperGravity new ].
-    (r < 0.90) ifTrue: [ ^ MoonWalk new ].
-    (r < 0.92) ifTrue: [ ^ AtomicBomb new ].
-    ^ HyperJump new.
+    strategies := { 
+        0.40 -> [ CommonTile new ].
+        0.60 -> [ BlackHole new ].
+        0.80 -> [ HyperGravity new ].
+        0.90 -> [ MoonWalk new ].
+        0.92 -> [ AtomicBomb new ].
+        1.00 -> [ HyperJump new ] 
+    }.
+    
+    ^ (strategies detect: [ :assoc | r < assoc key ]) value value.
 ]
