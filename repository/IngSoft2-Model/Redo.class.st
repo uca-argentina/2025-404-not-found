@@ -13,13 +13,13 @@ Redo class >> className [
 { #category : 'as yet unclassified' }
 Redo >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
 	| newCard |
-	newCard:=(aGame readLastCard) class new.
+	newCard:=((aGame cards )readLastCard) class new.
 	newCard actOn: aSpaceship from: aCardSpaceship during: aGame.
 ]
 
 { #category : 'as yet unclassified' }
 Redo >> actOn: aSpaceship from: aCardSpaceship in: aGame [ 
 	| newCard |
-	newCard:=(aGame readLastCard) class new.
+	newCard:=((aGame cards) readLastCard) class new.
 	newCard actOn: aSpaceship from: aCardSpaceship in: aGame.
 ]

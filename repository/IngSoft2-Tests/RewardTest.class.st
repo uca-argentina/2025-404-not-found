@@ -47,7 +47,7 @@ RewardTest >> test01WhenMaxRollGetsMaxFuelPermanently [
 RewardTest >> test02WhenMaxRollGetsOneLessFuel [
 	aSpaceship1 getRewardWithPorcentage:0.
 	"Inicialmente tiene 10 de fuel, pasara a 9 el que tiene, no del tanque"
-	self assert: aSpaceship1 fuel equals:9.
+	self assert: aSpaceship1 fuelTank fuel equals:9.
 
 
 ]

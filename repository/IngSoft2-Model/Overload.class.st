@@ -12,7 +12,8 @@ Overload class >> className [
 
 { #category : 'as yet unclassified' }
 Overload >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
-	aGame addCard: self against: aSpaceship .
+	"aGame addCard: self against: aSpaceship ."
+	aGame cards add: self against: aSpaceship .
 	aSpaceship modifyRoll: -2
 ]
 

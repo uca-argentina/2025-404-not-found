@@ -99,7 +99,7 @@ GameWithFuelTest >> testWhenSpaceshipSkipsOwnTurnThenFuelGoesBackToMax [
 	aGame nextTurn.
 	aGame skipTurn.
 		
-	self assert: aSpaceship1 fuel equals: 10
+	self assert: aSpaceship1 fuelTank fuel equals: 10
 	
 ]
 
@@ -112,6 +112,6 @@ GameWithFuelTest >> testWhenTwoTurnsAreSkippedFuelGoesBackToMax [
 	aGame nextTurn.
 	aGame nextTurn.
 		
-	self assert: aSpaceship1 fuel equals: 10
+	self assert: aSpaceship1 fuelTank fuel equals: 10
 	
 ]

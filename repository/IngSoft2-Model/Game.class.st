@@ -10,11 +10,10 @@ Class {
 		'turnNumber',
 		'numberSpaceships',
 		'laps',
-		'permanentCards',
 		'lastEffect',
-		'cardTargets',
 		'extraTurn',
-		'direction'
+		'direction',
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -40,24 +39,12 @@ Game >> activateMoonWalk: nTiles from: triggeringSpaceship [
 	].
 ]
 
-{ #category : 'adding' }
-Game >> addCard: aCard against:aSpaceship [
-	permanentCards add: aCard .
-	cardTargets at: aCard put:aSpaceship .
-]
-
 { #category : 'logic' }
 Game >> addExtraTurn [
 	extraTurn :=extraTurn +1.
 ]
 
-{ #category : 'adding' }
-Game >> addPermanentCard: anOverloadCard against: aSpaceship [ 
-	self addCard:anOverloadCard against: aSpaceship .
-	aSpaceship modifyRoll: anOverloadCard penalty .
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Game >> advanceTurn [
 	extraTurn > 0 ifTrue: [ 
         extraTurn := extraTurn - 1. 
@@ -66,8 +53,14 @@ Game >> advanceTurn [
 	
 ]
 
+{ #category : 'accessing' }
+Game >> cards [ 	
+	^cardManager 
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceships andDice: someDice laps: someLaps [
+	cardManager:=CardManager of:self.
 	direction:=1.
 	extraTurn := 0.
 	laps := someLaps.
@@ -75,8 +68,7 @@ Game >> initializeWith: someSpaceships andDice: someDice laps: someLaps [
 	dice := someDice.
 	turnNumber := 1.
 	numberSpaceships := spaceships size.
-	permanentCards := OrderedCollection new.
-	cardTargets:=Dictionary new.
+
 ]
 
 { #category : 'logic' }
@@ -95,7 +87,7 @@ Game >> maximumValueOfDice [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Game >> modifyRollAll: aNumber [
 	
 	spaceships do: [ :ship | ship modifyRoll: aNumber ].
@@ -125,47 +117,13 @@ Game >> nextTurnWithCard:aCard against:targetSpaceship [
 	self advanceTurn.
 ]
 
-{ #category : 'accessing' }
-Game >> permanentCards [
-
-	^ permanentCards size
-]
-
 { #category : 'logic' }
 Game >> ranking [
 	^ spaceships asSortedCollection: [ :shipA :shipB | 
         shipA isAheadOf: shipB ]
 ]
 
-{ #category : 'removing' }
-Game >> readLastCard [
-
-	permanentCards isEmptyOrNil ifTrue: [
-		^ NullCard with: NullAction new ].
-	nil.
-	^ permanentCards last
-]
-
-{ #category : 'removing' }
-Game >> removeCard: aCardToRemove [
-
-	| cardToRemoveFromGame  targetSpaceship |
-	cardToRemoveFromGame  := permanentCards
-		        detect: [ :aPermanentCard  | aPermanentCard  class = aCardToRemove action class ]
-		        ifNone: [
-		        Error signal: 'La carta a eliminar no esta en juego' ].
-	
-	permanentCards remove: cardToRemoveFromGame .
-	
-	targetSpaceship:= (cardTargets at:cardToRemoveFromGame).
-	targetSpaceship ifNotNil: [ 
-		cardToRemoveFromGame removeAction:targetSpaceship in:self.
-		cardTargets removeKey:cardToRemoveFromGame ]ifNil: [ cardToRemoveFromGame  removeAction:self . ].
-	
-	^ cardToRemoveFromGame 
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Game >> reverseTurns [
 	direction :=direction negated.
 	
@@ -179,7 +137,7 @@ Game >> rollDices [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Game >> saveLastEffect: aBlock [
 	lastEffect :=aBlock .
 ]
@@ -194,4 +152,9 @@ Game >> skipTurn [
 { #category : 'accessing' }
 Game >> spaceships [
 	^ spaceships 
+]
+
+{ #category : 'accessing' }
+Game >> turn [
+	^turnNumber .
 ]

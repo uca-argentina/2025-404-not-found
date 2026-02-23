@@ -10,7 +10,7 @@ Cancellation class >> className [
 	'Cancellation'.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 Cancellation >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 
 	aGame removeCard. 

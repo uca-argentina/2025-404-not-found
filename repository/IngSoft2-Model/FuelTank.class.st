@@ -22,7 +22,7 @@ FuelTank >> fuel [
 	^fuel
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 FuelTank >> increaseSize:aNumber [
 	maxFuel := maxFuel +aNumber.
 
@@ -59,7 +59,7 @@ FuelTank >> useFuel: numberOfTiles from: spaceship [
 
 	fuel := fuel - numberOfTiles abs.
 	fuel > 0 ifTrue: [ ^self ].
-	(spaceship askForFuel: fuel abs) ifTrue: [ ^self ].
+	((spaceship ally) shareFuel: fuel abs) ifTrue: [ ^self ].
 	spaceship penalize.
 	fuel := 0.
 ]

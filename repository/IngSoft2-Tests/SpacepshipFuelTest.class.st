@@ -12,7 +12,7 @@ SpacepshipFuelTest >> testSpaceshipFuelDecreaseWithMoves [
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.	
 	aSpaceship1 move:1.
 	
-	self assert: aSpaceship1 fuel equals: 9.
+	self assert: aSpaceship1 fuelTank fuel equals: 9.
 	
 
 ]
@@ -32,7 +32,7 @@ SpacepshipFuelTest >> testSpaceshipFuelDecreasesInWormHole [
 	aBoard setGame: aGame.
 	aSpaceship1 turn: 8.
 	
-	self assert: aSpaceship1 fuel equals: 0.
+	self assert: aSpaceship1 fuelTank fuel equals: 0.
 	
 ]
 
@@ -42,7 +42,7 @@ SpacepshipFuelTest >> testSpaceshipFuelStartsWithMaxDice [
 	aBoard := Board with: 20.
 	aSpaceship1 := Spaceship withName: 'Nave 1' withBoard: aBoard withMaxFuel: 10.
 	
-	self assert: aSpaceship1 fuel equals: 10.
+	self assert: aSpaceship1 fuelTank fuel equals: 10.
 	
 	
 	

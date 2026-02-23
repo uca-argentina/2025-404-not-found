@@ -35,28 +35,24 @@ Spaceship class >> withName: aName withBoard:aBoard withMaxFuel: maxFuel withCar
 	^ self new initializeWith: aName withBoard: aBoard  withMaxFuel: maxFuel withCards: cards
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
+Spaceship >> ally [
+^ally
+]
+
+{ #category : 'cardLogic' }
 Spaceship >> allyWith: aSpaceship [
-	ally := aSpaceship.
+	ally := ActiveAlliance with:aSpaceship .
 	
 ]
 
-{ #category : 'as yet unclassified' }
-Spaceship >> askForFuel: fuelNeeded [
-	ally ifNil: [ ^false ].
-	^ally shareFuel: fuelNeeded
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'cardLogic' }
 Spaceship >> breakAlliance [
-	|lostAlly|
-	lostAlly :=ally.
-	ally := nil.
-	^lostAlly .
+	ally:=NoAlliance new.
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> canExecuteMove:toMove [
 	(toMove < exitRoll) ifTrue: [ ^ false ].
 
@@ -76,7 +72,7 @@ Spaceship >> cards [
 	^cards size
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Spaceship >> checkFuelCapacity [
 ^fuelTank maxFuel
 
@@ -88,11 +84,13 @@ Spaceship >> drawCard: aCard [
 ]
 
 { #category : 'accessing' }
-Spaceship >> fuel [
-	^ fuelTank fuel
+Spaceship >> fuelTank [
+	^fuelTank 
+	
+	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Spaceship >> getRewardWithPorcentage:aPorcentage [
 	| randomNumber |
 
@@ -115,7 +113,7 @@ Spaceship >> hasWon: laps [
 	^ position hasDoneLaps: laps
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> increaseMaxFuelBy: aNumberToIncreaseTank [
 	fuelTank increaseSize:aNumberToIncreaseTank.
 
@@ -131,7 +129,7 @@ Spaceship >> initializeWith: aName withBoard: aBoard withMaxFuel: aMaxFuel withC
 	exitRoll := 0.
 	cards := someCards.
 	minusMoves :=0.
-	ally := nil.
+	ally:=NoAlliance new.
 	rollAddOn := 0.
 	jailTime :=0.
 ]
@@ -182,7 +180,7 @@ Spaceship >> manageSkip [
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> modifyRoll: aNumber [
 	rollAddOn := rollAddOn + aNumber.
 ]
@@ -214,7 +212,7 @@ Spaceship >> position [
 	^ position
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'moving' }
 Spaceship >> reduceFuelBy:aNumber [
 	fuelTank useFuel: 1 from: self.
 
@@ -231,13 +229,6 @@ Spaceship >> resetToStartWithoutFuelLoss [
 	position := position backToZero.
 ]
 
-{ #category : 'as yet unclassified' }
-Spaceship >> shareFuel: fuelNeeded [
-	^fuelTank shareFuel: fuelNeeded from: self.
-	
-	
-]
-
 { #category : 'logic' }
 Spaceship >> skip [
 	penalization := penalization + 1.
@@ -250,22 +241,22 @@ Spaceship >> turn: toMove [
     board applyTileEffectTo: self.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'logic' }
 Spaceship >> turn: toMove playCard: aCard against: aSpaceship in:aGame [
 	self useCard: aCard against: aSpaceship during: aGame . 
 	self turn:toMove .
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'cardLogic' }
 Spaceship >> useCancellationOn: cardToRemove inGame: aGame [
 	| cancellationCard |
 	cancellationCard := cards detect: [:c | c action class = Cancellation] ifNone: [ Error signal:'No cancellation card was found' ].
 	cards remove: cancellationCard.
-	aGame removeCard: cardToRemove . 
+	aGame cards removeCard: cardToRemove . 
    ^cancellationCard 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'cardLogic' }
 Spaceship >> useCard: aCard against: aSpaceship during: aGame [
 	| cardToUse |
 	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].
@@ -273,7 +264,7 @@ Spaceship >> useCard: aCard against: aSpaceship during: aGame [
 	cards remove: (cards at: 1).
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'cardLogic' }
 Spaceship >> useCard: aCard against: aSpaceship in: aGame [
 	| cardToUse |
 	cardToUse := cards detect: [:c | c == aCard ] ifNone: [ Error signal:'The chosen card was not found' ].

@@ -10,7 +10,7 @@ Skip class >> className [
 	'Skip'.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 Skip >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 	aCardSpaceship skip.
 ]

@@ -10,14 +10,15 @@ Acceleration class >> className [
 	'Acceleration'.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 Acceleration >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
-	aGame addCard: self against: aSpaceship .
+	"aGame addCard: self against: aSpaceship ."
+	aGame cards add: self against: aSpaceship .
 	aGame modifyRollAll: 1
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'effects' }
 Acceleration >> actOn: aSpaceship from: aCardSpaceship in: aGame [ 
 	Error signal:'Permanent Card can only be played turing turn'
 

@@ -64,8 +64,8 @@ BoardTileEffectTest >> testABWhenSpaceshipLandsOnAtomicBombThenSpaceshipsDontUse
 	aBoard addTile: atomicBomb.
 	aSpaceship1 turn: 9. 
 	 
-	self assert: aSpaceship2 fuel equals: 30.
-	self assert: aSpaceship1 fuel equals: 21.
+	self assert: aSpaceship2 fuelTank fuel equals: 30.
+	self assert: aSpaceship1 fuelTank fuel equals: 21.
 ]
 
 { #category : 'tests' }
@@ -77,7 +77,7 @@ BoardTileEffectTest >> testBHWhenBlackHoleEffectIsApliedThenFuelGoesDown [
 	
 	aSpaceship1 turn: 9.
 	
-	self assert: aSpaceship1 fuel equals: 17.
+	self assert: aSpaceship1 fuelTank fuel equals: 17.
 	
 
 ]
@@ -199,8 +199,8 @@ BoardTileEffectTest >> testMWCorrectFuelUsage [
 	aSpaceship1 turn: 6.
 	aSpaceship2 turn: 4. "Cae en moonWalk y hace que la 1 retroceda"
 	 
-	self assert: aSpaceship2 fuel equals: 26.
-	self assert: aSpaceship1 fuel equals: 21.
+	self assert: aSpaceship2 fuelTank fuel equals: 26.
+	self assert: aSpaceship1 fuelTank fuel equals: 21.
 ]
 
 { #category : 'tests' }

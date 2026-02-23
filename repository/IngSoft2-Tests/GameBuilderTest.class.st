@@ -16,6 +16,30 @@ GameBuilderTest >> should: anErrorBlock raise: anErrorClass withMessageText: err
 ]
 
 { #category : 'asserting' }
+GameBuilderTest >> testGamePlaysSomeTurns [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: 20.
+	builder setWormholeEntrance: 2 exit: 7.
+	builder setGameLaps: 1.
+	
+	game := builder buildGame.
+	game nextTurn.
+	game nextTurn.
+	
+self assert: (game turn)equals:1.
+				
+			
+		
+	
+
+]
+
+{ #category : 'asserting' }
 GameBuilderTest >> testSpaceshipFuelInitializesWithDoubleTheMaxRoll [
 	| builder game |
 	builder := GameBuilder new.
