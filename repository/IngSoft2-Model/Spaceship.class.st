@@ -244,7 +244,7 @@ Spaceship >> turn: toMove [
 
 { #category : 'as yet unclassified' }
 Spaceship >> turn: toMove playCard: aCard against: aSpaceship in:aGame [
-	aCard ifNotNil: [ self useCard: aCard against: aSpaceship during: aGame ]. 
+	self useCard: aCard against: aSpaceship during: aGame . 
 	self turn:toMove .
 ]
 

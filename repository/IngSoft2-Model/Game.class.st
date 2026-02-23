@@ -118,7 +118,7 @@ Game >> nextTurnWithCard:aCard against:targetSpaceship [
 	rollResult := self rollDices.
 	(rollResult = self maximumValueOfDice)ifTrue: [
 			currentShip getRewardWithPorcentage:80.].
-	aCard ifNotNil: [currentShip turn: rollResult playCard: aCard against:targetSpaceship  in: self]
+	aCard ifNotNil: [currentShip turn: rollResult playCard: aCard against:targetSpaceship in: self]
 	ifNil:[
 	currentShip turn: rollResult.].
 
