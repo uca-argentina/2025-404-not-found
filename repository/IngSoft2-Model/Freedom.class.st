@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Freedom class >> className [ 
+	'Freedom'.
+]
+
 { #category : 'as yet unclassified' }
 Freedom >> actOn: aSpaceship from: cardSpaceship during: aGame [
 	aGame addCard: self against: aSpaceship .

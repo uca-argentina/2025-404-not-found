@@ -18,7 +18,7 @@ Class {
 HyperJump class >> inPosition: aPosition withEffect: aListOfParsec [
 	| sortedParsecs |
 	sortedParsecs :=aListOfParsec asSortedCollection reverse.
-	^self new initializeIn: aPosition withParsecs:sortedParsecs .
+	^(self inPosition: aPosition ) initializeWithParsecs:sortedParsecs .
 	
 ]
 
@@ -46,8 +46,7 @@ HyperJump >> convert: aConvertor with: sizeOfBoard and: aListOfValues [
 ]
 
 { #category : 'initialization' }
-HyperJump >> initializeIn: aPosition withParsecs:sortedCollection [
-	self initializeIn: aPosition.
+HyperJump >> initializeWithParsecs:sortedCollection [
 	listOfValues :=sortedCollection.
 	
 ]

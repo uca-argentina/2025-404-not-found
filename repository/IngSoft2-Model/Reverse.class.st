@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Reverse class >> className [ 
+	'Reverse'.
+]
+
 { #category : 'as yet unclassified' }
 Reverse >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 	aGame reverseTurns.

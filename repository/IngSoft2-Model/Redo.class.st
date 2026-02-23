@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Redo class >> className [ 
+	'Redo'.
+]
+
 { #category : 'as yet unclassified' }
 Redo >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
 	| newCard |
@@ -17,9 +22,4 @@ Redo >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	| newCard |
 	newCard:=(aGame readLastCard) class new.
 	newCard actOn: aSpaceship from: aCardSpaceship in: aGame.
-]
-
-{ #category : 'as yet unclassified' }
-Redo >> nameOfCard [ 
-^'redo'
 ]

@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Ally class >> className [ 
+	'Ally'.
+]
+
 { #category : 'as yet unclassified' }
 Ally >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 	aGame addCard: self against:aSpaceship .
@@ -17,11 +22,6 @@ Ally >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 Ally >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	Error signal:'Permanent Card can only be played turing turn'
 
-]
-
-{ #category : 'as yet unclassified' }
-Ally >> nameOfCard [ 
-^'ally'
 ]
 
 { #category : 'removing' }

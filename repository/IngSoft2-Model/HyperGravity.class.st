@@ -10,7 +10,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 HyperGravity class >> inPosition: aPosition needingToRoll:aNumber [
-	^self new initializeIn: aPosition needing:aNumber.
+	^(self inPosition: aPosition ) initializeNeeding:aNumber.
 	
 ]
 
@@ -22,7 +22,6 @@ HyperGravity >> applyEffectsTo: aSpaceship in: aGame [
 ]
 
 { #category : 'initialization' }
-HyperGravity >> initializeIn: aPosition needing:aNumber [
-	self initializeIn: aPosition.
+HyperGravity >> initializeNeeding:aNumber [
 	exitRoll :=aNumber
 ]

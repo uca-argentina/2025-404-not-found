@@ -13,7 +13,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 MoonWalk class >> inPosition: aPosition backingUp: aNumber [
-	^self new initializeIn: aPosition backingUp:aNumber 
+	^(self inPosition: aPosition ) initializeBackingUp:aNumber 
 ]
 
 { #category : 'effects' }
@@ -24,7 +24,6 @@ MoonWalk >> applyEffectsTo: aSpaceship in: aGame [
 ]
 
 { #category : 'initialization' }
-MoonWalk >> initializeIn: aPosition backingUp: aNumber [
-	self initializeIn: aPosition .
+MoonWalk >> initializeBackingUp: aNumber [
 	nTiles:= aNumber negated .
 ]

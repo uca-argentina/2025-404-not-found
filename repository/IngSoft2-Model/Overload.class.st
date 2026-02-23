@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Overload class >> className [ 
+	'Overload'.
+]
+
 { #category : 'as yet unclassified' }
 Overload >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
 	aGame addCard: self against: aSpaceship .
@@ -15,11 +20,6 @@ Overload >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 Overload >> actOn: aSpaceship from: aCardSpaceship in: aGame [
 	Error signal:'Permanent Card can only be played turing turn'
 
-]
-
-{ #category : 'as yet unclassified' }
-Overload >> nameOfCard [ 
-^'overload'
 ]
 
 { #category : 'removing' }

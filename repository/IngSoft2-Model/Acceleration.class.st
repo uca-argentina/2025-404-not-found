@@ -5,6 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'introspection' }
+Acceleration class >> className [ 
+	'Acceleration'.
+]
+
 { #category : 'as yet unclassified' }
 Acceleration >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
 	aGame addCard: self against: aSpaceship .
@@ -16,11 +21,6 @@ Acceleration >> actOn: aSpaceship from: aCardSpaceship during: aGame [
 Acceleration >> actOn: aSpaceship from: aCardSpaceship in: aGame [ 
 	Error signal:'Permanent Card can only be played turing turn'
 
-]
-
-{ #category : 'as yet unclassified' }
-Acceleration >> nameOfCard [ 
-^'acceleration'
 ]
 
 { #category : 'removing' }

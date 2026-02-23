@@ -10,7 +10,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 WormHole class >> inPosition: aPosition withOffset:anOffset [
-	^ self new initializeIn: aPosition withOffset: anOffset 
+	^ (self inPosition: aPosition) initializeWithOffset: anOffset.
+
 
 ]
 
@@ -23,8 +24,7 @@ WormHole >> applyEffectsTo: aSpaceship in: aGame [
 ]
 
 { #category : 'initialization' }
-WormHole >> initializeIn: aPosition withOffset:anOffset [
-	self initializeIn: aPosition. 
+WormHole >> initializeWithOffset:anOffset [
 	offset :=anOffset
 	
 	

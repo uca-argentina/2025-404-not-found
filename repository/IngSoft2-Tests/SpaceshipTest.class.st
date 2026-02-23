@@ -17,7 +17,6 @@ SpaceshipTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 
 { #category : 'tests' }
 SpaceshipTest >> testSpaceShipWithEmptyNameThenCreationFails [
-
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard .
@@ -30,7 +29,6 @@ SpaceshipTest >> testSpaceShipWithEmptyNameThenCreationFails [
 
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipInitializesOnPosition0 [
-
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard .
@@ -52,7 +50,6 @@ SpaceshipTest >> testTheSpaceshipKnowsItsName [
 
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
-
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard .
@@ -64,7 +61,6 @@ SpaceshipTest >> testTheSpaceshipMovesNBoxesAhead [
 
 { #category : 'tests' }
 SpaceshipTest >> testTheSpaceshipMovesOneBoxAhead [
-
 	| aSpaceship sizeOfBoard aBoard |
 	sizeOfBoard := 10.
 	aBoard := Board with: sizeOfBoard .

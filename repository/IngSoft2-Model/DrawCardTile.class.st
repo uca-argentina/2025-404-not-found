@@ -13,7 +13,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 DrawCardTile class >> inPosition: aPosition withDeck: aDeck [
-	^self new initializeIn: aPosition withDeck: aDeck 
+	^ (self inPosition: aPosition) initializeWithDeck: aDeck .
 ]
 
 { #category : 'effects' }
@@ -22,7 +22,6 @@ DrawCardTile >> applyEffectsTo: aSpaceship in: aGame [
 ]
 
 { #category : 'initialization' }
-DrawCardTile >> initializeIn: aPosition withDeck:aDeck [
-	self initializeIn: aPosition.
+DrawCardTile >> initializeWithDeck:aDeck [
 	cardDeck := aDeck 
 ]

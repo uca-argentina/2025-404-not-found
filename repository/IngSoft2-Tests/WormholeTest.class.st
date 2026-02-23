@@ -26,6 +26,7 @@ WormholeTest >> testWhenSpaceshipLandsOnEntranceHoleThenGoesThroughExitHole [
 	aDie2 := LoadedDie with: { 3 . 3 . 3 . 2}. 	
 	dice := { aDie1 . aDie2 }. 	lap := 2. 	
 	aGame := Game with: spaceships andDice: dice laps: lap .
+	
 	aBoard addWormHolewithEntraceTile:2 exitTile:6.
 	aBoard setGame: aGame.
 	
@@ -67,6 +68,7 @@ WormholeTest >> testWhenWormholeEntranceBoxOutsideBoardThenCreationFails [
 	dice := { aDie1 . aDie2 }. 	lap := 2. 	
 	aGame := Game with: spaceships andDice: dice laps: lap .
 	aBoard setGame: aGame .
+	
 	self
 		should: [ aBoard addWormHolewithEntraceTile:-1 exitTile:6.]
 		raise: Error
