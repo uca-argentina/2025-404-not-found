@@ -7,7 +7,6 @@ Class {
 
 { #category : 'as yet unclassified' }
 Acceleration >> actOn: aSpaceship from: aCardSpaceship during: aGame [ 
-	
 	aGame addCard: self against: aSpaceship .
 	aGame modifyRollAll: 1
 

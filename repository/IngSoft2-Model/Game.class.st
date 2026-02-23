@@ -57,6 +57,15 @@ Game >> addPermanentCard: anOverloadCard against: aSpaceship [
 	aSpaceship modifyRoll: anOverloadCard penalty .
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> advanceTurn [
+	extraTurn > 0 ifTrue: [ 
+        extraTurn := extraTurn - 1. 
+        ^ self ].
+	turnNumber := (turnNumber - 1 + direction) \\ numberSpaceships + 1.
+	
+]
+
 { #category : 'initialization' }
 Game >> initializeWith: someSpaceships andDice: someDice laps: someLaps [
 	direction:=1.
@@ -78,15 +87,6 @@ Game >> isFinished [
 { #category : 'accessing' }
 Game >> lastEffect [
 ^lastEffect 
-]
-
-{ #category : 'as yet unclassified' }
-Game >> manageTurn [
-	extraTurn > 0 ifTrue: [ 
-        extraTurn := extraTurn - 1. 
-        ^ self ].
-	turnNumber := (turnNumber - 1 + direction) \\ numberSpaceships + 1.
-	
 ]
 
 { #category : 'accessing' }
@@ -113,17 +113,16 @@ Game >> nextTurnWithCard:aCard against:targetSpaceship [
 	self isFinished ifTrue: [ ^ self ].
 	currentShip := spaceships at:turnNumber .
 
-	(currentShip managePenalization) ifTrue: [ ^ self manageTurn ].
+	(currentShip managePenalization) ifTrue: [ ^ self advanceTurn ].
 	
 	rollResult := self rollDices.
 	(rollResult = self maximumValueOfDice)ifTrue: [
 			currentShip getRewardWithPorcentage:80.].
-	aCard ifNotNil: [ 
-		currentShip turn: rollResult playCard: aCard against:targetSpaceship in: self.]
+	aCard ifNotNil: [currentShip turn: rollResult playCard: aCard against:targetSpaceship  in: self]
 	ifNil:[
-		currentShip turn: rollResult .].
+	currentShip turn: rollResult.].
 
-	self manageTurn.
+	self advanceTurn.
 ]
 
 { #category : 'accessing' }
@@ -182,8 +181,8 @@ Game >> saveLastEffect: aBlock [
 { #category : 'logic' }
 Game >> skipTurn [
 	self isFinished ifTrue: [ ^ self ].
-	(spaceships at: turnNumber) refuel.
-	turnNumber := (turnNumber \\ numberSpaceships) + 1.
+  (spaceships at:turnNumber) refuel.
+	self advanceTurn .
 ]
 
 { #category : 'accessing' }

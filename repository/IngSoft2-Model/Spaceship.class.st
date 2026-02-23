@@ -237,19 +237,15 @@ Spaceship >> skip [
 
 { #category : 'logic' }
 Spaceship >> turn: toMove [
-	self turn: toMove playCard: nil against: nil in:nil.
+	 (self canExecuteMove: toMove) ifFalse: [ ^ self ].
+    self move: (toMove + rollAddOn).
+    board applyTileEffectTo: self.
 ]
 
 { #category : 'as yet unclassified' }
 Spaceship >> turn: toMove playCard: aCard against: aSpaceship in:aGame [
 	aCard ifNotNil: [ self useCard: aCard against: aSpaceship during: aGame ]. 
-
-    "2. Validación de Movimiento: Protección y Ocultamiento [cite: 17, 27]"
-    (self canExecuteMove: toMove) ifFalse: [ ^ self ].
-
-    "3. Ejecución: Acceso Uniforme y Mapeo Directo [cite: 32, 20]"
-    self move: (toMove + rollAddOn).
-    board applyTileEffectTo: self.
+	self turn:toMove .
 ]
 
 { #category : 'as yet unclassified' }
