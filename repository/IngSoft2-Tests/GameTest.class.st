@@ -68,6 +68,20 @@ GameTest >> testGameInitialization [
 ]
 
 { #category : 'tests' }
+GameTest >> testGameRanking [
+	
+	aGame nextTurn .
+	aGame nextTurn .
+	aGame nextTurn .
+	aGame nextTurn .
+	aGame nextTurn .
+	
+	self assert: (aGame ranking first) equals: aSpaceship1.
+	self assert: (aGame ranking second) equals: aSpaceship2.
+				
+]
+
+{ #category : 'tests' }
 GameTest >> testTwoShipsMoveInDifferentTurns [ 
 
 	aGame nextTurn.

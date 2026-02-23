@@ -30,6 +30,14 @@ Board class >> withRandom: aNumber [
 	^ self new withRandom: aNumber
 ]
 
+{ #category : 'instance creation' }
+Board class >> withRandom: aNumber withMax:maxDice [
+
+	aNumber negative ifTrue: [
+		Error signal: 'Board size should be positive' ].
+	^ self new withRandom: aNumber withMax: maxDice .
+]
+
 { #category : 'adding' }
 Board >> addTile: tile [
 	(self checkLimits:(tile position) ) ifFalse: [ 
@@ -109,12 +117,24 @@ Board >> tileAt: position [
 Board >> with: aSize [
 
 	size := aSize.
-	tiles := (TileDistributionStrategy new) initializeTiles: aSize.
+	tiles:=(TileDistributionStrategy new) initializeTiles: aSize.
 ]
 
 { #category : 'initialization' }
 Board >> withRandom: aSize [
 
+	| tds |
 	size := aSize.
-	tiles := (TileDistributionStrategy new) initializeTilesRandom: aSize.
+	tds:=TileDistributionStrategy new.
+	tds setMaxDiceValue: game maximumValueOfDice.
+	tiles := tds initializeTilesRandom: aSize.
+]
+
+{ #category : 'initialization' }
+Board >> withRandom: aSize withMax:maxDice [
+	| tds |
+	size := aSize.
+	tds:=TileDistributionStrategy new.
+	tds setMaxDiceValue: maxDice .
+	tiles := tds initializeTilesRandom: aSize.
 ]

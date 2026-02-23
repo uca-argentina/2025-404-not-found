@@ -11,7 +11,8 @@ Class {
 		'wormholeEntrance',
 		'wormholeExit',
 		'laps',
-		'maxFuel'
+		'maxFuel',
+		'spaceships'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,15 +40,16 @@ GameBuilder >> addSpaceshipNamed: aName [
 { #category : 'initialization' }
 GameBuilder >> buildGame [
 
-	| dice board spaceships cards |
+	| dice board cards game |
 	maxFuel := dieValues sum.
 	dice := dieValues collect: [ :val | Die with: val ].
-	board := Board with: boardSize.
+	board := Board withRandom: boardSize withMax: (dice sum: [ :die | die numberSides ]).
 	board addWormHolewithEntraceTile:wormholeEntrance exitTile:wormholeExit .
 	cards := self addCards.
 	spaceships := spaceshipNames collect: [ :name | Spaceship withName: name withBoard: board withMaxFuel: maxFuel withCards: cards].
-
-	^ Game with: spaceships andDice: dice laps: laps 
+	game:=Game with: spaceships andDice: dice laps: laps .
+	board setGame: game.
+	^ game. 
 ]
 
 { #category : 'initialization' }
@@ -75,4 +77,9 @@ GameBuilder >> setGameLaps: numberOfLaps [
 GameBuilder >> setWormholeEntrance: entrance exit: exit [
     wormholeEntrance := entrance.
     wormholeExit := exit.
+]
+
+{ #category : 'accessing' }
+GameBuilder >> spaceships [
+	^spaceships .
 ]

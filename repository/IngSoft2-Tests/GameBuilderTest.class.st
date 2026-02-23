@@ -38,6 +38,28 @@ GameBuilderTest >> testSpaceshipFuelInitializesWithDoubleTheMaxRoll [
 ]
 
 { #category : 'asserting' }
+GameBuilderTest >> testSpaceshipStartsWith2Cards [
+	| builder game |
+	builder := GameBuilder new.
+	builder addSpaceshipNamed: 'Nave 1'.
+	builder addSpaceshipNamed: 'Nave 2'.
+	builder addDieWithValue: 3.
+	builder addDieWithValue: 5.
+	builder setBoardSize: 10.
+	builder setWormholeEntrance: 2 exit: 7.
+	builder setGameLaps: 1.
+	
+	game := builder buildGame.
+	
+	self assert:	((builder spaceships) at:1 )cards equals: 2
+				
+			
+		
+	
+
+]
+
+{ #category : 'asserting' }
 GameBuilderTest >> testWhenGameCreationWithInvalidLapsThenFails [
 	| builder game |
 	builder := GameBuilder new.

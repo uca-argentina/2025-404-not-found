@@ -131,6 +131,12 @@ Game >> permanentCards [
 	^ permanentCards size
 ]
 
+{ #category : 'logic' }
+Game >> ranking [
+	^ spaceships asSortedCollection: [ :shipA :shipB | 
+        shipA isAheadOf: shipB ]
+]
+
 { #category : 'removing' }
 Game >> readLastCard [
 

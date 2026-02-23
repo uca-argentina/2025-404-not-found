@@ -136,6 +136,13 @@ Spaceship >> initializeWith: aName withBoard: aBoard withMaxFuel: aMaxFuel withC
 	jailTime :=0.
 ]
 
+{ #category : 'accessing' }
+Spaceship >> isAheadOf:anotherSpaceship [
+	^ (self position lap > anotherSpaceship position lap) or: [ 
+        (self position lap = anotherSpaceship position lap) and: [ 
+            self position index > anotherSpaceship position index ] ]
+]
+
 { #category : 'logic' }
 Spaceship >> lockUntil: anExitRoll [
 	exitRoll := anExitRoll.
@@ -197,6 +204,7 @@ Spaceship >> name [
 
 { #category : 'logic' }
 Spaceship >> penalize [
+"Cuando se queda sin combustible"
 	position := position backToZero.
 	penalization := penalization +2.
 ]
